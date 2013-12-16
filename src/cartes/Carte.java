@@ -17,6 +17,12 @@ public class Carte {
 		estValide = true;
 	}
 
+	public Carte(String nom, String descrp)
+	{
+		setNom(nom);
+		setDescription(descrp);
+	}
+	
 	
 	public CarteType getType() {
 		return type;
@@ -39,6 +45,14 @@ public class Carte {
 	
 	@Override public String toString(){
 		return getType() +"-->"+ getNom() +" : "+getDescription();
+	}
+
+	public void jouerLaCarte() {
+	}
+	
+	public void action() {}
+
+	public void jouerLaCarte(Carte carte) {
 	}
 	
 }

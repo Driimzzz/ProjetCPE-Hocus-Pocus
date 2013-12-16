@@ -17,12 +17,12 @@ public class Hocus extends Carte{
 		setForce(0);
 		super.setType(CarteType.hocus);
 	}
-//	
-//	public Hocus(String nom,String descrip){		
-//		super(nom,descrip);
-//		super.setType(CarteType.hocus);
-//		setForce(0);
-//	}
+	
+	public Hocus(String nom,String descrip){		
+		super(nom,descrip);
+		super.setType(CarteType.hocus);
+		setForce(0);
+	}
 	
 
 	@Override public String toString(){

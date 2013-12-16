@@ -2,13 +2,13 @@ package cartes;
 
 public class ContreSort extends Pocus{
 	
-	private Hocus carteVisee;
+	private Carte carteVisee;
 	
-	public Hocus getCarteVisee() {
+	public Carte getCarteVisee() {
 		return carteVisee;
 	}
 	
-	public void setCarteVisee(Hocus carteVisee) {
+	public void setCarteVisee(Carte carteVisee) {
 		this.carteVisee = carteVisee;
 	}
 
@@ -18,11 +18,13 @@ public class ContreSort extends Pocus{
 		super.setDescription("Détruisez la carte HOCUS");
 	}
 	
-	public void jouerLaCarte(){
-		Hocus visee = super.viserUneCarteHocus();
+	@Override
+	public void jouerLaCarte(Carte visee){
+		//Hocus visee = super.viserUneCarteHocus();
 		this.setCarteVisee(visee);
 	}
 	
+	@Override
 	public void action() {
 		if(this.estValide)
 			carteVisee.estValide = false;

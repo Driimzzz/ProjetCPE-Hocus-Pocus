@@ -17,7 +17,7 @@ public class BaguetteMagique extends Pocus {
 		super.setNom("Baguette Magique");
 		super.setDescription("Doublez la valeur d'une carte HOCUS");		
 	}
-	
+		
 	public void jouerLaCarte(Hocus visee){
 //		Hocus visee = super.viserUneCarteHocus();
 				
@@ -27,6 +27,7 @@ public class BaguetteMagique extends Pocus {
 			System.out.println("La carte hocus en question ne peu pas etre cible d'une Baguette Magique.");
 	}
 	
+	@Override
 	public void action() {
 		if(this.estValide)
 		{
