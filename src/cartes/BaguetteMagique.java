@@ -18,8 +18,8 @@ public class BaguetteMagique extends Pocus {
 		super.setDescription("Doublez la valeur d'une carte HOCUS");		
 	}
 	
-	public void jouerLaCarte(){
-		Hocus visee = super.viserUneCarteHocus();
+	public void jouerLaCarte(Hocus visee){
+//		Hocus visee = super.viserUneCarteHocus();
 				
 		if (visee.getForce() != 0)
 			setCarteVisee(visee);
