@@ -60,9 +60,9 @@ public class exec {
 		carteHocus = new Sortilege(3);
 		partie.ajouterAAireDeJeu(carteHocus);
 				
-		cartePocus = new BaguetteMagique();
-		cartePocus.jouerLaCarte(carteHocus);
-		partie.ajouterAAireDeJeu(cartePocus);
+//		cartePocus = new BaguetteMagique();
+//		cartePocus.jouerLaCarte(carteHocus);
+//		partie.ajouterAAireDeJeu(cartePocus);
 				
 		cartePocus = new ContreSort();
 		cartePocus.jouerLaCarte(carteHocus);
