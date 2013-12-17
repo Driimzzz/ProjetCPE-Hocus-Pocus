@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import cartes.*;
+import cartes.Carte.CarteType;
 
 public class Partie {
 	private int chaudron;// le nb de gemmes dans le chaudron
@@ -19,7 +20,9 @@ public class Partie {
 		System.out.println("construction partie : ");
 		this.initJoueurs(nbJoueurs, nomsJoueurs);
 		this.initBiblio();
-		this.initChaudron(partieRapide); 
+		this.initChaudron(partieRapide);
+		aireDeJeu = new PileDeCartes();
+		defausse = new PileDeCartes();
 
 	}
 
@@ -95,6 +98,33 @@ public class Partie {
 		this.aireDeJeu = aireDeJeu;
 	}
 
+	public void ajouterAAireDeJeu(Carte carte){
+		if(aireDeJeu.tailleDeLaPile()<1)
+		{
+			if(carte.getType() == CarteType.hocus)
+				aireDeJeu.ajouterUneCarte(carte);
+			else
+				System.out.println("La premiere carte jouée doit être une HOCUS");
+		}
+		else
+		{
+			if(carte.getType() == CarteType.pocus)
+				aireDeJeu.ajouterUneCarte(carte);
+			else
+				System.out.println("Une seule carte Hocus à la fois");
+		}
+			
+	}
+	
+	public void jouerLesCartesDeLaireDeJeu()
+	{
+		while(aireDeJeu.tailleDeLaPile()>0){
+			Carte currentCarte = aireDeJeu.tirerUneCarte();
+			currentCarte.action();
+		}
+		setAireDeJeu(new PileDeCartes());
+	}
+	
 	public PileDeCartes getDefausse() {
 		return defausse;
 	}

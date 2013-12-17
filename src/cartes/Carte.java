@@ -13,6 +13,7 @@ public class Carte {
 	private String nom;
 	private String description;
 	
+	//si la carte est toujours valide, non deffaussée par une autre
 	private boolean estValide;
 	
 	protected Carte(){		
@@ -24,8 +25,7 @@ public class Carte {
 		setNom(nom);
 		setDescription(descrp);
 	}
-	
-	
+		
 	public boolean isValide() {
 		return estValide;
 	}
