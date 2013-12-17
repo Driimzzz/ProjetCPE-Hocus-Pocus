@@ -11,19 +11,48 @@ import cartes.Carte.CarteType;
 
 public class Partie {
 	private int chaudron;// le nb de gemmes dans le chaudron
-	private Bibliotheque bibliotheque;
-	private List<Joueur> joueurs;
-	private PileDeCartes aireDeJeu;
-	private PileDeCartes defausse;
+	
+	static class bibliotheque extends Bibliotheque{
+		
+	}
+	static private List<joueur> joueurs;
+	static private bibliotheque bibliotheque;
+	
+	
+	static class joueur extends Joueur{
+
+		public joueur(String _nom) {
+			super(_nom);
+			// TODO Auto-generated constructor stub
+		}
+		
+		public void piocherCartes(int nbCartes){
+			for(int i=0;i<nbCartes;i++)
+				this.getMain().ajouterUneCarte(Partie.bibliotheque.getCartes().tirerUneCarte());
+			
+		}
+		
+	}
+	
+	static private PileDeCartes aireDeJeu;
+	static private PileDeCartes defausse;
 
 	public Partie(int nbJoueurs, String[] nomsJoueurs, boolean partieRapide) { // constructeur de la partie
 		System.out.println("construction partie : ");
-		this.initJoueurs(nbJoueurs, nomsJoueurs);
-		this.initBiblio();
-		this.initChaudron(partieRapide);
 		aireDeJeu = new PileDeCartes();
 		defausse = new PileDeCartes();
 
+		bibliotheque = new bibliotheque();
+		
+		initJoueurs(nbJoueurs, nomsJoueurs);
+		initChaudron(partieRapide); 
+		
+		for (int i=0;i<nbJoueurs;i++){
+			System.out.println("affichage de la main de " + this.getJoueurs().get(i).getNom());
+			this.getJoueurs().get(i).getMain().afficherToutes();
+		}
+		System.out.println("affichage de la bibliotheque :");
+		bibliotheque.getCartes().afficherToutes();
 	}
 
 	private void initChaudron(boolean partieRapide) {
@@ -54,14 +83,18 @@ public class Partie {
 	}
 
 	private void initJoueurs(int nbJoueurs, String[] nomsJoueurs) {
-		this.joueurs = new ArrayList<Joueur>();
+		
+		//creation des joueurs
+		joueurs = new ArrayList<joueur>();
 		for (int i=0;i<nbJoueurs;i++){
-			this.getJoueurs().add(new Joueur(nomsJoueurs[i]));
+			this.getJoueurs().add(new joueur(nomsJoueurs[i]));
 		}
-	}
-
-	private void initBiblio() {
-
+		
+		//distribution des cartes aux joueurs
+		for (int i=0;i<nbJoueurs;i++){
+			this.getJoueurs().get(i).piocherCartes(5);
+		}
+		
 	}
 
 	// GETTERS & SETTERS ********************
@@ -78,16 +111,16 @@ public class Partie {
 		return bibliotheque;
 	}
 
-	public void setBibliotheque(Bibliotheque bibliotheque) {
-		this.bibliotheque = bibliotheque;
+	public void setBibliotheque(partie.Partie.bibliotheque bibliotheque) {
+		Partie.bibliotheque = bibliotheque;
 	}
 
-	public List<Joueur> getJoueurs() {
+	public List<joueur> getJoueurs() {
 		return joueurs;
 	}
 
-	public void setJoueurs(List<Joueur> joueurs) {
-		this.joueurs = joueurs;
+	public void setJoueurs(List<joueur> joueurs) {
+		Partie.joueurs = joueurs;
 	}
 
 	public PileDeCartes getAireDeJeu() {
@@ -95,7 +128,7 @@ public class Partie {
 	}
 
 	public void setAireDeJeu(PileDeCartes aireDeJeu) {
-		this.aireDeJeu = aireDeJeu;
+		Partie.aireDeJeu = aireDeJeu;
 	}
 
 	public void ajouterAAireDeJeu(Carte carte){
@@ -130,7 +163,7 @@ public class Partie {
 	}
 
 	public void setDefausse(PileDeCartes defausse) {
-		this.defausse = defausse;
+		Partie.defausse = defausse;
 	}
 
 }

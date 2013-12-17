@@ -23,7 +23,7 @@ public class PileDeCartes {
 	
 	public void melanger(){
 		//prend la premiere carte et la met aléatoirement dans le paquet
-		for (int i=0;i<20;i++) {
+		for (int i=0;i<100;i++) {
 			int changeIndex = (int) Math.round(Math.random()*(listeDeCartes.size()-1));
 			listeDeCartes.add(changeIndex, listeDeCartes.pop());
 		}			
