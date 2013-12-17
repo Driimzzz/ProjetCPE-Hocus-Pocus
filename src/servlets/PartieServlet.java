@@ -58,6 +58,7 @@ public class PartieServlet extends HttpServlet {
 		boolean partieRapide = (request.getParameter("partieRapide")!=null)? true : false;
 
 		Partie partie = new Partie(nbJoueurs, nomJoueurs, partieRapide);
+		partie.jeu();
 		response.sendRedirect("");
 	}
 }

@@ -37,7 +37,25 @@ public class Partie {
 	static private PileDeCartes aireDeJeu;
 	static private PileDeCartes defausse;
 
-	public Partie(int nbJoueurs, String[] nomsJoueurs, boolean partieRapide) { // constructeur de la partie
+	public void tourDeJeu(joueur joueurEnCours){
+		System.out.println("c'est le tour de "+ joueurEnCours.getNom());
+		chaudron--;
+	}
+	
+	//la fonction qui alterne les tours de jeu entre les joueurs
+	public void jeu() {
+		int indexJoueur = 0;
+		while(chaudron>0){
+			tourDeJeu(joueurs.get(indexJoueur));
+			if(indexJoueur==joueurs.size()-1)
+				indexJoueur = 0;
+			else
+				indexJoueur++;
+		}
+		//TODO creer une fonction qui classe les joueurs en fonction de leur nombre de gemmes et afficher les scores.
+	}
+	// constructeur de la partie
+	public Partie(int nbJoueurs, String[] nomsJoueurs, boolean partieRapide) { 
 		System.out.println("construction partie : ");
 		aireDeJeu = new PileDeCartes();
 		defausse = new PileDeCartes();
