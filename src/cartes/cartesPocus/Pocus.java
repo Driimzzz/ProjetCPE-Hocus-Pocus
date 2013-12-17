@@ -1,6 +1,8 @@
-package cartes;
+package cartes.cartesPocus;
 
 import cartes.Carte;
+import cartes.cartesHocus.Hocus;
+import cartes.cartesHocus.Sortilege;
 
 public class Pocus extends Carte{
 	

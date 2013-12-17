@@ -1,5 +1,6 @@
-package cartes;
+package cartes.cartesHocus;
 
+import cartes.Carte;
 
 public class Hocus extends Carte{
 		

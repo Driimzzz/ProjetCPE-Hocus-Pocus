@@ -1,4 +1,6 @@
-package cartes;
+package cartes.cartesPocus;
+
+import cartes.Carte;
 
 public class ContreSort extends Pocus{
 	
@@ -26,7 +28,10 @@ public class ContreSort extends Pocus{
 	
 	@Override
 	public void action() {
-		if(this.estValide)
-			carteVisee.estValide = false;
+		if(isValide())
+		{
+			carteVisee.setEstValide(false);
+			System.out.println("La carte "+carteVisee+" est détruite");
+		}		
 	}
 }

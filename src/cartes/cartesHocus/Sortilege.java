@@ -1,4 +1,4 @@
-package cartes;
+package cartes.cartesHocus;
 
 public class Sortilege extends Hocus{
 
@@ -11,7 +11,7 @@ public class Sortilege extends Hocus{
 	}
 		
 	public void action() {
-		if(this.estValide)
+		if(isValide())
 		{
 			System.out.println("pioche "+this.getForce()+" gemmes dans le chaudron");
 		}

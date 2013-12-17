@@ -1,4 +1,6 @@
-package cartes;
+package cartes.cartesPocus;
+
+import cartes.cartesHocus.Hocus;
 
 public class BaguetteMagique extends Pocus {
 
@@ -18,6 +20,7 @@ public class BaguetteMagique extends Pocus {
 		super.setDescription("Doublez la valeur d'une carte HOCUS");		
 	}
 		
+	@Override
 	public void jouerLaCarte(Hocus visee){
 //		Hocus visee = super.viserUneCarteHocus();
 				
@@ -29,7 +32,7 @@ public class BaguetteMagique extends Pocus {
 	
 	@Override
 	public void action() {
-		if(this.estValide)
+		if(isValide())
 		{
 			int force = carteVisee.getForce();
 			carteVisee.setForce(force*2);

@@ -1,6 +1,12 @@
 package cartes;
 
 import cartes.Carte.CarteType;
+import cartes.cartesHocus.Hocus;
+import cartes.cartesHocus.Sortilege;
+import cartes.cartesHocus.Voleur;
+import cartes.cartesPocus.BaguetteMagique;
+import cartes.cartesPocus.ContreSort;
+import cartes.cartesPocus.Pocus;
 import cartes.PileDeCartes;
 
 public class exec {
@@ -25,11 +31,20 @@ public class exec {
 		System.out.println("\n---simple jeu---");
 				
 		Hocus hocus = new Sortilege(4);
+		
+		hocus = new Voleur(3);
 	    Pocus pocus = new BaguetteMagique();
+	    
 	    pocus.jouerLaCarte(hocus);
 		pocus.action();
-		hocus.action();
+		hocus.action();	
 		
+		Carte carteHocus = new Voleur(3); 
+	    pocus = new ContreSort();
+	    pocus.jouerLaCarte(carteHocus);
+	    pocus.action();
+	    carteHocus.action();
+	    
 
 	}
 

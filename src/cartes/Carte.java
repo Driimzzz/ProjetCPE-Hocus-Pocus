@@ -1,17 +1,19 @@
 package cartes;
 
+import cartes.cartesHocus.Hocus;
+
 
 
 public class Carte {
 	
-	enum CarteType {hocus,pocus};
+	public enum CarteType {hocus,pocus};
 	
 	private CarteType type;
 	
 	private String nom;
 	private String description;
 	
-	protected boolean estValide;
+	private boolean estValide;
 	
 	protected Carte(){		
 		estValide = true;
@@ -24,6 +26,14 @@ public class Carte {
 	}
 	
 	
+	public boolean isValide() {
+		return estValide;
+	}
+
+	public void setEstValide(boolean estValide) {
+		this.estValide = estValide;
+	}
+
 	public CarteType getType() {
 		return type;
 	}
@@ -52,7 +62,11 @@ public class Carte {
 	
 	public void action() {}
 
-	public void jouerLaCarte(Carte carte) {
+	public void jouerLaCarte(Carte carte) {	}
+
+	public void jouerLaCarte(Hocus visee) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

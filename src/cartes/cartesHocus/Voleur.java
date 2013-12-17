@@ -1,4 +1,4 @@
-package cartes;
+package cartes.cartesHocus;
 
 public class Voleur extends Hocus{
 	
@@ -16,9 +16,9 @@ public class Voleur extends Hocus{
 	}
 	
 	public void action() {
-		if(this.estValide)
+		if(isValide())
 		{
 			System.out.println("vol "+this.getForce()+" gemmes à un joueur");
-		}
+		}	
 	}
 }
