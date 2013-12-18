@@ -1,9 +1,11 @@
 package cartes.cartesHocus;
 
+import partie.Partie;
+
 public class Sortilege extends Hocus{
 
-	public Sortilege(int force){	
-		super();
+	public Sortilege(int force,Partie partie){	
+		super(partie);
 		super.setNom("Sortilege");
 		super.setDescription("Piochez des gemmes dans le chaudron");
 		super.setForce(force);

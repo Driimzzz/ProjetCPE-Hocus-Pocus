@@ -1,5 +1,6 @@
 package cartes.cartesHocus;
 
+import partie.Partie;
 import cartes.Carte;
 
 public class Hocus extends Carte{
@@ -13,8 +14,8 @@ public class Hocus extends Carte{
 		this.force = force;
 	}
 	
-	protected Hocus(){
-		super();
+	protected Hocus(Partie partie){
+		super(partie);
 		setForce(0);
 		super.setType(CarteType.hocus);
 	}

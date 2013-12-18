@@ -1,5 +1,6 @@
 package cartes.cartesPocus;
 
+import partie.Partie;
 import cartes.Carte;
 
 public class ContreSort extends Pocus{
@@ -14,8 +15,8 @@ public class ContreSort extends Pocus{
 		this.carteVisee = carteVisee;
 	}
 
-	public ContreSort(){	
-		super();
+	public ContreSort(Partie partie){	
+		super(partie);
 		super.setNom("Contre Sort");
 		super.setDescription("Détruisez la carte HOCUS");
 	}

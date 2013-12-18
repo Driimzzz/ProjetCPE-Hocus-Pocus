@@ -5,9 +5,11 @@ public class Joueur {
 	private Main main;
 	private Grimoire grimoire;
 	private String nom;
+	private Partie partie;
 	
 	
-	public Joueur(String _nom){
+	public Joueur(String _nom,Partie maPartie){
+		this.setPartie(maPartie);
 		this.setNom(_nom);
 		this.setGemmes(0);
 		this.setGrimoire(new Grimoire());
@@ -15,7 +17,22 @@ public class Joueur {
 		System.out.println("joueur créé : " + this.getNom());
 	}
 	
+	public void piocherCartes(int nbCartes){
+		for(int i=0;i<nbCartes;i++)
+			this.getMain().ajouterUneCarte(getPartie().bibliotheque.getCartes().tirerUneCarte());
+		
+	}
 	
+	
+	
+	public Partie getPartie() {
+		return partie;
+	}
+
+	public void setPartie(Partie partie) {
+		this.partie = partie;
+	}
+
 	public int getGemmes() {
 		return gemmes;
 	}

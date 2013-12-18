@@ -1,5 +1,6 @@
 package cartes.cartesPocus;
 
+import partie.Partie;
 import cartes.cartesHocus.Hocus;
 
 public class BaguetteMagique extends Pocus {
@@ -14,8 +15,8 @@ public class BaguetteMagique extends Pocus {
 		this.carteVisee = carteVisee;
 	}
 
-	public BaguetteMagique() {
-		super();
+	public BaguetteMagique(Partie partie) {
+		super(partie);
 		super.setNom("Baguette Magique");
 		super.setDescription("Doublez la valeur d'une carte HOCUS");		
 	}

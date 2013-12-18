@@ -11,33 +11,15 @@ import cartes.Carte.CarteType;
 
 public class Partie {
 	private int chaudron;// le nb de gemmes dans le chaudron
-	
-	static class bibliotheque extends Bibliotheque{
-		
-	}
-	static private List<joueur> joueurs;
-	static private bibliotheque bibliotheque;
-	
-	
-	static class joueur extends Joueur{
 
-		public joueur(String _nom) {
-			super(_nom);
-			// TODO Auto-generated constructor stub
-		}
+	static private List<Joueur> joueurs;
+	static Bibliotheque bibliotheque;
 		
-		public void piocherCartes(int nbCartes){
-			for(int i=0;i<nbCartes;i++)
-				this.getMain().ajouterUneCarte(Partie.bibliotheque.getCartes().tirerUneCarte());
-			
-		}
-		
-	}
 	
 	static private PileDeCartes aireDeJeu;
 	static private PileDeCartes defausse;
 
-	public void tourDeJeu(joueur joueurEnCours){
+	public void tourDeJeu(Joueur joueurEnCours){
 		System.out.println("c'est le tour de "+ joueurEnCours.getNom());
 		chaudron--;
 	}
@@ -60,7 +42,7 @@ public class Partie {
 		aireDeJeu = new PileDeCartes();
 		defausse = new PileDeCartes();
 
-		bibliotheque = new bibliotheque();
+		bibliotheque = new Bibliotheque(this);
 		
 		initJoueurs(nbJoueurs, nomsJoueurs);
 		initChaudron(partieRapide); 
@@ -103,9 +85,9 @@ public class Partie {
 	private void initJoueurs(int nbJoueurs, String[] nomsJoueurs) {
 		
 		//creation des joueurs
-		joueurs = new ArrayList<joueur>();
+		joueurs = new ArrayList<Joueur>();
 		for (int i=0;i<nbJoueurs;i++){
-			this.getJoueurs().add(new joueur(nomsJoueurs[i]));
+			this.getJoueurs().add(new Joueur(nomsJoueurs[i],this));
 		}
 		
 		//distribution des cartes aux joueurs
@@ -129,15 +111,15 @@ public class Partie {
 		return bibliotheque;
 	}
 
-	public void setBibliotheque(partie.Partie.bibliotheque bibliotheque) {
+	public void setBibliotheque(Bibliotheque bibliotheque) {
 		Partie.bibliotheque = bibliotheque;
 	}
 
-	public List<joueur> getJoueurs() {
+	public List<Joueur> getJoueurs() {
 		return joueurs;
 	}
 
-	public void setJoueurs(List<joueur> joueurs) {
+	public void setJoueurs(List<Joueur> joueurs) {
 		Partie.joueurs = joueurs;
 	}
 

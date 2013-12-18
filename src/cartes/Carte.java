@@ -1,5 +1,6 @@
 package cartes;
 
+import partie.Partie;
 import cartes.cartesHocus.Hocus;
 
 
@@ -13,11 +14,14 @@ public class Carte {
 	private String nom;
 	private String description;
 	
+	private Partie partie;
+	
 	//si la carte est toujours valide, non deffaussée par une autre
 	private boolean estValide;
 	
-	protected Carte(){		
+	protected Carte(Partie maPartie){		
 		estValide = true;
+		setPartie(maPartie);
 	}
 
 	public Carte(String nom, String descrp)
@@ -32,6 +36,15 @@ public class Carte {
 
 	public void setEstValide(boolean estValide) {
 		this.estValide = estValide;
+	}
+
+
+	public Partie getPartie() {
+		return partie;
+	}
+
+	public void setPartie(Partie partie) {
+		this.partie = partie;
 	}
 
 	public CarteType getType() {
