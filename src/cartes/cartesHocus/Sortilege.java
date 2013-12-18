@@ -15,7 +15,9 @@ public class Sortilege extends Hocus{
 	public void action() {
 		if(isValide())
 		{
+			this.getPartie().piocherDansLeChaudron(getForce());
 			System.out.println("pioche "+this.getForce()+" gemmes dans le chaudron");
+			System.out.println("il rests "+ this.getPartie().getChaudron() +" gemmes dans le chaudron");
 		}
 	}
 	

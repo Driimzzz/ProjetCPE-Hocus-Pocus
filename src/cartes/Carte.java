@@ -10,7 +10,7 @@ public class Carte {
 	public enum CarteType {hocus,pocus};
 	
 	private CarteType type;
-	
+	 
 	private String nom;
 	private String description;
 	
@@ -75,7 +75,7 @@ public class Carte {
 	
 	public void action() {}
 
-	public void jouerLaCarte(Carte carte) {	}
+//	public void jouerLaCarte(Carte carte) {	}
 
 	public void jouerLaCarte(Hocus visee) {
 		// TODO Auto-generated method stub

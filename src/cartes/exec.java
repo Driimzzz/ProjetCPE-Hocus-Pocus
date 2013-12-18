@@ -20,22 +20,18 @@ public class exec {
 	    int nbJoueurs = 2;
 		String[] nomJoueurs = {"Alice",
 		                       "Bob"};
+		
 		boolean partieRapide = false;
 		
 		Carte carteHocus;
 		Carte cartePocus;
 
 		Partie partie = new Partie(nbJoueurs, nomJoueurs, partieRapide);
-		carteHocus = new Sortilege(3,partie);
+		
+		partie.getJoueurs().get(1).setGemmes(5);
+		
+		carteHocus = new Voleur(6, partie);
 		partie.ajouterAAireDeJeu(carteHocus);
-				
-//		cartePocus = new BaguetteMagique();
-//		cartePocus.jouerLaCarte(carteHocus);
-//		partie.ajouterAAireDeJeu(cartePocus);
-				
-		cartePocus = new ContreSort(partie);
-		cartePocus.jouerLaCarte(carteHocus);
-		partie.ajouterAAireDeJeu(cartePocus);
 				
 		partie.jouerLesCartesDeLaireDeJeu();
 

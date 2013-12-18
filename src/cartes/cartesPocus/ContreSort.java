@@ -22,8 +22,9 @@ public class ContreSort extends Pocus{
 	}
 	
 	@Override
-	public void jouerLaCarte(Carte visee){
-		//Hocus visee = super.viserUneCarteHocus();
+	public void jouerLaCarte(){
+		Carte visee = super.viserUneCarteHocus();
+		//TODO demander de viser un joueur
 		this.setCarteVisee(visee);
 	}
 	

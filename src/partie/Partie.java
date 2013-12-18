@@ -15,10 +15,15 @@ public class Partie {
 	static private List<Joueur> joueurs;
 	static Bibliotheque bibliotheque;
 		
+	private int indexJoueur;
 	
 	static private PileDeCartes aireDeJeu;
 	static private PileDeCartes defausse;
 
+	public void piocherDansLeChaudron(int nbrDeGemmes){
+		setChaudron(chaudron - nbrDeGemmes);
+	}
+	
 	public void tourDeJeu(Joueur joueurEnCours){
 		System.out.println("c'est le tour de "+ joueurEnCours.getNom());
 		chaudron--;
@@ -26,7 +31,7 @@ public class Partie {
 	
 	//la fonction qui alterne les tours de jeu entre les joueurs
 	public void jeu() {
-		int indexJoueur = 0;
+		indexJoueur = 0;
 		while(chaudron>0){
 			tourDeJeu(joueurs.get(indexJoueur));
 			if(indexJoueur==joueurs.size()-1)
@@ -36,6 +41,7 @@ public class Partie {
 		}
 		//TODO creer une fonction qui classe les joueurs en fonction de leur nombre de gemmes et afficher les scores.
 	}
+	
 	// constructeur de la partie
 	public Partie(int nbJoueurs, String[] nomsJoueurs, boolean partieRapide) { 
 		System.out.println("construction partie : ");
@@ -97,8 +103,41 @@ public class Partie {
 		
 	}
 
+	public void ajouterAAireDeJeu(Carte carte){
+		carte.jouerLaCarte();
+		if(aireDeJeu.tailleDeLaPile()<1)
+		{
+			if(carte.getType() == CarteType.hocus)
+				aireDeJeu.ajouterUneCarte(carte);
+			else
+				System.out.println("La premiere carte jouée doit être une HOCUS");
+		}
+		else
+		{
+			if(carte.getType() == CarteType.pocus)
+				aireDeJeu.ajouterUneCarte(carte);
+			else
+				System.out.println("Une seule carte Hocus à la fois");
+		}
+			
+	}
+	
+	public void jouerLesCartesDeLaireDeJeu()
+	{
+		while(aireDeJeu.tailleDeLaPile()>0){
+			Carte currentCarte = aireDeJeu.tirerUneCarte();
+			currentCarte.action();
+		}
+		setAireDeJeu(new PileDeCartes());
+	}
+	
+	
 	// GETTERS & SETTERS ********************
 
+	public int getJoueurJouant() {
+		return indexJoueur;
+	}
+	
 	public int getChaudron() {
 		return chaudron;
 	}
@@ -131,32 +170,6 @@ public class Partie {
 		Partie.aireDeJeu = aireDeJeu;
 	}
 
-	public void ajouterAAireDeJeu(Carte carte){
-		if(aireDeJeu.tailleDeLaPile()<1)
-		{
-			if(carte.getType() == CarteType.hocus)
-				aireDeJeu.ajouterUneCarte(carte);
-			else
-				System.out.println("La premiere carte jouée doit être une HOCUS");
-		}
-		else
-		{
-			if(carte.getType() == CarteType.pocus)
-				aireDeJeu.ajouterUneCarte(carte);
-			else
-				System.out.println("Une seule carte Hocus à la fois");
-		}
-			
-	}
-	
-	public void jouerLesCartesDeLaireDeJeu()
-	{
-		while(aireDeJeu.tailleDeLaPile()>0){
-			Carte currentCarte = aireDeJeu.tirerUneCarte();
-			currentCarte.action();
-		}
-		setAireDeJeu(new PileDeCartes());
-	}
 	
 	public PileDeCartes getDefausse() {
 		return defausse;
