@@ -7,9 +7,11 @@ public class Hocus extends Carte{
 		
 	private int force; //valeur du pouvoir
 	
+	@Override
 	public int getForce() {
 		return force;
 	}
+	@Override
 	public void setForce(int force) {
 		this.force = force;
 	}

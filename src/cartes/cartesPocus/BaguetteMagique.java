@@ -1,30 +1,31 @@
 package cartes.cartesPocus;
 
 import partie.Partie;
+import cartes.Carte;
 import cartes.cartesHocus.Hocus;
 
 public class BaguetteMagique extends Pocus {
 
-	private Hocus carteVisee;
+	private Carte carteVisee;
 
-	public Hocus getCarteVisee() {
+	public Carte getCarteVisee() {
 		return carteVisee;
 	}
 
-	public void setCarteVisee(Hocus carteVisee) {
-		this.carteVisee = carteVisee;
+	public void setCarteVisee(Carte visee) {
+		this.carteVisee = visee;
 	}
 
 	public BaguetteMagique(Partie partie) {
 		super(partie);
 		super.setNom("Baguette Magique");
-		super.setDescription("Doublez la valeur d'une carte HOCUS");		
+		super.setDescription("Doublez la valeur de la carte HOCUS");		
 	}
 		
-	@Override
-	public void jouerLaCarte(Hocus visee){
-//		Hocus visee = super.viserUneCarteHocus();
-				
+
+	public void jouerLaCarte(){
+		Carte visee = this.getPartie().getAireDeJeu().getPileDeCarte().get(0);		
+		
 		if (visee.getForce() != 0)
 			setCarteVisee(visee);
 		else
@@ -37,6 +38,7 @@ public class BaguetteMagique extends Pocus {
 		{
 			int force = carteVisee.getForce();
 			carteVisee.setForce(force*2);
+			System.out.println("Baguette magique : "+ carteVisee);
 		}
 	}
 }

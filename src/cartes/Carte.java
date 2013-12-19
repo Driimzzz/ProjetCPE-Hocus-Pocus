@@ -70,16 +70,19 @@ public class Carte {
 		return getType() +"-->"+ getNom() +" : "+getDescription();
 	}
 
+	
+	//Dummy functions
+	public int getForce(){
+		return 0;
+	}
+	
+	public void setForce(int force) {		
+	}
+	
 	public void jouerLaCarte() {
 	}
 	
 	public void action() {}
 
-//	public void jouerLaCarte(Carte carte) {	}
-
-	public void jouerLaCarte(Hocus visee) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }

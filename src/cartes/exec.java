@@ -25,15 +25,29 @@ public class exec {
 		
 		Carte carteHocus;
 		Carte cartePocus;
-
+		
+		//création d'une partie avec Alice et Bob
 		Partie partie = new Partie(nbJoueurs, nomJoueurs, partieRapide);
 		
+		//ajout de 5 gemmes a bob
 		partie.getJoueurs().get(1).setGemmes(5);
 		
-		carteHocus = new Voleur(6, partie);
+//		carteHocus = new Voleur(3, partie);
+//		partie.ajouterAAireDeJeu(carteHocus);
+		
+		carteHocus = new Sortilege(3, partie);
 		partie.ajouterAAireDeJeu(carteHocus);
-				
+		
+		cartePocus = new BaguetteMagique(partie);
+		partie.ajouterAAireDeJeu(cartePocus);
+		
+//		cartePocus = new ContreSort(partie);
+//		partie.ajouterAAireDeJeu(cartePocus);
+		
 		partie.jouerLesCartesDeLaireDeJeu();
+		
+		
+		
 
 	}
 
