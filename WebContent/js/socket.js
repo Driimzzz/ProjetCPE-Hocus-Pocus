@@ -1,5 +1,5 @@
 MessageType = {
-		Error:0, Connection:1, Disconnection:2, Message:3,
+		Error:0, Connection:1, Disconnection:2, Message:3,Users:4
 };
 
 
@@ -73,7 +73,7 @@ Chat.initialize();
 
 function test()
 {
-	var test=new Message(3,"Clement,Paul,Emilie",-1);
+	var test=new Message(4,"Clement,Paul,Emilie",-1);
 	Chat.socket.send(JSON.stringify(test));
 }
 

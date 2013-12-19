@@ -126,8 +126,11 @@ public final class Message {
         try {
         	Gson gson = new GsonBuilder().create(); 
              m = gson.fromJson(str, Message.class);
-        	 String[] elements = m.getMessage().split(",");
-        	 Interface.createJeu(elements.length, elements);
+             if(m.getType()==MessageType.Users)
+             {
+	        	 String[] elements = m.getMessage().split(",");
+	        	 Interface.createJeu(elements.length, elements);
+             }
            
         } catch (RuntimeException ex) {
             return new Message(MessageType.Error, ex.getMessage());
