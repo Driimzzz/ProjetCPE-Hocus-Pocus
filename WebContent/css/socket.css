@@ -42,10 +42,12 @@ input#chat {
 	float:right;
 	width: 100%;
 	height:6%;
+	font-weight:bold;
 }
 
 
 #console p {
 	padding: 0;
 	margin: 0;
+	font-weight:bold;
 }

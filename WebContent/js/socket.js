@@ -63,7 +63,7 @@ Chat.sendMessage = (function() {
 var Console = {};
 
 Console.log = (function(message) {
-	$("#console").append("<p class='text-info'>"+message+"</p>");
+	$("#console").append("<p>"+message+"</p>");
 
 	console.scrollTop = console.scrollHeight;
 });
