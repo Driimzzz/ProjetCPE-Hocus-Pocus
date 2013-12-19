@@ -4,6 +4,8 @@ import interfaceclientserveur.Interface;
 
 import java.util.Stack;
 
+import org.json.JSONArray;
+
 public class PileDeCartes {
 	private Stack<Carte> listeDeCartes;
 	
@@ -21,6 +23,15 @@ public class PileDeCartes {
 	
 	public Carte tirerUneCarte(){
 		return listeDeCartes.pop();
+	}
+	
+	public JSONArray toJson(){
+		JSONArray json = new JSONArray();
+		
+		for(Carte carte : listeDeCartes)
+			json.put(carte.toJson());
+		
+		return json;
 	}
 	
 	public void melanger(){
