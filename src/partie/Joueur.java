@@ -17,13 +17,20 @@ public class Joueur {
 		System.out.println("joueur créé : " + this.getNom());
 	}
 	
+	//
 	public void piocherCartes(int nbCartes){
 		for(int i=0;i<nbCartes;i++)
 			this.getMain().ajouterUneCarte(getPartie().bibliotheque.getCartes().tirerUneCarte());
 		
 	}
 	
-	
+	//Le joueur perds des gemmes
+	public int perdreDesGemmes(int nbrVoles){
+		if(gemmes-nbrVoles<0)
+			nbrVoles = gemmes;
+		gemmes -= nbrVoles;		
+		return nbrVoles ;
+	}
 	
 	public Partie getPartie() {
 		return partie;

@@ -12,9 +12,4 @@ public class Pocus extends Carte{
 		super.setType(CarteType.pocus);
 	}
 	
-	protected Hocus viserUneCarteHocus(){
-		//TODO choisir une carte à visée
-		return (new Sortilege(4,getPartie()));		//pour tester
-	}
-	
 }
