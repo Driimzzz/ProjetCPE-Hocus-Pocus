@@ -29,64 +29,136 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import websocket.console.Message.ParseException;
 
-@ServerEndpoint(value = "/websocket/chat")
-public class ChatAnnotation {
+
+
+@ServerEndpoint(value = "/websocket/console")
+public class SocketAnnotation {
 
     private static final String GUEST_PREFIX = "Guest";
     private static final AtomicInteger connectionIds = new AtomicInteger(0);
-    private static List<Client> clients=new ArrayList();
+    
+
+   
+    private static Salle salle=new Salle();
+    
+  
+    public static enum MessageType {
+        Error(0),
+        Connection(1),
+        Disconnection(2),
+        Message(3);
+        
+        private int index;
+        private MessageType(int index) { this.index =index; }
+
+        public static MessageType getMessageType(int index) {
+           for (MessageType l : MessageType.values()) {
+               if (l.index == index) return l;
+           }
+           throw new IllegalArgumentException("MessageType not found");
+        }
+
+    }
+
 
     private Client client;
 
-    public ChatAnnotation() {
-    	client=new Client();
-    	client.setNickname(GUEST_PREFIX + connectionIds.getAndIncrement());
+    public SocketAnnotation() {
+    
     }
 
 
     @OnOpen
     public void start(Session session) {
+    	client=new Client();
+    	client.setId(connectionIds.getAndIncrement());
+    	client.setNickname(GUEST_PREFIX +client.getId() );
         client.setSession(session);
-        clients.add(client);
-        String message = String.format("* %s %s", client.getNickname(), "has joined.");
+        salle.getClients().add(client);
+        String mess = String.format("%s %s", client.getNickname(), "has joined.");
+        Message message=new Message(MessageType.Connection,mess,client.getId());
         broadcast(message);
     }
 
 
     @OnClose
     public void end() {
-        clients.remove(client);
-        String message = String.format("* %s %s",
+        salle.getClients().remove(client);
+        
+        String mess = String.format("%s %s",
         		client.getNickname(), "has disconnected.");
+        Message message=new Message(MessageType.Disconnection,mess,client.getId());
         broadcast(message);
     }
 
 
     @OnMessage
-    public void incoming(String message) {
+    public void incoming(String data) {
         // Never trust the client
-        String filteredMessage = String.format("%s: %s",
-        		client.getNickname(), HTMLFilter.filter(message.toString()));
-        broadcast(filteredMessage);
+        String mess = String.format(HTMLFilter.filter(data.toString()));
+        Message message=new Message();
+        try {
+			message=message.parseFromString(mess);
+			message.setAuteur(client.getId());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			broadcast(new Message(MessageType.Error,e.getMessage()));
+		}
+        broadcast(message);
     }
 
 
-    private static void broadcast(String msg) {
-        for (Client client : clients) {
+    public static void broadcast(Message message) {
+    	salle.addMessage(message);
+    	if(message.getDestination()==-1)
+    		send2All(message);
+    	else
+    	{
+    		send2User(message);
+    	}
+    }
+    
+    private static void send2User(Message message)
+    {
+    	Client client=salle.getClients().get((int)message.getDestination());
+        try {
+            client.getSession().getBasicRemote().sendText(message.toString());
+        } catch (IOException e) {
+        	broadcast(new Message(MessageType.Error,e.getMessage()));
+            salle.getClients().remove(client);
             try {
-                client.getSession().getBasicRemote().sendText(msg);
+            	client.getSession().close();
+            } catch (IOException e1) {
+            	broadcast(new Message(MessageType.Error,e1.getMessage()));
+            }
+            String mess = String.format("%s %s",
+            		client.getNickname(), "has been disconnected.");
+            message=new Message(MessageType.Disconnection,mess,client.getId());
+            broadcast(message);
+        }
+    	
+    }
+    private static void send2All(Message message)
+    {
+    	for (Client client : salle.getClients()) {
+            try {
+                client.getSession().getBasicRemote().sendText(message.toString());
             } catch (IOException e) {
-                clients.remove(client);
+            	broadcast(new Message(MessageType.Error,e.getMessage()));
+                salle.getClients().remove(client);
                 try {
                 	client.getSession().close();
                 } catch (IOException e1) {
-                    // Ignore
+                	broadcast(new Message(MessageType.Error,e1.getMessage()));
                 }
-                String message = String.format("* %s %s",
+                String mess = String.format("%s %s",
                 		client.getNickname(), "has been disconnected.");
+                message=new Message(MessageType.Disconnection,mess,client.getId());
                 broadcast(message);
             }
         }
     }
+    
 }

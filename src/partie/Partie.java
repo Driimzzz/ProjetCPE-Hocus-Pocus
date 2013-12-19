@@ -1,5 +1,7 @@
 package partie;
 
+import interfaceclientserveur.Interface;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -11,6 +13,7 @@ import cartes.Carte.CarteType;
 
 public class Partie {
 	private int chaudron;// le nb de gemmes dans le chaudron
+	private Interface afficher =new Interface();
 
 	static private List<Joueur> joueurs;
 	static Bibliotheque bibliotheque;
@@ -20,7 +23,7 @@ public class Partie {
 	static private PileDeCartes defausse;
 
 	public void tourDeJeu(Joueur joueurEnCours){
-		System.out.println("c'est le tour de "+ joueurEnCours.getNom());
+		afficher.Console("c'est le tour de "+ joueurEnCours.getNom());
 		chaudron--;
 	}
 	
@@ -38,7 +41,7 @@ public class Partie {
 	}
 	// constructeur de la partie
 	public Partie(int nbJoueurs, String[] nomsJoueurs, boolean partieRapide) { 
-		System.out.println("construction partie : ");
+		afficher.Console("construction partie : ");
 		aireDeJeu = new PileDeCartes();
 		defausse = new PileDeCartes();
 
@@ -48,10 +51,10 @@ public class Partie {
 		initChaudron(partieRapide); 
 		
 		for (int i=0;i<nbJoueurs;i++){
-			System.out.println("affichage de la main de " + this.getJoueurs().get(i).getNom());
+			afficher.Console("affichage de la main de " + this.getJoueurs().get(i).getNom());
 			this.getJoueurs().get(i).getMain().afficherToutes();
 		}
-		System.out.println("affichage de la bibliotheque :");
+		afficher.Console("affichage de la bibliotheque :");
 		bibliotheque.getCartes().afficherToutes();
 	}
 
@@ -79,7 +82,7 @@ public class Partie {
 		} 
 		else
 			chaudron = 15;
-		System.out.println("chaudron initialisé à : "+ this.getChaudron());
+		afficher.Console("chaudron initialisé à : "+ this.getChaudron());
 	}
 
 	private void initJoueurs(int nbJoueurs, String[] nomsJoueurs) {
@@ -137,14 +140,14 @@ public class Partie {
 			if(carte.getType() == CarteType.hocus)
 				aireDeJeu.ajouterUneCarte(carte);
 			else
-				System.out.println("La premiere carte jouée doit être une HOCUS");
+				afficher.Console("La premiere carte jouée doit être une HOCUS");
 		}
 		else
 		{
 			if(carte.getType() == CarteType.pocus)
 				aireDeJeu.ajouterUneCarte(carte);
 			else
-				System.out.println("Une seule carte Hocus à la fois");
+				afficher.Console("Une seule carte Hocus à la fois");
 		}
 			
 	}

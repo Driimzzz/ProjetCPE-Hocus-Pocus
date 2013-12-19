@@ -3,7 +3,7 @@ package websocket.console;
 import javax.websocket.Session;
 
 public class Client {
-	private long id;
+	private int id;
 	private Session session;
 	private String nickname;
 	
@@ -12,16 +12,16 @@ public class Client {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Client(long id, Session session, String nickname) {
+	public Client(int id, Session session, String nickname) {
 		super();
 		this.id = id;
 		this.session = session;
 		this.nickname = nickname;
 	}
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public Session getSession() {
