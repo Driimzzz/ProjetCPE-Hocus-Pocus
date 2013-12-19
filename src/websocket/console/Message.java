@@ -24,6 +24,9 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import websocket.console.SocketAnnotation.MessageType;
 
 /**
@@ -39,7 +42,7 @@ public final class Message {
 	
 	private int iDmessage;
 	private int auteur=-1;
-    private MessageType type;
+    private int type;
     private String message;
     private int destination=-1;
 
@@ -57,9 +60,9 @@ public final class Message {
 		this.auteur = auteur;
 	}
 	public MessageType getType() {
-		return type;
+		return SocketAnnotation.MessageType.getMessageType(type);
 	}
-	public void setType(MessageType type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 	public String getMessage() {
@@ -81,13 +84,20 @@ public final class Message {
 	}
 	public Message(MessageType type, String message) {
 
+        this.type = type.ordinal();
+        this.message = message;
+        iDmessage=messageIds.getAndIncrement();
+    }
+	public Message(int type, String message,int auteur) {
+
         this.type = type;
         this.message = message;
+        this.auteur=auteur;
         iDmessage=messageIds.getAndIncrement();
     }
 	public Message(MessageType type, String message,int auteur) {
 
-        this.type = type;
+        this.type = type.ordinal();
         this.message = message;
         this.auteur=auteur;
         iDmessage=messageIds.getAndIncrement();
@@ -109,41 +119,16 @@ public final class Message {
 
     public Message parseFromString(String str)
             throws ParseException {
-
-    	MessageType type;
-        String message;
-        int destination=-1;
+        Message m;
 
         try {
-            String[] elements = str.split(",");
-            if(elements.length==1)
-            {
-            	type=MessageType.Error;
-            	message=elements[0];
-            }
-            else if(elements.length==2)
-            {
-            	 type = MessageType.getMessageType(Integer.parseInt(elements[0]));
-            	 message = elements[1];
-            }
-            else if(elements.length==3)
-            {
-            	type = MessageType.getMessageType(Integer.parseInt(elements[0]));
-            	message = elements[1];
-                destination=Integer.parseInt(elements[2]);
-            }
-            else {
-            	type=MessageType.Error;
-            	message="parseFromString Message Error";
-            }
+        	Gson gson = new GsonBuilder().create(); 
+             m = gson.fromJson(str, Message.class);
+        	
            
         } catch (RuntimeException ex) {
             return new Message(MessageType.Error, ex.getMessage());
         }
-
-        Message m = new Message(type, message);
-        m.setDestination(destination);
-
         return m;
     }
 
