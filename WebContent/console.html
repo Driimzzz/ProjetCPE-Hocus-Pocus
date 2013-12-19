@@ -8,20 +8,29 @@
 <script src="js/socket.js"></script>
 <link rel="stylesheet" href="css/socket.css">
 <link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/bootstrap-theme.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 </head>
 <body>
 
 
+	<div id="table-container">
+		<div id="menu-container" class="navbar navbar-inverse">
+			<div id="sousmenu-container">
+				<button class="btn btn-primary">Start</button>
+			</div>
 
-	<div>
-		<p>
-			<input type="text"
-				placeholder="TypeMessagge(int),Message,Destination(-1 all or ID)"
-				id="chat" />
-		</p>
-		<div id="console-container">
-			<div id="console"></div>
 		</div>
 	</div>
+
+	<div id="console-container">
+
+		<div id="console"></div>
+		<p>
+			<input type="text" id="chat" />
+		</p>
+	</div>
+
 </body>
 </html>

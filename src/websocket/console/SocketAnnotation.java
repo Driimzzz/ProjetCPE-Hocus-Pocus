@@ -74,7 +74,8 @@ public class SocketAnnotation {
 		client.setNickname(GUEST_PREFIX + client.getId());
 		client.setSession(session);
 		Salle.getClients().add(client);
-		bufferedMessages();
+		//met à jour les mesages buffered
+		//bufferedMessages();
 		String mess = String.format("%s %s", client.getNickname(),
 				"has joined.");
 		Message message = new Message(MessageType.Connection, mess,
