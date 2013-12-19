@@ -79,10 +79,11 @@ public class SocketAnnotation {
     	client.setNickname(GUEST_PREFIX +client.getId() );
         client.setSession(session);
         Salle.getClients().add(client);
+        bufferedMessages();
         String mess = String.format("%s %s", client.getNickname(), "has joined.");
         Message message=new Message(MessageType.Connection,mess,client.getId());
         broadcast(message);
-        bufferedMessages();
+        
     }
 
 // Appeler lors de la fermeture de la fenêtre donc de la socket
