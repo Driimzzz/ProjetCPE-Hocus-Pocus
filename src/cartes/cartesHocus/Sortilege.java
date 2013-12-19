@@ -1,5 +1,6 @@
 package cartes.cartesHocus;
 
+import interfaceclientserveur.Interface;
 import partie.Joueur;
 import partie.Partie;
 
@@ -21,8 +22,8 @@ public class Sortilege extends Hocus{
 			Joueur joueurJouant = this.getPartie().getJoueurs().get(this.getPartie().getJoueurJouant());
 			joueurJouant.setGemmes(joueurJouant.getGemmes()+this.getForce());
 			
-			System.out.println(joueurJouant.getNom() + " pioche "+this.getForce()+" gemmes dans le chaudron");
-			System.out.println("Il reste "+ this.getPartie().getChaudron() +" gemmes dans le chaudron");
+			Interface.Console(joueurJouant.getNom() + " pioche "+this.getForce()+" gemmes dans le chaudron");
+			Interface.Console("Il reste "+ this.getPartie().getChaudron() +" gemmes dans le chaudron");
 		}
 	}
 	

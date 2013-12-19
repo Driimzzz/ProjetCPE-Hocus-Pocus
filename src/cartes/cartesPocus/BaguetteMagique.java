@@ -1,5 +1,6 @@
 package cartes.cartesPocus;
 
+import interfaceclientserveur.Interface;
 import partie.Partie;
 import cartes.Carte;
 import cartes.cartesHocus.Hocus;
@@ -29,7 +30,7 @@ public class BaguetteMagique extends Pocus {
 		if (visee.getForce() != 0)
 			setCarteVisee(visee);
 		else
-			System.out.println("La carte hocus en question ne peu pas etre cible d'une Baguette Magique.");
+			Interface.Console("La carte hocus en question ne peu pas etre cible d'une Baguette Magique.");
 	}
 	
 	@Override
@@ -38,7 +39,7 @@ public class BaguetteMagique extends Pocus {
 		{
 			int force = carteVisee.getForce();
 			carteVisee.setForce(force*2);
-			System.out.println("Baguette magique : "+ carteVisee);
+			Interface.Console("Baguette magique : "+ carteVisee);
 		}
 	}
 }

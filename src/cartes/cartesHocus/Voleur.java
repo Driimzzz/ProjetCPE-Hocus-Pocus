@@ -1,5 +1,7 @@
 package cartes.cartesHocus;
 
+import interfaceclientserveur.Interface;
+
 import java.util.Scanner;
 
 import partie.Joueur;
@@ -28,7 +30,7 @@ public class Voleur extends Hocus{
 		int numJoueur = -1;
 		//saisie protégée pour que le joueur visé existe
 		while(numJoueur<0 || numJoueur>this.getPartie().getJoueurs().size()-1){		
-			System.out.println("A qui volez vous?");		
+			Interface.Console("A qui volez vous?");		
 			numJoueur = scan.nextInt();	//choix du joueur 1 arbitrairement pour tester
 		}		
 		joueurVise = this.getPartie().getJoueurs().get(numJoueur);		
@@ -39,16 +41,16 @@ public class Voleur extends Hocus{
 	public void action() {
 		if(isValide())
 		{
-			System.out.println("vol "+this.getForce()+" gemmes à un joueur");
+			Interface.Console("vol "+this.getForce()+" gemmes à un joueur");
 			
 			int gemmesVolees = joueurVise.perdreDesGemmes(this.getForce());
-			System.out.println("Vous volez à "+joueurVise.getNom());
-			System.out.println("Il lui reste "+joueurVise.getGemmes()+" gemmes");
+			Interface.Console("Vous volez à "+joueurVise.getNom());
+			Interface.Console("Il lui reste "+joueurVise.getGemmes()+" gemmes");
 			
 			Joueur joueurJouant = this.getPartie().getJoueurs().get(this.getPartie().getJoueurJouant());
 			joueurJouant.setGemmes(joueurJouant.getGemmes()+gemmesVolees);
 			
-			System.out.println(joueurJouant.getNom()+" a maintenant "+joueurJouant.getGemmes()+" gemmes");	
+			Interface.Console(joueurJouant.getNom()+" a maintenant "+joueurJouant.getGemmes()+" gemmes");	
 		}	
 	}
 }
