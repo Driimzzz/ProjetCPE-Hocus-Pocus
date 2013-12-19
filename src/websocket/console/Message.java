@@ -16,6 +16,8 @@
  */
 package websocket.console;
 
+import interfaceclientserveur.Interface;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -125,6 +127,7 @@ public final class Message {
         	Gson gson = new GsonBuilder().create(); 
              m = gson.fromJson(str, Message.class);
         	 String[] elements = m.getMessage().split(",");
+        	 Interface.createJeu(elements.length, elements);
            
         } catch (RuntimeException ex) {
             return new Message(MessageType.Error, ex.getMessage());
