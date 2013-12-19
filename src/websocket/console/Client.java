@@ -6,6 +6,7 @@ public class Client {
 	private int id;
 	private Session session;
 	private String nickname;
+	private int lastMessage;
 	
 	
 	public Client() {
@@ -35,6 +36,12 @@ public class Client {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public int getLastMessage() {
+		return lastMessage;
+	}
+	public void setLastMessage(int lastMessage) {
+		this.lastMessage = lastMessage;
 	}
 	
 

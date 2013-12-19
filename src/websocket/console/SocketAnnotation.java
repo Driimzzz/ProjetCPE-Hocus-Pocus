@@ -29,6 +29,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import com.sun.xml.internal.ws.client.ClientSchemaValidationTube;
+
 import websocket.console.Message.ParseException;
 
 
@@ -69,23 +71,24 @@ public class SocketAnnotation {
     
     }
 
-
+//    Appeler lors de l'ouverture de la socket
     @OnOpen
     public void start(Session session) {
     	client=new Client();
     	client.setId(connectionIds.getAndIncrement());
     	client.setNickname(GUEST_PREFIX +client.getId() );
         client.setSession(session);
-        salle.getClients().add(client);
+        Salle.getClients().add(client);
         String mess = String.format("%s %s", client.getNickname(), "has joined.");
         Message message=new Message(MessageType.Connection,mess,client.getId());
         broadcast(message);
+        bufferedMessages();
     }
 
-
+// Appeler lors de la fermeture de la fenêtre donc de la socket
     @OnClose
     public void end() {
-        salle.getClients().remove(client);
+        Salle.getClients().remove(client);
         
         String mess = String.format("%s %s",
         		client.getNickname(), "has disconnected.");
@@ -93,7 +96,7 @@ public class SocketAnnotation {
         broadcast(message);
     }
 
-
+//Réception des messages du client
     @OnMessage
     public void incoming(String data) {
         // Never trust the client
@@ -109,7 +112,7 @@ public class SocketAnnotation {
         broadcast(message);
     }
 
-
+// le serveur envoie le message au client
     public static void broadcast(Message message) {
     	salle.addMessage(message);
     	if(message.getDestination()==-1)
@@ -119,15 +122,16 @@ public class SocketAnnotation {
     		send2User(message);
     	}
     }
-    
+    //envoie à'lutilsisateur concerné
     private static void send2User(Message message)
     {
-    	Client client=salle.getClients().get((int)message.getDestination());
+    	Client client=Salle.getClients().get((int)message.getDestination());
+    	client.setLastMessage(message.getiDmessage());
         try {
             client.getSession().getBasicRemote().sendText(message.toString());
         } catch (IOException e) {
         	broadcast(new Message(MessageType.Error,e.getMessage()));
-            salle.getClients().remove(client);
+            Salle.getClients().remove(client);
             try {
             	client.getSession().close();
             } catch (IOException e1) {
@@ -140,14 +144,16 @@ public class SocketAnnotation {
         }
     	
     }
+    //envoie à tous les utilisateurs
     private static void send2All(Message message)
     {
-    	for (Client client : salle.getClients()) {
+    	for (Client client : Salle.getClients()) {
             try {
                 client.getSession().getBasicRemote().sendText(message.toString());
+                client.setLastMessage(message.getiDmessage());
             } catch (IOException e) {
             	broadcast(new Message(MessageType.Error,e.getMessage()));
-                salle.getClients().remove(client);
+                Salle.getClients().remove(client);
                 try {
                 	client.getSession().close();
                 } catch (IOException e1) {
@@ -159,6 +165,17 @@ public class SocketAnnotation {
                 broadcast(message);
             }
         }
+    }
+    // affiche tous les messages bufferisés dans la salle
+    private void bufferedMessages()
+    {
+    	for(int i=client.getLastMessage();i<Salle.getMessages().size();i++)
+    	{
+    		Message message=Salle.getMessages().get(i);
+    		message.setDestination(client.getId());
+    		send2User(message);
+    	}
+    		 
     }
     
 }

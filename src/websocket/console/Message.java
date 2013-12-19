@@ -37,17 +37,17 @@ import websocket.console.SocketAnnotation.MessageType;
 public final class Message {
 	private static final AtomicInteger messageIds = new AtomicInteger(0);
 	
-	private long iDmessage;
+	private int iDmessage;
 	private int auteur=-1;
     private MessageType type;
     private String message;
     private int destination=-1;
 
     
-	public long getiDmessage() {
+	public int getiDmessage() {
 		return iDmessage;
 	}
-	public void setiDmessage(long iDmessage) {
+	public void setiDmessage(int iDmessage) {
 		this.iDmessage = iDmessage;
 	}
 	public int getAuteur() {

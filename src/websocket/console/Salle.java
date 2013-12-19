@@ -6,7 +6,7 @@ import java.util.List;
 public class Salle {
 
 	// listes des messages dans la room
-	private List<Message> messages = new ArrayList<Message>();
+	private static List<Message> messages = new ArrayList<Message>();
 	 private static List<Client> clients=new ArrayList<Client>();
 
 	public Salle() {
@@ -25,16 +25,16 @@ public class Salle {
 	}
 
 
-	public List<Message> getMessages() {
+	public static List<Message> getMessages() {
 		return messages;
 	}
 
 	public void setMessages(List<Message> messages) {
-		this.messages = messages;
+		Salle.messages = messages;
 	}
 
 	public void addMessage(Message message) {
-		messages.add(message);
+		Salle.messages.add(message);
 	}
 
 }

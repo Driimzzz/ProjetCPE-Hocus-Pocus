@@ -1,5 +1,6 @@
 package cartes.cartesPocus;
 
+import interfaceclientserveur.Interface;
 import partie.Partie;
 import cartes.Carte;
 
@@ -32,7 +33,7 @@ public class ContreSort extends Pocus{
 		if(isValide())
 		{
 			carteVisee.setEstValide(false);
-			System.out.println("La carte "+carteVisee+" est détruite");
+			Interface.Console("La carte "+carteVisee+" est détruite");
 		}		
 	}
 }
