@@ -43,9 +43,10 @@ public class PileDeCartes {
 	}
 	
 	public void afficherToutes(){
-		Interface.Console("----le jeu de carte----");
+		int i=0;
 		for (Carte carteCourante : listeDeCartes) {
-			Interface.Console(carteCourante.toString());
+			Interface.Console(i + " : " + carteCourante.toString());
+			i++;
 		}
 	}
 	

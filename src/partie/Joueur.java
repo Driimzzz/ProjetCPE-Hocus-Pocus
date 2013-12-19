@@ -1,5 +1,7 @@
 package partie;
 
+import cartes.Carte;
+
 public class Joueur {
 	private int gemmes;
 	private Main main;
@@ -17,10 +19,17 @@ public class Joueur {
 		System.out.println("joueur créé : " + this.getNom());
 	}
 	
+	public void jouerCarte(Carte carteJouee){
+		this.getMain().getPileDeCarte().remove(carteJouee);
+		carteJouee.jouerLaCarte();
+		this.getPartie().ajouterAAireDeJeu(carteJouee);
+	}
+	
+	
 	//
 	public void piocherCartes(int nbCartes){
 		for(int i=0;i<nbCartes;i++)
-			this.getMain().ajouterUneCarte(getPartie().bibliotheque.getCartes().tirerUneCarte());
+			this.getMain().ajouterUneCarte(getPartie().getBibliotheque().getCartes().tirerUneCarte());
 		
 	}
 	
