@@ -23,7 +23,7 @@ public class Partie {
 	static private PileDeCartes defausse;
 
 	public void tourDeJeu(Joueur joueurEnCours){
-		afficher.Console("c'est le tour de "+ joueurEnCours.getNom());
+		Interface.Console("c'est le tour de "+ joueurEnCours.getNom());
 		chaudron--;
 	}
 	
@@ -41,7 +41,7 @@ public class Partie {
 	}
 	// constructeur de la partie
 	public Partie(int nbJoueurs, String[] nomsJoueurs, boolean partieRapide) { 
-		afficher.Console("construction partie : ");
+		Interface.Console("construction partie : ");
 		aireDeJeu = new PileDeCartes();
 		defausse = new PileDeCartes();
 
@@ -51,10 +51,10 @@ public class Partie {
 		initChaudron(partieRapide); 
 		
 		for (int i=0;i<nbJoueurs;i++){
-			afficher.Console("affichage de la main de " + this.getJoueurs().get(i).getNom());
+			Interface.Console("affichage de la main de " + this.getJoueurs().get(i).getNom());
 			this.getJoueurs().get(i).getMain().afficherToutes();
 		}
-		afficher.Console("affichage de la bibliotheque :");
+		Interface.Console("affichage de la bibliotheque :");
 		bibliotheque.getCartes().afficherToutes();
 	}
 
@@ -82,7 +82,7 @@ public class Partie {
 		} 
 		else
 			chaudron = 15;
-		afficher.Console("chaudron initialisé à : "+ this.getChaudron());
+		Interface.Console("chaudron initialisé à : "+ this.getChaudron());
 	}
 
 	private void initJoueurs(int nbJoueurs, String[] nomsJoueurs) {
@@ -140,14 +140,14 @@ public class Partie {
 			if(carte.getType() == CarteType.hocus)
 				aireDeJeu.ajouterUneCarte(carte);
 			else
-				afficher.Console("La premiere carte jouée doit être une HOCUS");
+				Interface.Console("La premiere carte jouée doit être une HOCUS");
 		}
 		else
 		{
 			if(carte.getType() == CarteType.pocus)
 				aireDeJeu.ajouterUneCarte(carte);
 			else
-				afficher.Console("Une seule carte Hocus à la fois");
+				Interface.Console("Une seule carte Hocus à la fois");
 		}
 			
 	}
