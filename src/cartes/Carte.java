@@ -1,9 +1,10 @@
 package cartes;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import partie.Partie;
-import cartes.cartesHocus.Hocus;
-
-
 
 public class Carte {
 	
@@ -30,6 +31,21 @@ public class Carte {
 		setDescription(descrp);
 	}
 		
+	public JSONObject toJson(){
+		JSONObject json =new JSONObject();
+		String nom = this.getNom();
+		if(this.getForce()!=0)
+			nom += this.getForce();
+		
+		try {
+			json.put("nomCarte", nom);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return json;		
+	}
+	
 	public boolean isValide() {
 		return estValide;
 	}
