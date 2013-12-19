@@ -13,45 +13,46 @@ import cartes.Carte.CarteType;
 
 public class Partie {
 	private int chaudron;// le nb de gemmes dans le chaudron
-	private Interface afficher =new Interface();
 
 	static private List<Joueur> joueurs;
 	static Bibliotheque bibliotheque;
-		
-	
+	private int indexJoueur;
 	static private PileDeCartes aireDeJeu;
 	static private PileDeCartes defausse;
 
-	public void tourDeJeu(Joueur joueurEnCours){
-		Interface.Console("c'est le tour de "+ joueurEnCours.getNom());
+	public void tourDeJeu(Joueur joueurEnCours) {
+		Interface.Console("c'est le tour de " + joueurEnCours.getNom());
 		chaudron--;
 	}
-	
-	//la fonction qui alterne les tours de jeu entre les joueurs
+
+	// la fonction qui alterne les tours de jeu entre les joueurs
 	public void jeu() {
-		int indexJoueur = 0;
-		while(chaudron>0){
+		indexJoueur = 0;
+		while (chaudron > 0) {
 			tourDeJeu(joueurs.get(indexJoueur));
-			if(indexJoueur==joueurs.size()-1)
+			if (indexJoueur == joueurs.size() - 1)
 				indexJoueur = 0;
 			else
 				indexJoueur++;
 		}
-		//TODO creer une fonction qui classe les joueurs en fonction de leur nombre de gemmes et afficher les scores.
+		// TODO creer une fonction qui classe les joueurs en fonction de leur
+		// nombre de gemmes et afficher les scores.
 	}
+
 	// constructeur de la partie
-	public Partie(int nbJoueurs, String[] nomsJoueurs, boolean partieRapide) { 
+	public Partie(int nbJoueurs, String[] nomsJoueurs, boolean partieRapide) {
 		Interface.Console("construction partie : ");
 		aireDeJeu = new PileDeCartes();
 		defausse = new PileDeCartes();
 
 		bibliotheque = new Bibliotheque(this);
-		
+
 		initJoueurs(nbJoueurs, nomsJoueurs);
-		initChaudron(partieRapide); 
-		
-		for (int i=0;i<nbJoueurs;i++){
-			Interface.Console("affichage de la main de " + this.getJoueurs().get(i).getNom());
+		initChaudron(partieRapide);
+
+		for (int i = 0; i < nbJoueurs; i++) {
+			Interface.Console("affichage de la main de "
+					+ this.getJoueurs().get(i).getNom());
 			this.getJoueurs().get(i).getMain().afficherToutes();
 		}
 		Interface.Console("affichage de la bibliotheque :");
@@ -79,28 +80,34 @@ public class Partie {
 				throw new IllegalStateException(
 						"erreur : le nombre de joueurs est incorrect");
 			}
-		} 
-		else
+		} else
 			chaudron = 15;
-		Interface.Console("chaudron initialisé à : "+ this.getChaudron());
+		Interface.Console("chaudron initialisé à : " + this.getChaudron());
 	}
 
 	private void initJoueurs(int nbJoueurs, String[] nomsJoueurs) {
-		
-		//creation des joueurs
+
+		// creation des joueurs
 		joueurs = new ArrayList<Joueur>();
-		for (int i=0;i<nbJoueurs;i++){
-			this.getJoueurs().add(new Joueur(nomsJoueurs[i],this));
+		for (int i = 0; i < nbJoueurs; i++) {
+			this.getJoueurs().add(new Joueur(nomsJoueurs[i], this));
 		}
-		
-		//distribution des cartes aux joueurs
-		for (int i=0;i<nbJoueurs;i++){
+
+		// distribution des cartes aux joueurs
+		for (int i = 0; i < nbJoueurs; i++) {
 			this.getJoueurs().get(i).piocherCartes(5);
 		}
-		
+
+	}
+
+	public void piocherDansLeChaudron(int nbrDeGemmes) {
+		setChaudron(chaudron - nbrDeGemmes);
 	}
 
 	// GETTERS & SETTERS ********************
+	public int getJoueurJouant() {
+		return indexJoueur;
+	}
 
 	public int getChaudron() {
 		return chaudron;
@@ -134,33 +141,30 @@ public class Partie {
 		Partie.aireDeJeu = aireDeJeu;
 	}
 
-	public void ajouterAAireDeJeu(Carte carte){
-		if(aireDeJeu.tailleDeLaPile()<1)
-		{
-			if(carte.getType() == CarteType.hocus)
+	public void ajouterAAireDeJeu(Carte carte) {
+		if (aireDeJeu.tailleDeLaPile() < 1) {
+			if (carte.getType() == CarteType.hocus)
 				aireDeJeu.ajouterUneCarte(carte);
 			else
-				Interface.Console("La premiere carte jouée doit être une HOCUS");
-		}
-		else
-		{
-			if(carte.getType() == CarteType.pocus)
+				Interface
+						.Console("La premiere carte jouée doit être une HOCUS");
+		} else {
+			if (carte.getType() == CarteType.pocus)
 				aireDeJeu.ajouterUneCarte(carte);
 			else
 				Interface.Console("Une seule carte Hocus à la fois");
 		}
-			
+
 	}
-	
-	public void jouerLesCartesDeLaireDeJeu()
-	{
-		while(aireDeJeu.tailleDeLaPile()>0){
+
+	public void jouerLesCartesDeLaireDeJeu() {
+		while (aireDeJeu.tailleDeLaPile() > 0) {
 			Carte currentCarte = aireDeJeu.tirerUneCarte();
 			currentCarte.action();
 		}
 		setAireDeJeu(new PileDeCartes());
 	}
-	
+
 	public PileDeCartes getDefausse() {
 		return defausse;
 	}
