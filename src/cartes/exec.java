@@ -1,5 +1,6 @@
 package cartes;
 
+import interfaceclientserveur.Interface;
 import partie.Partie;
 import cartes.Carte.CarteType;
 import cartes.cartesHocus.Hocus;
@@ -15,7 +16,7 @@ public class exec {
 	public static void main(String[] args) {
 		PileDeCartes pile = new PileDeCartes();
 				    
-	    System.out.println("\n---simple partie---");
+		Interface.Console("\n---simple partie---");
 	    
 	    int nbJoueurs = 2;
 		String[] nomJoueurs = {"Alice",

@@ -1,5 +1,7 @@
 package cartes;
 
+import interfaceclientserveur.Interface;
+
 import java.util.Stack;
 
 public class PileDeCartes {
@@ -30,9 +32,9 @@ public class PileDeCartes {
 	}
 	
 	public void afficherToutes(){
-		System.out.println("----le jeu de carte----");
+		Interface.Console("----le jeu de carte----");
 		for (Carte carteCourante : listeDeCartes) {
-			System.out.println(carteCourante);
+			Interface.Console(carteCourante.toString());
 		}
 	}
 	

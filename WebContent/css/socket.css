@@ -1,16 +1,16 @@
 input#chat {
-	width: 410px;
+	width: 610px;
 }
 
 #console-container {
-	width: 400px;
+	width: 600px;
 }
 
 #console {
 	border: 1px solid #CCCCCC;
 	border-right-color: #999999;
 	border-bottom-color: #999999;
-	height: 170px;
+	height:370px;
 	overflow-y: scroll;
 	padding: 5px;
 	width: 100%;

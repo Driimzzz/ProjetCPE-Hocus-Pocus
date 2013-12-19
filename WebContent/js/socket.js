@@ -56,7 +56,7 @@
             p.style.wordWrap = 'break-word';
             p.innerHTML = message;
             console.appendChild(p);
-            while (console.childNodes.length > 25) {
+            while (console.childNodes.length >100) {
                 console.removeChild(console.firstChild);
             }
             console.scrollTop = console.scrollHeight;
