@@ -12,6 +12,7 @@ public class Interface {
 	
 	public void Console(String str)
 	{
+		System.out.println(str);
 		Message message=new Message(websocket.console.SocketAnnotation.MessageType.Message,str);
 		SocketAnnotation.broadcast(message);
 	}
