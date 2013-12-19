@@ -1,5 +1,6 @@
 package interfaceclientserveur;
 
+import partie.Partie;
 import websocket.console.Message;
 import websocket.console.SocketAnnotation;
 import websocket.console.SocketAnnotation.MessageType;
@@ -17,5 +18,9 @@ public class Interface {
 		SocketAnnotation.broadcast(message);
 	}
 	
+	public static void createJeu(int nbJoueurs, String[] nomJoueurs){
+		Partie partie = new Partie(nbJoueurs, nomJoueurs, true);
+		partie.jeu();
+	}
 
 }

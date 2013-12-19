@@ -38,18 +38,15 @@ public class exec {
 		
 		carteHocus = new Sortilege(3, partie);
 		partie.ajouterAAireDeJeu(carteHocus);
-		
-		cartePocus = new BaguetteMagique(partie);
-		partie.ajouterAAireDeJeu(cartePocus);
+//		
+//		cartePocus = new BaguetteMagique(partie);
+//		partie.ajouterAAireDeJeu(cartePocus);
 		
 //		cartePocus = new ContreSort(partie);
 //		partie.ajouterAAireDeJeu(cartePocus);
 		
 		partie.jouerLesCartesDeLaireDeJeu();
 		
-		
-		
-
 	}
 
 }
