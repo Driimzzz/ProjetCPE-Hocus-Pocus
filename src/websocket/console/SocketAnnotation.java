@@ -44,7 +44,7 @@ public class SocketAnnotation {
 	private static Salle salle = new Salle();
 
 	public static enum MessageType {
-		Error(0), Connection(1), Disconnection(2), Message(3), Users(4);
+		Error(0), Connection(1), Disconnection(2), Message(3), Users(4), Start(5);
 
 		private int index;
 
@@ -63,6 +63,15 @@ public class SocketAnnotation {
 	}
 
 	private Client client;
+	
+
+	public static Salle getSalle() {
+		return salle;
+	}
+
+	public static void setSalle(Salle salle) {
+		SocketAnnotation.salle = salle;
+	}
 
 	public SocketAnnotation() {
 

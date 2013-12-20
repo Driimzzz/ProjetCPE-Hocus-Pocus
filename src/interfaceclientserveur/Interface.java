@@ -1,6 +1,9 @@
 package interfaceclientserveur;
 
+import java.util.List;
+
 import partie.Partie;
+import websocket.console.Client;
 import websocket.console.Message;
 import websocket.console.SocketAnnotation;
 import websocket.console.SocketAnnotation.MessageType;
@@ -21,11 +24,20 @@ public class Interface {
 		Partie partie = new Partie(nbJoueurs, nomJoueurs, true);
 		partie.jeu();
 	}
+	//multijoueur (il faut ouvrir plusieurs fenêtres pour le simuler)
+	public static void createJeu(List<Client>clients) {
+		Partie partie = new Partie(clients, true);
+		partie.jeu();
+	}
 
 	public static void gestionMessage(Message message) {
 		if (message.getType() == MessageType.Users) {
 			String[] elements = message.getMessage().split(",");
 			createJeu(elements.length, elements);
+		}
+		if(message.getType() == MessageType.Start)
+		{
+			createJeu(SocketAnnotation.getSalle().getClients());
 		}
 	}
 

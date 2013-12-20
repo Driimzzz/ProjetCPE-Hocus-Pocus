@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
 
+
+
+import websocket.console.Client;
 import cartes.*;
 import cartes.Carte.CarteType;
 
@@ -106,7 +109,7 @@ public class Partie {
 		}
 	}
 
-	// constructeur de la partie
+	// constructeur non mutlijoueur de la partie
 	public Partie(int nbJoueurs, String[] nomsJoueurs, boolean partieRapide) {
 		Interface.Console("construction partie : ");
 		aireDeJeu = new PileDeCartes();
@@ -125,7 +128,35 @@ public class Partie {
 		Interface.Console("affichage de la bibliotheque :");
 		bibliotheque.getCartes().afficherToutes();
 	}
+	// constructeur multijoueur de la partie
+		public Partie(List<Client> clients, boolean partieRapide) {
+			Interface.Console("construction partie : ");
+			aireDeJeu = new PileDeCartes();
+			defausse = new PileDeCartes();
 
+			bibliotheque = new Bibliotheque(this);
+
+			// creation des joueurs
+			joueurs = new ArrayList<Joueur>();
+			for (int i = 0; i < clients.size(); i++) {
+				this.getJoueurs().add(new Joueur(clients.get(i).getNickname(), this));
+			}
+
+			// distribution des cartes aux joueurs
+			for (int i = 0; i < clients.size(); i++) {
+				this.getJoueurs().get(i).piocherCartes(5);
+			}
+			initChaudron(partieRapide);
+
+			for (int i = 0; i < clients.size(); i++) {
+				Interface.Console("affichage de la main de "
+						+ this.getJoueurs().get(i).getNom());
+				this.getJoueurs().get(i).getMain().afficherToutes();
+			}
+			Interface.Console("affichage de la bibliotheque :");
+			bibliotheque.getCartes().afficherToutes();
+		}
+		
 	private void initChaudron(boolean partieRapide) {
 		if (!partieRapide) {
 			switch (joueurs.size()) {
@@ -152,6 +183,7 @@ public class Partie {
 		Interface.Console("chaudron initialisé à : " + this.getChaudron());
 	}
 
+	//non mutlijoueur
 	private void initJoueurs(int nbJoueurs, String[] nomsJoueurs) {
 
 		// creation des joueurs
@@ -166,6 +198,8 @@ public class Partie {
 		}
 
 	}
+
+
 
 	public void piocherDansLeChaudron(int nbrDeGemmes) {
 		setChaudron(chaudron - nbrDeGemmes);

@@ -8,6 +8,13 @@ function createJeu()
 	Chat.socket.send(JSON.stringify(Joueurs));
 }
 
+
+function startJeu()
+{
+	var start=new Message(5,"start",-1);
+	Chat.socket.send(JSON.stringify(start));
+}
+
 function Message(type, message, destination) {
 	this.type = type;
 	this.message = message;
