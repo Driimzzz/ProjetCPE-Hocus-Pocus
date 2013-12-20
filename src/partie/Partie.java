@@ -4,9 +4,11 @@ import interfaceclientserveur.Interface;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Scanner;
 
 import cartes.*;
 import cartes.Carte.CarteType;
@@ -22,9 +24,54 @@ public class Partie {
 
 	public void tourDeJeu(Joueur joueurEnCours) {
 		Interface.Console("c'est le tour de " + joueurEnCours.getNom());
-		chaudron--;
+		Interface.Console("vous avez "+ joueurEnCours.getGemmes()+" gemmes.");
+		
+		int numCarte = -2;
+		while (numCarte!=-1 && chaudron > 0 && joueurEnCours.getMain().tailleDeLaPile() > 0){ //tant qu'on veut jouer et qu'on a des cartes
+			while(numCarte<-1 || numCarte>joueurEnCours.getMain().tailleDeLaPile()-1){	 //saisie protegee
+				joueurEnCours.getMain().afficherToutes();
+				Interface.Console("quelle carte jouer ? (-1 pour ne rien jouer)");
+				numCarte = readIntValue();	
+			}	
+			if(numCarte>=0){
+				joueurEnCours.jouerCarte(joueurEnCours.getMain().getPileDeCarte().elementAt(numCarte));
+				numCarte = -2;
+			}
+			jouerLesCartesDeLaireDeJeu();
+			Interface.Console("vous avez maintenant "+ joueurEnCours.getGemmes()+" gemmes.");
+			
+		}
+		if(chaudron>0){
+			finDuTour(joueurEnCours);
+		}
+		else{
+			finDuJeu();
+		}
 	}
 
+	public void finDuTour(Joueur joueurEnCours){
+		Interface.Console("c'est la fin de votre tour, vous pouvez : 1=piocher une gemme dans le chaudron OU 2=piocher deux cartes : ");
+		int input = -1;
+		while(input!=1 && input!=2){		
+			Interface.Console("entrez 1 ou 2:");
+			input = readIntValue();
+		}	
+		if (input==1){//pioche 1 gemme
+			Interface.Console("vous piochez 1 gemme dans le chaudron");
+			joueurEnCours.setGemmes(joueurEnCours.getGemmes()+1);
+			this.piocherDansLeChaudron(1);
+			
+		}
+		else if (input ==2 ){ //pioche 2 cartes
+			Interface.Console("vous piochez 2 cartes");
+			joueurEnCours.piocherCartes(2);
+		}
+		else{//erreur
+			Interface.Console("erreur fin du tour");
+		}
+		Interface.Console("vous avez maintenant "+ joueurEnCours.getGemmes()+" gemmes.");
+	}
+	
 	// la fonction qui alterne les tours de jeu entre les joueurs
 	public void jeu() {
 		indexJoueur = 0;
@@ -35,8 +82,28 @@ public class Partie {
 			else
 				indexJoueur++;
 		}
-		// TODO creer une fonction qui classe les joueurs en fonction de leur
-		// nombre de gemmes et afficher les scores.
+		finDuJeu();
+	}
+	
+	public void finDuJeu(){
+		Interface.Console("c'est la fin du jeu, tableau des scores : ");
+		afficherJoueurs();
+	}
+	
+	public static int readIntValue() throws InputMismatchException
+	{
+	    Scanner in = new Scanner(System.in);  
+	    int integer;
+	    Interface.Console("Enter an integer value: ");
+	    integer = in.nextInt();
+	    return integer;
+	}
+	
+	public void afficherJoueurs(){
+		Interface.Console("liste des joueurs : ");
+		for(int i=0;i<getJoueurs().size();i++){
+			Interface.Console(i+" : "+ getJoueurs().get(i).getNom() + " : " + getJoueurs().get(i).getGemmes() + " gemmes" );
+		}
 	}
 
 	// constructeur de la partie
@@ -102,8 +169,11 @@ public class Partie {
 
 	public void piocherDansLeChaudron(int nbrDeGemmes) {
 		setChaudron(chaudron - nbrDeGemmes);
+		Interface.Console("il reste " + chaudron + " gemmes dans le chaudron");
+		if (chaudron <= 0){
+			finDuJeu();
+		}
 	}
-
 	// GETTERS & SETTERS ********************
 	public int getJoueurJouant() {
 		return indexJoueur;

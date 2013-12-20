@@ -31,7 +31,8 @@ public class Voleur extends Hocus{
 		//saisie protégée pour que le joueur visé existe
 		while(numJoueur<0 || numJoueur>this.getPartie().getJoueurs().size()-1){		
 			Interface.Console("A qui volez vous?");		
-			numJoueur = scan.nextInt();	//choix du joueur 1 arbitrairement pour tester
+			this.getPartie().afficherJoueurs();
+			numJoueur = partie.Partie.readIntValue();	//methode readinvalue créee dans la classe partie ca demande un input d'un int
 		}		
 		joueurVise = this.getPartie().getJoueurs().get(numJoueur);		
 		
