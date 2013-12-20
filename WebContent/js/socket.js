@@ -2,6 +2,11 @@ MessageType = {
 		Error:0, Connection:1, Disconnection:2, Message:3,Users:4
 };
 
+function createJeu()
+{
+	var Joueurs=new Message(4,"Clement,Paul,Emilie",-1);
+	Chat.socket.send(JSON.stringify(Joueurs));
+}
 
 function Message(type, message, destination) {
 	this.type = type;
@@ -71,9 +76,5 @@ Console.log = (function(message) {
 
 Chat.initialize();
 
-function test()
-{
-	var test=new Message(4,"Clement,Paul,Emilie",-1);
-	Chat.socket.send(JSON.stringify(test));
-}
+
 

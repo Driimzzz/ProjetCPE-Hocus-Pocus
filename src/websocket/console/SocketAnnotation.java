@@ -16,6 +16,8 @@
  */
 package websocket.console;
 
+import interfaceclientserveur.Interface;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +112,7 @@ public class SocketAnnotation {
 			broadcast(new Message(MessageType.Error, e.getMessage()));
 		}
 		broadcast(message);
+		Interface.gestionMessage(message);
 	}
 
 	// le serveur envoie le message au client
