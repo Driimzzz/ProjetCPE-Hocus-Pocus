@@ -4,14 +4,14 @@ MessageType = {
 
 function createJeu()
 {
-	var Joueurs=new Message(4,"Clement,Paul,Emilie",-1);
+	var Joueurs=new Message(2,"Users:Clement,Paul,Emilie",-1);
 	Chat.socket.send(JSON.stringify(Joueurs));
 }
 
 
 function startJeu()
 {
-	var start=new Message(5,"start",-1);
+	var start=new Message(2,"star:ok",-1);
 	Chat.socket.send(JSON.stringify(start));
 }
 

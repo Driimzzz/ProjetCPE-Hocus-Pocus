@@ -44,7 +44,7 @@ public class SocketAnnotation {
 	private static Salle salle = new Salle();
 
 	public static enum MessageType {
-		Error(0), Connection(1), Disconnection(2), Message(3), Users(4), Start(5);
+		Error(0), Message(1), Console(2);
 
 		private int index;
 
@@ -89,7 +89,7 @@ public class SocketAnnotation {
 		//bufferedMessages();
 		String mess = String.format("%s %s", client.getNickname(),
 				"has joined.");
-		Message message = new Message(MessageType.Connection, mess,
+		Message message = new Message(MessageType.Message, mess,
 				client.getId());
 		broadcast(message);
 
@@ -102,7 +102,7 @@ public class SocketAnnotation {
 
 		String mess = String.format("%s %s", client.getNickname(),
 				"has disconnected.");
-		Message message = new Message(MessageType.Disconnection, mess,
+		Message message = new Message(MessageType.Message, mess,
 				client.getId());
 		broadcast(message);
 	}
@@ -120,7 +120,7 @@ public class SocketAnnotation {
 			// TODO Auto-generated catch block
 			broadcast(new Message(MessageType.Error, e.getMessage()));
 		}
-		broadcast(message);
+		//broadcast(message);
 		Interface.gestionMessage(message);
 	}
 
@@ -154,7 +154,7 @@ public class SocketAnnotation {
 				}
 				String mess = String.format("%s %s", client.getNickname(),
 						"has been disconnected.");
-				message = new Message(MessageType.Disconnection, mess,
+				message = new Message(MessageType.Message, mess,
 						client.getId());
 				broadcast(message);
 			}
@@ -181,7 +181,7 @@ public class SocketAnnotation {
 				}
 				String mess = String.format("%s %s", client.getNickname(),
 						"has been disconnected.");
-				message = new Message(MessageType.Disconnection, mess,
+				message = new Message(MessageType.Message, mess,
 						client.getId());
 				broadcast(message);
 			}

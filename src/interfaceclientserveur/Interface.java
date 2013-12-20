@@ -24,21 +24,27 @@ public class Interface {
 		Partie partie = new Partie(nbJoueurs, nomJoueurs, true);
 		partie.jeu();
 	}
-	//multijoueur (il faut ouvrir plusieurs fenêtres pour le simuler)
-	public static void createJeu(List<Client>clients) {
+
+	// multijoueur (il faut ouvrir plusieurs fenêtres pour le simuler)
+	public static void createJeu(List<Client> clients) {
 		Partie partie = new Partie(clients, true);
 		partie.jeu();
 	}
 
 	public static void gestionMessage(Message message) {
-		if (message.getType() == MessageType.Users) {
-			String[] elements = message.getMessage().split(",");
-			createJeu(elements.length, elements);
+		if (message.getType() == MessageType.Console) {
+			String[] elements = message.getMessage().split(":");
+			if ("Users".equals(elements[0])) {
+				elements = message.getMessage().split(":$,");
+				createJeu(elements.length, elements);
+			}
+			if ("Start".equals(elements[0])) {
+				createJeu(SocketAnnotation.getSalle().getClients());
+			}
+
 		}
-		if(message.getType() == MessageType.Start)
-		{
-			createJeu(SocketAnnotation.getSalle().getClients());
+		if (message.getType() == MessageType.Message) {
+			SocketAnnotation.broadcast(message);
 		}
 	}
-
 }
