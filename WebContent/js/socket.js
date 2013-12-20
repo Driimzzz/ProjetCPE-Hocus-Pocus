@@ -11,7 +11,7 @@ function createJeu()
 
 function startJeu()
 {
-	var start=new Message(2,"star:ok",-1);
+	var start=new Message(2,"start:ok",-1);
 	Chat.socket.send(JSON.stringify(start));
 }
 
