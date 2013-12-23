@@ -34,11 +34,11 @@ public class Interface {
 	public static void gestionMessage(Message message) {
 		if (message.getType() == MessageType.Console) {
 			String[] elements = message.getMessage().split(":");
-			if ("Users".equals(elements[0])) {
-				elements = message.getMessage().split(":$,");
+			if ("users".equals(elements[0])) {
+				elements = message.getMessage().split(",");
 				createJeu(elements.length, elements);
 			}
-			if ("Start".equals(elements[0])) {
+			if ("start".equals(elements[0])) {
 				createJeu(SocketAnnotation.getSalle().getClients());
 			}
 
