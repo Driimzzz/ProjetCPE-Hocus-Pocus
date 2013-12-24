@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hocus Pocus</title>
+<link rel="stylesheet" href="css/socket.css">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+<script src="js/socket.js"></script>
+
+</head>
+<body>
+	<div data-role="page" id="table-container">
+		<div data-role="header" data-position="inline"  data-theme="a">
+			<h1>Hocus Pocus</h1>
+		</div>
+		<div data-role="content" id="table-container"></div>
+		<div data-role="footer" class="ui-bar" data-id="foo1"
+			data-position="fixed">
+			<a href="#show-console" data-role="button" data-icon="arrow-d">Console</a>
+		</div>
+		<div data-role="panel" data-position="right" 
+			data-position-fixed="true" data-display="overlay" id="show-console">
+
+			<div id="console"></div>
+            <div id="message"></div>
+            <div id="menu-right">
+              <input type="text" id="chat" data-clear-btn="true"/>
+              
+              <select  name="flip-1" id="flip-1" data-role="slider" onChange="slide()">
+                <option value="1">Message</option>
+                <option value="2">Console</option>
+                </select>
+            </div>
+		
+
+		</div>
+		<!-- /panel -->
+	</div>
+</body>
+</html>

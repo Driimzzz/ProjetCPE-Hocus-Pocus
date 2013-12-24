@@ -94,12 +94,18 @@ public class Partie {
 	}
 	
 	public static int readIntValue() throws InputMismatchException
-	{
-	    Scanner in = new Scanner(System.in);  
-	    int integer;
-	    Interface.Console("Enter an integer value: ");
-	    integer = in.nextInt();
-	    return integer;
+	{ 
+		/*Read thread=new Read();
+		thread.start();
+		while( thread.isAlive() ) {
+		}
+		return Integer.parseInt(Interface.input);*/
+		Scanner in = new Scanner(System.in);  
+		int integer;
+        Interface.Console("Enter an integer value: ");
+        integer = in.nextInt();
+        return integer;
+	   
 	}
 	
 	public void afficherJoueurs(){
@@ -278,3 +284,14 @@ public class Partie {
 	}
 
 }
+class Read extends Thread {
+	   public void run () {
+		    Interface.Console("Enter an integer value: ");
+		   do {
+		    	System.out.print('z');
+		    }while("".equals(Interface.input));
+		   
+		    
+
+	   }
+	}

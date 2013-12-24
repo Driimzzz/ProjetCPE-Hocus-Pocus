@@ -1,54 +1,53 @@
 
-#console-container {
-	float:right;
-	width: 20%;
-	height:100%;
-}
 #table-container {
-	float:left;
-	width: 80%;
+	background: radial-gradient(at 50% 38%, rgb(83, 194, 48),
+		rgb(19, 131, 0)) no-repeat fixed center center lightblue;
+}
+
+#show-console{
 	height:100%;
-	background: radial-gradient(at 50% 38% , rgb(83, 194, 48), rgb(19, 131, 0)) no-repeat fixed center center lightblue;
-}
-
-
-#menu-container{
-	position:absolute;
-	width:80%;
-	bottom:0;
-	margin:0;
-   height:5%;
-}
-#sousmenu-container{
-
-	width:50%;
-	margin:auto;
-	padding:auto;
-}
-#sousmenu-container button{
-height:100%;
-width:20%;
 }
 #console {
+		position:absolute;
+        border: 1px solid #CCCCCC;
+        border-right-color: #999999;
+        border-bottom-color: #999999;
+        height:690px;
+        overflow-y: scroll;
+        padding: 5px;
+        width: 100%;
+}
+#message {
+		position:absolute;
+        border: 1px solid #CCCCCC;
+        border-right-color: #999999;
+        border-bottom-color: #999999;
+        height:690px;
+        overflow-y: scroll;
+        padding: 5px;
+        width: 100%;
+}
 
-	border: 1px solid #CCCCCC;
-	border-right-color: #999999;
-	border-bottom-color: #999999;
-	height:94%;
-	overflow-y: scroll;
-	padding: 5px;
-	width: 100%;
+#menu-right{
+	position:absolute;
+	bottom:0px;
 }
 input#chat {
-	float:right;
-	width: 100%;
-	height:6%;
-	font-weight:bold;
+        bottom:0px;
+        width: 100%;
+        height:6%;
+        
+        font-weight:bold;
+}
+#message p {
+        padding: 0;
+        margin: 0;
+        font-weight:bold;
 }
 
 
 #console p {
-	padding: 0;
-	margin: 0;
-	font-weight:bold;
+        padding: 0;
+        margin: 0;
+        font-weight:bold;
 }

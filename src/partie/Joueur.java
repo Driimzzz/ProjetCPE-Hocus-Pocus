@@ -1,5 +1,6 @@
 package partie;
 
+import interfaceclientserveur.Interface;
 import cartes.Carte;
 
 public class Joueur {
@@ -16,7 +17,7 @@ public class Joueur {
 		this.setGemmes(0);
 		this.setGrimoire(new Grimoire());
 		this.setMain(new Main());
-		System.out.println("joueur créé : " + this.getNom());
+		Interface.Console("joueur créé : " + this.getNom());
 	}
 	
 	public void jouerCarte(Carte carteJouee){

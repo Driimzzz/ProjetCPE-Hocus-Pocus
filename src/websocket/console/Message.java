@@ -26,6 +26,9 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -116,9 +119,15 @@ public final class Message {
 
         //return auteur + "," + type.toString() + "," + message+ "," + destination;
     	
-    	return message;
+    	//return message;
+    	return toJson();
     }
 
+    public String toJson(){
+    	Gson gson = new GsonBuilder().create(); 
+    	return gson.toJson(this, Message.class);
+	}
+    
     public Message parseFromString(String str)
             throws ParseException {
         Message m;

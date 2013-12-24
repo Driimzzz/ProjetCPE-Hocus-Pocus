@@ -1,17 +1,12 @@
-MessageType = {
-		Error:0, Connection:1, Disconnection:2, Message:3,Users:4
-};
 
-function createJeu()
-{
-	var Joueurs=new Message(2,"Users:Clement,Paul,Emilie",-1);
+
+function createJeu() {
+	var Joueurs = new Message(2, "Users:Clement,Paul,Emilie", -1);
 	Chat.socket.send(JSON.stringify(Joueurs));
 }
 
-
-function startJeu()
-{
-	var start=new Message(2,"start:ok",-1);
+function startJeu() {
+	var start = new Message(2, "start:ok", -1);
 	Chat.socket.send(JSON.stringify(start));
 }
 
@@ -38,6 +33,7 @@ Chat.connect = (function(host) {
 		Console.log('Info: WebSocket connection opened.');
 		document.getElementById('chat').onkeydown = function(event) {
 			if (event.keyCode == 13) {
+
 				Chat.sendMessage();
 			}
 		};
@@ -50,7 +46,7 @@ Chat.connect = (function(host) {
 
 	Chat.socket.onmessage = function(message) {
 
-		Console.log(message.data);
+		Console.log(jQuery.parseJSON(message.data));
 	};
 });
 
@@ -67,7 +63,7 @@ Chat.initialize = function() {
 Chat.sendMessage = (function() {
 	var message = document.getElementById('chat').value;
 	if (message != '') {
-		var mess=new Message(3,message,-1);
+		var mess = new Message($("#flip-1").val(), message, -1);
 		Chat.socket.send(JSON.stringify(mess));
 		document.getElementById('chat').value = '';
 	}
@@ -76,12 +72,27 @@ Chat.sendMessage = (function() {
 var Console = {};
 
 Console.log = (function(message) {
-	$("#console").append("<p>"+message+"</p>");
+	if (message.type == 1)
+		$("#message").append("<p>" + message.message + "</p>");
+	if (message.type == 2)
+		$("#console").append("<p>" + message.message + "</p>");
+	if(message.type==0)
+		$("#console").append("<p style='color:red;'>" + message.message + "</p>");
 
 	console.scrollTop = console.scrollHeight;
 });
 
 Chat.initialize();
+slide();
+function slide() {
+	if ($("#flip-1").val() == 1) {
+		$("#message").show();
+		$("#console").hide();
+	}
+	else if ($("#flip-1").val() == 2) {
+		$("#console").show();
+		$("#message").hide();
+	}
+	
 
-
-
+}
