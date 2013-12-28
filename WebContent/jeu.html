@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hocus Pocus</title>
+<link rel="stylesheet" href="css/socket.css">
+<link rel="stylesheet" href="css/jquery-mobile.css" />
+<script src="js/jquery.js"></script>
+<script src="js/jquery-mobile.js"></script>
+<script src="js/socket.js"></script>
+
+</head>
+<body>
+
+
+<div data-role="page" id="map-page">
+
+
+    <div data-role="header">
+        <h1>Header</h1>
+    </div>
+    
+    
+    <div data-role="content" style="background: radial-gradient(at 50% 38%, rgb(83, 194, 48),
+		rgb(19, 131, 0)) no-repeat fixed center center lightblue;">
+        
+        
+        <div class="ui-grid-b"  id="players-container">
+        
+	        <div class="ui-block-a player">
+	     
+	            <div class="player-title">Joueur 1: 10 Gemmes</div>
+	            <div class="player-grimoire">Grimoire</div><div class="player-cards">Cartes</div>
+              </div>
+              
+		      <div class="ui-block-b player" >
+              	 <div class="player-title">Joueur 2: 10 Gemmes</div>
+	             <div class="player-grimoire">Grimoire</div><div class="player-cards">Cartes</div>
+              </div>
+		      <div class="ui-block-c player" >
+              	 <div class="player-title">Joueur 3: 10 Gemmes</div>
+	             <div class="player-grimoire">Grimoire</div><div class="player-cards">Cartes</div>
+              </div>
+              
+		      <div class="ui-block-a player" >
+              	<div class="player-title">Joueur 4: 10 Gemmes</div>
+	            <div class="player-grimoire">Grimoire</div><div class="player-cards">Cartes</div>
+              </div>
+              
+		      <div class="ui-block-b">
+              	<div id="chaudron">Chaudron</div>
+                <div id="bibliotheque"><img src="img/HocusPocus/HocusPocus.png" width="100%" height="100%"></div>
+                <div id="defausse">Défausse</div>
+              </div>
+              
+		      <div class="ui-block-c player" >
+              	<div class="player-title">Joueur 5: 10 Gemmes</div>
+	            <div class="player-grimoire">Grimoire</div><div class="player-cards">Cartes</div>
+              </div>
+              
+		      <div class="ui-block-a">Bloc 3,1</div>
+              
+		      <div class="ui-block-b player" >
+              	<div class="player-title">Bous: 10 Gemmes</div>
+	            <div class="player-grimoire">Grimoire</div><div class="player-cards">Cartes</div>
+              </div>
+              
+		      <div class="ui-block-c">Bloc 3,3</div>
+	      </div>
+    </div>
+    <div data-role="footer">
+        <a href="#show-console" data-role="button" data-icon="arrow-d">Console</a>
+    </div>
+    <div data-role="panel" data-position="right"
+			data-position-fixed="true" data-display="overlay" id="show-console">
+
+			<div id="console"></div>
+			<div id="message"></div>
+			<div id="menu-right">
+				<input type="text" id="chat" data-clear-btn="true" /> <select
+					name="flip-1" id="flip-1" data-role="slider" onChange="slide()">
+					<option value="1">Message</option>
+					<option value="2">Console</option>
+				</select>
+			</div>
+
+
+		</div>
+		<!-- /panel -->
+</div>
+</body>
+</html>
