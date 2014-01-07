@@ -59,6 +59,11 @@ Chat.sendMessage = (function() {
 	}
 });
 
+function EnvoyerMessage(s)
+{
+	Chat.socket.send(s);
+}
+
 var Console = {};
 
 Console.log = (function(message) {

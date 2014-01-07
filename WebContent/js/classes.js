@@ -1,0 +1,4 @@
+function methode(nom)
+{
+	
+}
