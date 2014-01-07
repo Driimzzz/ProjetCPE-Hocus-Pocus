@@ -25,16 +25,17 @@ public class Voleur extends Hocus{
 	
 	@Override
 	public void jouerLaCarte(){
-		
-		Scanner scan = new Scanner(System.in);
-		int numJoueur = -1;
-		//saisie protégée pour que le joueur visé existe
-		while(numJoueur<0 || numJoueur>this.getPartie().getJoueurs().size()-1){		
-			Interface.Console("A qui volez vous?");		
-			this.getPartie().afficherJoueurs();
-			numJoueur = partie.Partie.readIntValue();	//methode readinvalue créee dans la classe partie ca demande un input d'un int
-		}		
-		joueurVise = this.getPartie().getJoueurs().get(numJoueur);		
+//		
+//		Scanner scan = new Scanner(System.in);
+//		int numJoueur = -1;
+//		//saisie protégée pour que le joueur visé existe
+//		while(numJoueur<0 || numJoueur>this.getPartie().getJoueurs().size()-1){		
+//			Interface.Console("A qui volez vous?");		
+//			this.getPartie().afficherJoueurs();
+//			numJoueur = partie.Partie.readIntValue();	//methode readinvalue créee dans la classe partie ca demande un input d'un int
+//		}	
+		Interface.viserUnJoueur(this.getPartie().getJoueurJouant());
+		//joueurVise = this.getPartie().getJoueurs().get(numJoueur);		
 		
 	}
 	
@@ -54,4 +55,13 @@ public class Voleur extends Hocus{
 			Interface.Console(joueurJouant.getNom()+" a maintenant "+joueurJouant.getGemmes()+" gemmes");	
 		}	
 	}
+
+	public Joueur getJoueurVise() {
+		return joueurVise;
+	}
+
+	public void setJoueurVise(Joueur joueurVise) {
+		this.joueurVise = joueurVise;
+	}	
+	
 }

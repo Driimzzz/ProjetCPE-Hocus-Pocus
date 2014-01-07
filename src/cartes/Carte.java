@@ -4,6 +4,7 @@ package cartes;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import partie.Joueur;
 import partie.Partie;
 
 public class Carte {
@@ -99,6 +100,10 @@ public class Carte {
 	}
 	
 	public void action() {}
+
+	public void setJoueurVise(Joueur jVise) {
+		
+	}
 
 	
 }

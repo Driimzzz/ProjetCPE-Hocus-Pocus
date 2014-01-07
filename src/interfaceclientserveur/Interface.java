@@ -23,6 +23,14 @@ public class Interface {
 	public static String input = "";
 
 	private static Partie partie;
+		
+	public static Partie getPartie() {
+		return partie;
+	}
+
+	public static void setPartie(Partie partie) {
+		Interface.partie = partie;
+	}
 
 	public Interface() {
 
@@ -84,18 +92,26 @@ public class Interface {
 	public static void carteJouee(int numJoueur, int numDansSaMain) {
 		Joueur joueur = partie.getJoueurs().get(numJoueur);
 		Carte carteJouee = joueur.getMain().getPileDeCarte().get(numDansSaMain);
-		joueur.jouerCarte(carteJouee);
+		joueur.jouerCarte(carteJouee); //TODO verification autorisation de jouer
 		Console(joueur.getNom() + " joue la carte " + carteJouee.getNom()
 				+ carteJouee.getForce());
 	}
 
 	// le serveur demande au client de viser
-	public static int viserUnJoueur(int numJoueurVisant) {
+	public static void viserUnJoueur(int numJoueurVisant) {
 		Console("Le joueur numéro " + numJoueurVisant
-				+ " doit viser un joueur. Lequel?");
-		int numJoueurVise = 1;// TODO recupérer un numero venant du cient je
-								// sais pas faire
-		return numJoueurVise;
+				+ " doit viser un joueur. Lequel?");		
+	}
+	
+	//le client repond quel joueur est visé
+	public static void joueurVise(int numJoueurVise){
+		Joueur jVise = partie.getJoueurs().get(numJoueurVise);
+		Console("vous visez le joueur numéro "+numJoueurVise);
+		partie.getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
+	}
+	
+	public static void finCarteHocus(){
+		partie.jouerLesCartesDeLaireDeJeu();
 	}
 
 	public static void gestionMessage(String data) {
@@ -113,7 +129,9 @@ public class Interface {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Console(methode);
+		
+		boolean bonJSON = true;
+		
 		switch (methode) {
 		case "creerJeu":
 			JSONArray arr = new JSONArray();
@@ -139,7 +157,7 @@ public class Interface {
 			break;
 
 		case "carteJouee":
-			boolean bonJSON = true;
+			bonJSON = true;
 			int numJoueur = 0;
 			int numCarte = 0;
 			try {
@@ -156,6 +174,21 @@ public class Interface {
 			}
 			if (bonJSON)
 				carteJouee(numJoueur, numCarte);
+			break;
+			
+		case "joueurVise":			
+			int numJoueurVise;
+			try {
+				numJoueurVise = json.getInt("numJoueurVise");
+				joueurVise(numJoueurVise);
+			} catch (JSONException e) {
+				bonJSON = false;
+				e.printStackTrace();
+			}			
+			break;
+		
+		case "finCarteHocus":
+			finCarteHocus();
 			break;
 
 		default:
