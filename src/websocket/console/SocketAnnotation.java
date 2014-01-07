@@ -111,7 +111,7 @@ public class SocketAnnotation {
 	@OnMessage
 	public void incoming(String data) {
 		// Never trust the client
-		String mess = String.format(data.toString());
+		/*String mess = String.format(data.toString());
 		Message message = new Message();
 		try {
 			message = message.parseFromString(mess);
@@ -120,8 +120,8 @@ public class SocketAnnotation {
 			// TODO Auto-generated catch block
 			broadcast(new Message(MessageType.Error, e.getMessage()));
 		}
-		//broadcast(message);
-		Interface.gestionMessage(message);
+		//broadcast(message);*/
+		Interface.gestionMessage(data);
 	}
 
 	// le serveur envoie le message au client

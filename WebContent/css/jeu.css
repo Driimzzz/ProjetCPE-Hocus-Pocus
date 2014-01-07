@@ -70,6 +70,7 @@
 	transform:rotate(7deg);
 -ms-transform:rotate(7deg); /* IE 9 */
 -webkit-transform:rotate(7deg); /* Safari and Chrome */
+border-radius:3px;
  }
  .player-main img:hover{
  -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
@@ -107,6 +108,7 @@
 	transform:rotate(7deg);
 -ms-transform:rotate(7deg); /* IE 9 */
 -webkit-transform:rotate(7deg); /* Safari and Chrome */
+border-radius:3px;
  }
  
 .player-grimoire img:hover{
@@ -133,6 +135,7 @@ transform:rotate(7deg);
 -webkit-transform:rotate(7deg); /* Safari and Chrome */
 	width:16.8%;
 	z-index:0;
+	border-radius:3px;
 }
 .player-jeu img:hover{
  -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
@@ -147,11 +150,13 @@ transform:rotate(7deg);
 	position:inherit;
 }
 .player-cartes img{
+	border-radius:3px;
 transform:rotate(7deg);
 -ms-transform:rotate(7deg); /* IE 9 */
 -webkit-transform:rotate(7deg); /* Safari and Chrome */
 	height:5%;
 	z-index:0;
+	border-radius:3px;
 }
 #chaudron{
 	text-align:center;
@@ -180,6 +185,7 @@ transform:rotate(7deg);
 #bibliotheque img{
 	border: 4px solid #FFF;
 	width:79%;
+	border-radius:3px;
 }
 #bibliotheque img:hover{
  -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
@@ -189,6 +195,7 @@ transform:rotate(7deg);
   -o-transform: scale(1.05,1.05);
   -ms-transform: scale(1.05,1.05);
   transform: scale(1.05,1.05);
+  
 
 }
 #defausse {
@@ -197,6 +204,7 @@ transform:rotate(7deg);
 #defausse img{
 	border: 4px solid #FFF;
 	width:79%;
+	border-radius:3px;
 
 }
 #defausse img:hover{
