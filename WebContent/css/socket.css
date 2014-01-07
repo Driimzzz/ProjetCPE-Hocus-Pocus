@@ -1,5 +1,7 @@
 html, body {
     height : 100%;
+	cursor:pointer;
+	
 }
 #map-page {
     height : 100%;
@@ -12,47 +14,6 @@ html, body {
 	height:100%;
 	border:none;
 	
-}
-.player{
-	height:33.33%;
-	background-color:#CCC;	
-}
-.player-title{
-	width:100%;
-	height:15%;
-	text-align:center;
-	background-color:#C04;
-}
-.player-grimoire{
-	width:100%;
-	height:42.5%;
-	margin:auto;
-	background-color:#CCD;
-}
-.player-cards{
-	width:100%;
-	height:42.5%;
-	margin:auto;
-	background-color:#DDD;
-}
-
-#chaudron{
-	float:left;
-	width:33.33%;
-	height:100%;
-	background-color:#CCM;
-}
-#biliotheque{
-	float:left;
-	width:33.33%;
-	height:100%;
-	background-color:#390;
-}
-#defausse{
-	float:left;
-	width:33.33%;
-	height:100%;
-	background-color:#C00;
 }
 #map-page .ui-content {
     position : absolute;
@@ -114,3 +75,4 @@ input#chat {
         margin: 0;
         font-weight:bold;
 }
+

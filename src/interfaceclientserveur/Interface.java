@@ -46,7 +46,7 @@ public class Interface {
 	// multijoueur (il faut ouvrir plusieurs fenêtres pour le simuler)
 	public static void createJeu(List<Client> clients) {
 		partie = new Partie(clients, true);
-		//partie.jeu();
+		partie.jeu();
 	}
 	
 	//peu renvoyer au client la main d'un joueur selon son numero.

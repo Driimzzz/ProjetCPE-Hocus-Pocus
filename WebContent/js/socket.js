@@ -1,15 +1,5 @@
 
 
-function createJeu() {
-	var Joueurs = new Message(2, "Users:Clement,Paul,Emilie", -1);
-	Chat.socket.send(JSON.stringify(Joueurs));
-}
-
-function startJeu() {
-	var start = new Message(2, "start:ok", -1);
-	Chat.socket.send(JSON.stringify(start));
-}
-
 function Message(type, message, destination) {
 	this.type = type;
 	this.message = message;
