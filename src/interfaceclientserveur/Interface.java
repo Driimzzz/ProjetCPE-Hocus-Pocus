@@ -1,9 +1,13 @@
 package interfaceclientserveur;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.gson.JsonObject;
 
 import cartes.Carte;
 import partie.Joueur;
@@ -38,13 +42,13 @@ public class Interface {
 		SocketAnnotation.broadcast(message);
 	}
 
-	public static void createJeu(int nbJoueurs, String[] nomJoueurs) {
-		partie = new Partie(nbJoueurs, nomJoueurs, true);
+	public static void creerJeu(String[] nomJoueurs) {
+		partie = new Partie(nomJoueurs.length, nomJoueurs, true);
 		// partie.jeu();
 	}
 
 	// multijoueur (il faut ouvrir plusieurs fenêtres pour le simuler)
-	public static void createJeu(List<Client> clients) {
+	public static void creerJeu(List<Client> clients) {
 		partie = new Partie(clients, true);
 		partie.jeu();
 	}
@@ -95,6 +99,68 @@ public class Interface {
 	}
 
 	public static void gestionMessage(String data) {
-		
+		JSONObject json = new JSONObject();
+		try {
+			json = new JSONObject(data);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String methode = "error";
+		try {
+			methode = (String) json.get("methode");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Console(methode);
+		switch (methode) {
+		case "creerJeu":
+			JSONArray arr = new JSONArray();
+			try {
+				arr = (JSONArray) json.get("joueurs");
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			List<String> joueurs = new ArrayList<>();
+			for (int i = 0; i < arr.length(); i++) {
+				try {
+					joueurs.add(arr.getString(i));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			String[] joueursTab = joueurs.toArray(new String[joueurs.size()]);
+			creerJeu(joueursTab);
+
+			break;
+
+		case "carteJouee":
+			boolean bonJSON = true;
+			int numJoueur = 0;
+			int numCarte = 0;
+			try {
+				numJoueur = json.getInt("numJoueur");
+			} catch (JSONException e) {
+				bonJSON = false;
+				e.printStackTrace();
+			}
+			try {
+				numCarte = json.getInt("numCarte");
+			} catch (JSONException e) {
+				bonJSON = false;
+				e.printStackTrace();
+			}
+			if (bonJSON)
+				carteJouee(numJoueur, numCarte);
+			break;
+
+		default:
+			Console("erreur dans la sythaxe json de methode");
+			break;
+		}
 	}
 }

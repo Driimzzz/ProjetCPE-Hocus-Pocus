@@ -14,38 +14,48 @@ import cartes.PileDeCartes;
 public class exec {
 
 	public static void main(String[] args) {
-		PileDeCartes pile = new PileDeCartes();
-				    
-		Interface.Console("\n---simple partie---");
-	    
-	    int nbJoueurs = 2;
-		String[] nomJoueurs = {"Alice",
-		                       "Bob"};
 		
-		boolean partieRapide = false;
+		Interface.gestionMessage("{methode:creerJeu;"
+				+ "joueurs:[Alice,Bob,Claire]"
+				+ "}");
 		
-		Carte carteHocus;
-		Carte cartePocus;
+		Interface.gestionMessage("{methode:carteJouee;"
+				+ "numJoueur:0;"
+				+ "numCarte:1"
+				+ "}");
 		
-		//création d'une partie avec Alice et Bob
-		Partie partie = new Partie(nbJoueurs, nomJoueurs, partieRapide);
-		
-		//ajout de 5 gemmes a bob
-		partie.getJoueurs().get(1).setGemmes(5);
-		
-//		carteHocus = new Voleur(3, partie);
-//		partie.ajouterAAireDeJeu(carteHocus);
-		
-		carteHocus = new Sortilege(3, partie);
-		partie.ajouterAAireDeJeu(carteHocus);
+//		PileDeCartes pile = new PileDeCartes();
+//				    
+//		Interface.Console("\n---simple partie---");
+//	    
+//	    int nbJoueurs = 2;
+//		String[] nomJoueurs = {"Alice",
+//		                       "Bob"};
 //		
-//		cartePocus = new BaguetteMagique(partie);
-//		partie.ajouterAAireDeJeu(cartePocus);
-		
-//		cartePocus = new ContreSort(partie);
-//		partie.ajouterAAireDeJeu(cartePocus);
-		
-		partie.jouerLesCartesDeLaireDeJeu();
+//		boolean partieRapide = false;
+//		
+//		Carte carteHocus;
+//		Carte cartePocus;
+//		
+//		//création d'une partie avec Alice et Bob
+//		Partie partie = new Partie(nbJoueurs, nomJoueurs, partieRapide);
+//		
+//		//ajout de 5 gemmes a bob
+//		partie.getJoueurs().get(1).setGemmes(5);
+//		
+////		carteHocus = new Voleur(3, partie);
+////		partie.ajouterAAireDeJeu(carteHocus);
+//		
+//		carteHocus = new Sortilege(3, partie);
+//		partie.ajouterAAireDeJeu(carteHocus);
+////		
+////		cartePocus = new BaguetteMagique(partie);
+////		partie.ajouterAAireDeJeu(cartePocus);
+//		
+////		cartePocus = new ContreSort(partie);
+////		partie.ajouterAAireDeJeu(cartePocus);
+//		
+//		partie.jouerLesCartesDeLaireDeJeu();
 		
 	}
 
