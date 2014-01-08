@@ -44,5 +44,5 @@ function getPlayers() {
 	
 	}	
 	envoyerJeu("{methode:creerJeu;joueurs:["+joueurs+"]}");
-	InitJeu(joueurs);
+	//InitJeu(joueurs);
 }

@@ -85,6 +85,7 @@ public class Partie extends Thread {
 	public void jeu() {
 		indexJoueur = 0;
 		while (chaudron > 0) {
+			Interface.laMainDuJoueur(indexJoueur);
 			tourDeJeu(joueurs.get(indexJoueur));
 			if (indexJoueur == joueurs.size() - 1)
 				indexJoueur = 0;

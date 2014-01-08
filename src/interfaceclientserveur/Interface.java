@@ -63,13 +63,9 @@ public class Interface {
 		SocketAnnotation.broadcast(message);
 	}
 
-	public static void createJeu(int nbJoueurs, String[] nomJoueurs) {
-		partie = new Partie(nbJoueurs, nomJoueurs, true);
-		 partie.start();
-}
 	public static void creerJeu(String[] nomJoueurs) {
 		partie = new Partie(nomJoueurs.length, nomJoueurs, true);
-		// partie.jeu();
+		partie.start();
 	}
 
 	// multijoueur (il faut ouvrir plusieurs fenêtres pour le simuler)

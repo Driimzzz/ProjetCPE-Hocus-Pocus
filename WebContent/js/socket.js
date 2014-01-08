@@ -68,12 +68,18 @@ function envoyerJeu(s)
 var Console = {};
 
 Console.log = (function(message) {
+	//type chat message
 	if (message.type == 1)
 		$("#message").append("<p>" + message.message + "</p>");
+	//type message console
 	if (message.type == 2)
 		$("#console").append("<p>" + message.message + "</p>");
+	//
 	if(message.type==0)
 		$("#console").append("<p style='color:red;'>" + message.message + "</p>");
+	//message de type jeu
+	if(message.type==3)
+		alert(message.message);
 	if(message.type==4)
 		alert(message.message);
 
