@@ -44,7 +44,7 @@ public class SocketAnnotation {
 	private static Salle salle = new Salle();
 
 	public static enum MessageType {
-		Error(0), Message(1), Console(2);
+		Error(0), Message(1), Console(2), Jeu(3);
 
 		private int index;
 
@@ -111,7 +111,7 @@ public class SocketAnnotation {
 	@OnMessage
 	public void incoming(String data) {
 		// Never trust the client
-		/*String mess = String.format(data.toString());
+		String mess = String.format(data.toString());
 		Message message = new Message();
 		try {
 			message = message.parseFromString(mess);
@@ -120,8 +120,8 @@ public class SocketAnnotation {
 			// TODO Auto-generated catch block
 			broadcast(new Message(MessageType.Error, e.getMessage()));
 		}
-		//broadcast(message);*/
-		Interface.gestionMessage(data);
+		//broadcast(message);
+		Interface.gestionMessage(message);
 	}
 
 	// le serveur envoie le message au client
@@ -199,3 +199,11 @@ public class SocketAnnotation {
 	}
 
 }
+class Jeu extends Thread {
+	   public void run () {
+		    
+		    
+
+	   }
+	}
+

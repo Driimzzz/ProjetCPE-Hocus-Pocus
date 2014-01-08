@@ -12,11 +12,14 @@ import java.util.Scanner;
 
 
 
+
+
+
 import websocket.console.Client;
 import cartes.*;
 import cartes.Carte.CarteType;
 
-public class Partie {
+public class Partie extends Thread {
 	private int chaudron;// le nb de gemmes dans le chaudron
 
 	static private List<Joueur> joueurs;
@@ -74,7 +77,10 @@ public class Partie {
 		}
 		Interface.Console("vous avez maintenant "+ joueurEnCours.getGemmes()+" gemmes.");
 	}
+	public void run () {
+		jeu();
 	
+	}
 	// la fonction qui alterne les tours de jeu entre les joueurs
 	public void jeu() {
 		indexJoueur = 0;
@@ -93,18 +99,21 @@ public class Partie {
 		afficherJoueurs();
 	}
 	
-	public static int readIntValue() throws InputMismatchException
+	public static int readIntValue() 
 	{ 
-		/*Read thread=new Read();
-		thread.start();
-		while( thread.isAlive() ) {
-		}
-		return Integer.parseInt(Interface.input);*/
-		Scanner in = new Scanner(System.in);  
-		int integer;
-        Interface.Console("Enter an integer value: ");
-        integer = in.nextInt();
-        return integer;
+	
+		do{
+			try {
+				Thread.sleep(100);
+				
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}while("".equals(Interface.input));
+		int nbr=Integer.parseInt(Interface.input);
+		Interface.input="";
+		return nbr;
 	   
 	}
 	
@@ -284,14 +293,3 @@ public class Partie {
 	}
 
 }
-class Read extends Thread {
-	   public void run () {
-		    Interface.Console("Enter an integer value: ");
-		   do {
-		    	System.out.print('z');
-		    }while("".equals(Interface.input));
-		   
-		    
-
-	   }
-	}

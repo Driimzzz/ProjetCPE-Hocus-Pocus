@@ -1,4 +1,4 @@
-
+var joueurs=["Clem","Emilie"];
 
 function Message(type, message, destination) {
 	this.type = type;
@@ -59,9 +59,10 @@ Chat.sendMessage = (function() {
 	}
 });
 
-function EnvoyerMessage(s)
+function envoyerJeu(s)
 {
-	Chat.socket.send(s);
+	var mess = new Message(3, JSON.stringify(s), -1);
+	Chat.socket.send(JSON.stringify(mess));
 }
 
 var Console = {};
@@ -79,6 +80,7 @@ Console.log = (function(message) {
 
 Chat.initialize();
 slide();
+
 function slide() {
 	if ($("#flip-1").val() == 1) {
 		$("#message").show();

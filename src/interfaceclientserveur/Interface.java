@@ -40,7 +40,7 @@ public class Interface {
 
 	public static void createJeu(int nbJoueurs, String[] nomJoueurs) {
 		partie = new Partie(nbJoueurs, nomJoueurs, true);
-		// partie.jeu();
+		 partie.start();
 	}
 
 	// multijoueur (il faut ouvrir plusieurs fenêtres pour le simuler)
@@ -94,7 +94,26 @@ public class Interface {
 		return numJoueurVise;
 	}
 
-	public static void gestionMessage(String data) {
-		
+	public static void gestionMessage(Message message) {
+		input = "";
+		if (message.getType() == MessageType.Console) {
+			String[] debut=message.getMessage().split(":");
+			if ("start".equals(debut[0])) {
+				String[] joueurs=message.getMessage().split(",");
+				createJeu(joueurs.length,joueurs);
+				
+
+			} else if ("getmain".equals(debut[0])) {
+				
+			} else {
+
+				input = message.getMessage();
+				Console(">" + input);
+			}
+		}
+		if (message.getType() == MessageType.Message) {
+			SocketAnnotation.broadcast(message);
+		}
 	}
 }
+
