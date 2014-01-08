@@ -54,17 +54,26 @@ function getInfo(message) {
 	if (obJ.methode == "afficherToutesLesMains") {
 		var mains = obJ.mains;
 		for (var i = 0; i < mains.length; i++) {
+			if (mains[i].numeroJoueur == 0)
+				$("#player" + mains[i].numeroJoueur + " .player-main").empty();
 			for (var j = 0; j < mains[i].mainJoueur.length; j++) {
-				if(mains[i].numeroJoueur==0)
-					$("#player" + mains[i].numeroJoueur + " .player-main").append(
-						'<img src="img/HocusPocus/' + mains[i].mainJoueur[j] + '.png">');
+				if (mains[i].numeroJoueur == 0)
+					$("#player" + mains[i].numeroJoueur + " .player-main")
+							.append(
+									'<img src="img/HocusPocus/'
+											+ mains[i].mainJoueur[j] + '.png" onclick="carteJouee('+i+','+j+')">');
 				else
-					$("#player" + mains[i].numeroJoueur + " .carte").html(mains[i].mainJoueur.length+
-					'<img src="img/HocusPocus/HocusPocus.png" width="10%" style="border: 2px solid #FFF;">');
+					$("#player" + mains[i].numeroJoueur + " .carte")
+							.html(
+									mains[i].mainJoueur.length
+											+ '<img src="img/HocusPocus/HocusPocus.png" width="10%" style="border: 2px solid #FFF;">');
 			}
 		}
-		
 
 	}
 
+}
+function carteJouee(joueur,carte)
+{
+	envoyerServeur("{methode:carteJouee;numJoueur:"+joueur+";numCarte:"+carte+"}");
 }
