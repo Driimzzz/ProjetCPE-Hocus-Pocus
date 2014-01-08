@@ -87,15 +87,15 @@ public class Interface {
 			json.put("numeroJoueur", numeroDuJoueur);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Error(e.getMessage());
 		}
 		try {
 			json.put("mainJoueur", joueurVise.getMain().toJson());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Error(e.getMessage());
 		}
-		Console(json.toString());
+		Jeu(json.toString());
 	}
 
 	// retourner au client quel joueur doit jouer
@@ -142,14 +142,14 @@ public class Interface {
 				json = new JSONObject(message.getMessage());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Error(e.getMessage());
 			}
 			String methode = "error";
 			try {
 				methode = (String) json.get("methode");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Error(e.getMessage());
 			}
 			
 			boolean bonJSON = true;
@@ -161,7 +161,7 @@ public class Interface {
 					arr = (JSONArray) json.get("joueurs");
 				} catch (JSONException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					Error(e1.getMessage());
 				}
 				List<String> joueurs = new ArrayList<>();
 				for (int i = 0; i < arr.length(); i++) {
@@ -169,7 +169,7 @@ public class Interface {
 						joueurs.add(arr.getString(i));
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						Error(e.getMessage());
 					}
 				}
 	
@@ -186,13 +186,13 @@ public class Interface {
 					numJoueur = json.getInt("numJoueur");
 				} catch (JSONException e) {
 					bonJSON = false;
-					e.printStackTrace();
+					Error(e.getMessage());
 				}
 				try {
 					numCarte = json.getInt("numCarte");
 				} catch (JSONException e) {
 					bonJSON = false;
-					e.printStackTrace();
+					Error(e.getMessage());
 				}
 				if (bonJSON)
 					carteJouee(numJoueur, numCarte);
@@ -205,7 +205,7 @@ public class Interface {
 					joueurVise(numJoueurVise);
 				} catch (JSONException e) {
 					bonJSON = false;
-					e.printStackTrace();
+					Error(e.getMessage());
 				}			
 				break;
 			
@@ -214,7 +214,7 @@ public class Interface {
 				break;
 	
 			default:
-				Console("erreur dans la sythaxe json de methode");
+				Error("erreur dans la sythaxe json de methode");
 				break;
 			}
 		}
