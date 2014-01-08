@@ -1,9 +1,13 @@
 package interfaceclientserveur;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.gson.JsonObject;
 
 import cartes.Carte;
 import partie.Joueur;
@@ -19,6 +23,14 @@ public class Interface {
 	public static String input = "";
 
 	private static Partie partie;
+		
+	public static Partie getPartie() {
+		return partie;
+	}
+
+	public static void setPartie(Partie partie) {
+		Interface.partie = partie;
+	}
 
 	public Interface() {
 
@@ -41,10 +53,14 @@ public class Interface {
 	public static void createJeu(int nbJoueurs, String[] nomJoueurs) {
 		partie = new Partie(nbJoueurs, nomJoueurs, true);
 		 partie.start();
+}
+	public static void creerJeu(String[] nomJoueurs) {
+		partie = new Partie(nomJoueurs.length, nomJoueurs, true);
+		// partie.jeu();
 	}
 
 	// multijoueur (il faut ouvrir plusieurs fenêtres pour le simuler)
-	public static void createJeu(List<Client> clients) {
+	public static void creerJeu(List<Client> clients) {
 		partie = new Partie(clients, true);
 		partie.jeu();
 	}
@@ -80,39 +96,110 @@ public class Interface {
 	public static void carteJouee(int numJoueur, int numDansSaMain) {
 		Joueur joueur = partie.getJoueurs().get(numJoueur);
 		Carte carteJouee = joueur.getMain().getPileDeCarte().get(numDansSaMain);
-		joueur.jouerCarte(carteJouee);
+		joueur.jouerCarte(carteJouee); //TODO verification autorisation de jouer
 		Console(joueur.getNom() + " joue la carte " + carteJouee.getNom()
 				+ carteJouee.getForce());
 	}
 
 	// le serveur demande au client de viser
-	public static int viserUnJoueur(int numJoueurVisant) {
+	public static void viserUnJoueur(int numJoueurVisant) {
 		Console("Le joueur numéro " + numJoueurVisant
-				+ " doit viser un joueur. Lequel?");
-		int numJoueurVise = 1;// TODO recupérer un numero venant du cient je
-								// sais pas faire
-		return numJoueurVise;
+				+ " doit viser un joueur. Lequel?");		
+	}
+	
+	//le client repond quel joueur est visé
+	public static void joueurVise(int numJoueurVise){
+		Joueur jVise = partie.getJoueurs().get(numJoueurVise);
+		Console("vous visez le joueur numéro "+numJoueurVise);
+		partie.getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
+	}
+	
+	public static void finCarteHocus(){
+		partie.jouerLesCartesDeLaireDeJeu();
 	}
 
-	public static void gestionMessage(Message message) {
-		input = "";
-		if (message.getType() == MessageType.Console) {
-			String[] debut=message.getMessage().split(":");
-			if ("start".equals(debut[0])) {
-				String[] joueurs=message.getMessage().split(",");
-				createJeu(joueurs.length,joueurs);
-				
 
-			} else if ("getmain".equals(debut[0])) {
-				
-			} else {
-
-				input = message.getMessage();
-				Console(">" + input);
-			}
+	
+	public static void gestionMessage(String data) {
+		JSONObject json = new JSONObject();
+		try {
+			json = new JSONObject(data);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		if (message.getType() == MessageType.Message) {
-			SocketAnnotation.broadcast(message);
+		String methode = "error";
+		try {
+			methode = (String) json.get("methode");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		boolean bonJSON = true;
+		
+		switch (methode) {
+		case "creerJeu":
+			JSONArray arr = new JSONArray();
+			try {
+				arr = (JSONArray) json.get("joueurs");
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			List<String> joueurs = new ArrayList<>();
+			for (int i = 0; i < arr.length(); i++) {
+				try {
+					joueurs.add(arr.getString(i));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			String[] joueursTab = joueurs.toArray(new String[joueurs.size()]);
+			creerJeu(joueursTab);
+
+			break;
+
+		case "carteJouee":
+			bonJSON = true;
+			int numJoueur = 0;
+			int numCarte = 0;
+			try {
+				numJoueur = json.getInt("numJoueur");
+			} catch (JSONException e) {
+				bonJSON = false;
+				e.printStackTrace();
+			}
+			try {
+				numCarte = json.getInt("numCarte");
+			} catch (JSONException e) {
+				bonJSON = false;
+				e.printStackTrace();
+			}
+			if (bonJSON)
+				carteJouee(numJoueur, numCarte);
+			break;
+			
+		case "joueurVise":			
+			int numJoueurVise;
+			try {
+				numJoueurVise = json.getInt("numJoueurVise");
+				joueurVise(numJoueurVise);
+			} catch (JSONException e) {
+				bonJSON = false;
+				e.printStackTrace();
+			}			
+			break;
+		
+		case "finCarteHocus":
+			finCarteHocus();
+			break;
+
+		default:
+			Console("erreur dans la sythaxe json de methode");
+			break;
 		}
 	}
 }
