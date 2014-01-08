@@ -120,87 +120,98 @@ public class Interface {
 
 
 	
-	public static void gestionMessage(String data) {
-		JSONObject json = new JSONObject();
-		try {
-			json = new JSONObject(data);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String methode = "error";
-		try {
-			methode = (String) json.get("methode");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public static void gestionMessage(Message message) {
 		
-		boolean bonJSON = true;
-		
-		switch (methode) {
-		case "creerJeu":
-			JSONArray arr = new JSONArray();
+		if(message.getType()==MessageType.Jeu)
+		{
+			JSONObject json = new JSONObject();
 			try {
-				arr = (JSONArray) json.get("joueurs");
-			} catch (JSONException e1) {
+				json = new JSONObject(message.getMessage());
+			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				e.printStackTrace();
 			}
-			List<String> joueurs = new ArrayList<>();
-			for (int i = 0; i < arr.length(); i++) {
+			String methode = "error";
+			try {
+				methode = (String) json.get("methode");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			boolean bonJSON = true;
+			
+			switch (methode) {
+			case "creerJeu":
+				JSONArray arr = new JSONArray();
 				try {
-					joueurs.add(arr.getString(i));
-				} catch (JSONException e) {
+					arr = (JSONArray) json.get("joueurs");
+				} catch (JSONException e1) {
 					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				List<String> joueurs = new ArrayList<>();
+				for (int i = 0; i < arr.length(); i++) {
+					try {
+						joueurs.add(arr.getString(i));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+	
+				String[] joueursTab = joueurs.toArray(new String[joueurs.size()]);
+				creerJeu(joueursTab);
+	
+				break;
+	
+			case "carteJouee":
+				bonJSON = true;
+				int numJoueur = 0;
+				int numCarte = 0;
+				try {
+					numJoueur = json.getInt("numJoueur");
+				} catch (JSONException e) {
+					bonJSON = false;
 					e.printStackTrace();
 				}
-			}
-
-			String[] joueursTab = joueurs.toArray(new String[joueurs.size()]);
-			creerJeu(joueursTab);
-
-			break;
-
-		case "carteJouee":
-			bonJSON = true;
-			int numJoueur = 0;
-			int numCarte = 0;
-			try {
-				numJoueur = json.getInt("numJoueur");
-			} catch (JSONException e) {
-				bonJSON = false;
-				e.printStackTrace();
-			}
-			try {
-				numCarte = json.getInt("numCarte");
-			} catch (JSONException e) {
-				bonJSON = false;
-				e.printStackTrace();
-			}
-			if (bonJSON)
-				carteJouee(numJoueur, numCarte);
-			break;
+				try {
+					numCarte = json.getInt("numCarte");
+				} catch (JSONException e) {
+					bonJSON = false;
+					e.printStackTrace();
+				}
+				if (bonJSON)
+					carteJouee(numJoueur, numCarte);
+				break;
+				
+			case "joueurVise":			
+				int numJoueurVise;
+				try {
+					numJoueurVise = json.getInt("numJoueurVise");
+					joueurVise(numJoueurVise);
+				} catch (JSONException e) {
+					bonJSON = false;
+					e.printStackTrace();
+				}			
+				break;
 			
-		case "joueurVise":			
-			int numJoueurVise;
-			try {
-				numJoueurVise = json.getInt("numJoueurVise");
-				joueurVise(numJoueurVise);
-			} catch (JSONException e) {
-				bonJSON = false;
-				e.printStackTrace();
-			}			
-			break;
-		
-		case "finCarteHocus":
-			finCarteHocus();
-			break;
-
-		default:
-			Console("erreur dans la sythaxe json de methode");
-			break;
+			case "finCarteHocus":
+				finCarteHocus();
+				break;
+	
+			default:
+				Console("erreur dans la sythaxe json de methode");
+				break;
+			}
+		}
+		input="";
+		if (message.getType() == MessageType.Console) {
+				input = message.getMessage();
+				Console(">"+input);
+		}
+		if (message.getType() == MessageType.Message) {
+			SocketAnnotation.broadcast(message);
 		}
 	}
 }
-

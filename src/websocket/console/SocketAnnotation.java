@@ -199,11 +199,5 @@ public class SocketAnnotation {
 	}
 
 }
-class Jeu extends Thread {
-	   public void run () {
-		    
-		    
 
-	   }
-	}
 

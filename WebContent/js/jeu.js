@@ -1,4 +1,4 @@
-var players=[];
+var joueurs=[];
 
 
 $(document).ready(function() {
@@ -36,13 +36,13 @@ function getPlayers() {
 	HideJeu();
 	for(var i=0; i<$('#selectNbJoueurs').val();i++)
 	{
-		players.push($('#nomJ' + i).val());
+		joueurs.push($('#nomJ' + i).val());
 		$("#player"+i+" .nom").html($('#nomJ' + i).val());
 		$("#player"+i+" .carte").html('3 <img src="img/HocusPocus/HocusPocus.png" width="10%" style="border: 2px solid #FFF;">');
 		$("#player"+i+" .gemme").html('0 <img src="img/HocusPocus/gemmes.png" width="15%">');
 		
 	
 	}	
-	
-	InitJeu(players);
+	envoyerJeu("{methode:creerJeu;joueurs:["+joueurs+"]}");
+	InitJeu(joueurs);
 }

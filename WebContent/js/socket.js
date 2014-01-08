@@ -1,4 +1,4 @@
-var joueurs=["Clem","Emilie"];
+
 
 function Message(type, message, destination) {
 	this.type = type;
@@ -61,7 +61,7 @@ Chat.sendMessage = (function() {
 
 function envoyerJeu(s)
 {
-	var mess = new Message(3, JSON.stringify(s), -1);
+	var mess = new Message(3, s, -1);
 	Chat.socket.send(JSON.stringify(mess));
 }
 
