@@ -15,12 +15,12 @@ Chat.connect = (function(host) {
 	} else if ('MozWebSocket' in window) {
 		Chat.socket = new MozWebSocket(host);
 	} else {
-		Console.log('Error: WebSocket is not supported by this browser.');
+		Client.log('Error: WebSocket is not supported by this browser.');
 		return;
 	}
 
 	Chat.socket.onopen = function() {
-		Console.log('Info: WebSocket connection opened.');
+		Client.log('Info: WebSocket connection opened.');
 		document.getElementById('chat').onkeydown = function(event) {
 			if (event.keyCode == 13) {
 
@@ -31,12 +31,12 @@ Chat.connect = (function(host) {
 
 	Chat.socket.onclose = function() {
 		document.getElementById('chat').onkeydown = null;
-		Console.log('Info: WebSocket closed.');
+		Client.log('Info: WebSocket closed.');
 	};
 
 	Chat.socket.onmessage = function(message) {
 
-		Console.log(jQuery.parseJSON(message.data));
+		Client.log(jQuery.parseJSON(message.data));
 	};
 });
 
@@ -59,15 +59,15 @@ Chat.sendMessage = (function() {
 	}
 });
 
-function envoyerJeu(s)
+function envoyerServeur(s)
 {
 	var mess = new Message(3, s, -1);
 	Chat.socket.send(JSON.stringify(mess));
 }
 
-var Console = {};
+var Client = {};
 
-Console.log = (function(message) {
+Client.log = (function(message) {
 	//type chat message
 	if (message.type == 1)
 		$("#message").append("<p>" + message.message + "</p>");
@@ -77,9 +77,12 @@ Console.log = (function(message) {
 	//
 	if(message.type==0)
 		$("#console").append("<p style='color:red;'>" + message.message + "</p>");
-	//message de type jeu
+	
+	//message de type jeu 
 	if(message.type==3)
-		alert(message.message);
+		getInfo(message.message);
+	
+	//
 	if(message.type==4)
 		alert(message.message);
 
