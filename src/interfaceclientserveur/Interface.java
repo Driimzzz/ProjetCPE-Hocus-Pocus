@@ -56,6 +56,12 @@ public class Interface {
 				websocket.console.SocketAnnotation.MessageType.Jeu, str);
 		SocketAnnotation.broadcast(message);
 	}
+	public static void Autorisation(String str) {
+		System.out.println(str);
+		Message message = new Message(
+				websocket.console.SocketAnnotation.MessageType.Autorisation, str);
+		SocketAnnotation.broadcast(message);
+	}
 
 	public static void createJeu(int nbJoueurs, String[] nomJoueurs) {
 		partie = new Partie(nbJoueurs, nomJoueurs, true);

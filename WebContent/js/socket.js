@@ -74,6 +74,8 @@ Console.log = (function(message) {
 		$("#console").append("<p>" + message.message + "</p>");
 	if(message.type==0)
 		$("#console").append("<p style='color:red;'>" + message.message + "</p>");
+	if(message.type==4)
+		alert(message.message);
 
 	console.scrollTop = console.scrollHeight;
 });

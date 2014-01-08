@@ -44,7 +44,7 @@ public class SocketAnnotation {
 	private static Salle salle = new Salle();
 
 	public static enum MessageType {
-		Error(0), Message(1), Console(2), Jeu(3);
+		Error(0), Message(1), Console(2), Jeu(3), Autorisation(4);
 
 		private int index;
 
