@@ -49,6 +49,13 @@ public class Interface {
 				websocket.console.SocketAnnotation.MessageType.Error, str);
 		SocketAnnotation.broadcast(message);
 	}
+	
+	public static void Jeu(String str) {
+		System.out.println(str);
+		Message message = new Message(
+				websocket.console.SocketAnnotation.MessageType.Jeu, str);
+		SocketAnnotation.broadcast(message);
+	}
 
 	public static void createJeu(int nbJoueurs, String[] nomJoueurs) {
 		partie = new Partie(nbJoueurs, nomJoueurs, true);
