@@ -2,11 +2,11 @@ var joueurs = [];
 var obJ = "";
 
 $(document).ready(function() {
-	HideJeu();
 
 	$('#selectNbJoueurs').change(function() {// affiche les zones d'input en
 		// fonction du nbd e joueurs
 		// choisis
+		HideJeu();
 		for (var i = 0; i < 6; i++) {
 			if (i < $(this).val())
 				$('#nameInputJ' + i).show();
@@ -51,29 +51,45 @@ function getPlayers() {
 function getInfo(message) {
 	obJ = jQuery.parseJSON(message);
 	console.log(obJ);
-	if (obJ.methode == "afficherToutesLesMains") {
-		var mains = obJ.mains;
-		for (var i = 0; i < mains.length; i++) {
-			if (mains[i].numeroJoueur == 0)
-				$("#player" + mains[i].numeroJoueur + " .player-main").empty();
-			for (var j = 0; j < mains[i].mainJoueur.length; j++) {
-				if (mains[i].numeroJoueur == 0)
-					$("#player" + mains[i].numeroJoueur + " .player-main")
-							.append(
-									'<img src="img/HocusPocus/'
-											+ mains[i].mainJoueur[j] + '.png" onclick="carteJouee('+i+','+j+')">');
+	if (obJ.methode == "toutesLesInfos") {
+		$("#chaudron")
+				.html(
+						obJ.chaudron
+								+ '<img src="img/HocusPocus/chaudron.gif" width="90%">');
+		for (var i = 0; i < obJ.joueurs.length; i++) {
+			$("#player" + i + " .nom").html(obJ.joueurs[i].nom);
+			$("#player" + i + " .carte")
+					.html(
+							obJ.joueurs[i].main
+									+ ' <img src="img/HocusPocus/HocusPocus.png" width="10%" style="border: 2px solid #FFF;">');
+			$("#player" + i + " .gemme")
+					.html(
+							obJ.joueurs[i].nbrGemme
+									+ ' <img src="img/HocusPocus/gemmes.png" width="15%">');
+
+			if (i == 0) {
+				$("#player" + i + " .player-main").empty();
+				$("#player" + i + " .player-gemme").html('<h1>'+obJ.joueurs[i].nbrGemme+'</h1><img src="img/HocusPocus/gemmes.png" width="15%">');
+			}
+
+			for (var j = 0; j < obJ.joueurs[i].main.length; j++) {
+				if (i == 0)
+					$("#player" + i + " .player-main").append(
+							'<img src="img/HocusPocus/'
+									+ obJ.joueurs[i].main[j]
+									+ '.png" onclick="carteJouee(' + i + ','
+									+ j + ')">');
 				else
-					$("#player" + mains[i].numeroJoueur + " .carte")
+					$("#player" + i + " .carte")
 							.html(
-									mains[i].mainJoueur.length
+									obJ.joueurs[i].main.length
 											+ '<img src="img/HocusPocus/HocusPocus.png" width="10%" style="border: 2px solid #FFF;">');
 			}
 		}
-
 	}
 
 }
-function carteJouee(joueur,carte)
-{
-	envoyerServeur("{methode:carteJouee;numJoueur:"+joueur+";numCarte:"+carte+"}");
+function carteJouee(joueur, carte) {
+	envoyerServeur("{methode:carteJouee;numJoueur:" + joueur + ";numCarte:"
+			+ carte + "}");
 }

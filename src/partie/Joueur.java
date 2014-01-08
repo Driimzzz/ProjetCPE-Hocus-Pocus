@@ -1,5 +1,10 @@
 package partie;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.JsonObject;
+
 import interfaceclientserveur.Interface;
 import cartes.Carte;
 
@@ -41,7 +46,29 @@ public class Joueur {
 		gemmes -= nbrVoles;		
 		return nbrVoles ;
 	}
-	
+	public JSONObject toJson(){
+		JSONObject json = new JSONObject();
+		try {
+			json.put("nom", this.getNom());
+		} catch (JSONException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			json.put("nbrGemme", this.gemmes);
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			json.put("main", this.main.toJson());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return json;
+	}
 	public Partie getPartie() {
 		return partie;
 	}

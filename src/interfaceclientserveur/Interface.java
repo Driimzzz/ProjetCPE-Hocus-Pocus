@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import cartes.Carte;
@@ -76,6 +77,36 @@ public class Interface {
 		partie.jeu();
 	}
 
+	
+	//le serveur envois toutes les infos relative à la partie
+		public static void toutesLesInfos(){
+			JSONObject grosJson = new JSONObject();
+			try {
+				grosJson.put("methode", "toutesLesInfos");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Error(e.getMessage());
+			}
+			try {
+				grosJson.put("chaudron", partie.getChaudron());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Error(e.getMessage());
+			}
+			JSONArray arr = new JSONArray();
+			for(Joueur j : partie.getJoueurs()){
+				arr.put(j.toJson());
+			}
+			try {
+				grosJson.put("joueurs", arr);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Error(e.getMessage());
+			}
+			
+			Jeu(grosJson.toString());
+		}
+		
 	// peu renvoyer au client la main d'un joueur selon son numero.
 	// TODO du coté client afficher ou mettre à jour la main du joueur
 	public static void lesMainsDesJoueurs() {
@@ -84,7 +115,7 @@ public class Interface {
 			headJson.put("methode", "afficherToutesLesMains");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Error(e.getMessage());
 		}
 
 		JSONArray arr = new JSONArray();

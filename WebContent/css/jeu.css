@@ -160,11 +160,12 @@ transform:rotate(7deg);
 }
 #chaudron{
 	text-align:center;
-	
-	
+	color:#FFF;
+	 -webkit-text-shadow: 2px 2px 7px rgba(0,0,0,0.9);
+  text-shadow: 2px 2px 7px rgba(0,0,0,0.9);
+  font-weight:bold;
 }
 #chaudron img{
-	margin-top:15%;
 }
 #chaudron img:hover{
  -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
