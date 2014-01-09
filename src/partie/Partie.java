@@ -90,7 +90,7 @@ public class Partie extends Thread {
 	}
 	// la fonction qui alterne les tours de jeu entre les joueurs
 	public void jeu() {
-		indexJoueur = 0;
+		//indexJoueur = 0;
 //		while (chaudron > 0) {
 		if (chaudron > 0) {
 			Interface.toutesLesInfos();
@@ -141,7 +141,7 @@ public class Partie extends Thread {
 		defausse = new PileDeCartes();
 
 		bibliotheque = new Bibliotheque(this);
-
+		indexJoueur = 0;
 		initJoueurs(nbJoueurs, nomsJoueurs);
 		initChaudron(partieRapide);
 
