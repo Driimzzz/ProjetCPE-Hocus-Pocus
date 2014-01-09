@@ -50,7 +50,6 @@ function getPlayers() {
 }
 
 function getInfo(message) {
-	alert(message);
 	obJ = jQuery.parseJSON(message);
 	console.log(obJ);
 	if (obJ.methode == "toutesLesInfos") {
