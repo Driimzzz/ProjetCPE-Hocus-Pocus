@@ -114,13 +114,27 @@ function getInfo(message) {
 		}
 		$("#popupCibler").popup("open");
 	}
+	
+	if (obJ.methode == "demandeAction") {
+		if(!obJ.peuCarteHocus)
+			$("#boutonChoisirAction0").hide();
+		else
+			$("#boutonChoisirAction0").show();
+		
+		$("#popupChoisirAction").popup("open");
+	}
 
 }
 function carteJouee(joueur, carte) {
 	envoyerServeur("{methode:carteJouee;numJoueur:" + joueur + ";numCarte:"
 			+ carte + "}");
 }
+
 function viserJoueur(numero){
 	envoyerServeur("{methode:joueurVise;numJoueurVise:" + numero + "}");
 	$("#popupCibler").popup("close");
+}
+function choisirAction(action){
+	envoyerServeur("{methode:reponseAction;action:" + action + "}");
+	$("#popupChoisirAction").popup("close");
 }

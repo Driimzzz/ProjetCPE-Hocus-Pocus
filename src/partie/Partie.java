@@ -28,49 +28,56 @@ public class Partie extends Thread {
 	static private PileDeCartes aireDeJeu;
 	static private PileDeCartes defausse;
 
-	public void tourDeJeu(Joueur joueurEnCours) {
+	public void tourDeJeu() {
+		Joueur joueurEnCours = joueurs.get(indexJoueur);
 		Interface.Console("c'est le tour de " + joueurEnCours.getNom());
 		Interface.Console("vous avez "+ joueurEnCours.getGemmes()+" gemmes.");
 		
-		int numCarte = -2;
-		while (numCarte!=-1 && chaudron > 0 && joueurEnCours.getMain().tailleDeLaPile() > 0){ //tant qu'on veut jouer et qu'on a des cartes
-			while(numCarte<-1 || numCarte>joueurEnCours.getMain().tailleDeLaPile()-1){	 //saisie protegee
-				joueurEnCours.getMain().afficherToutes();
-				Interface.Console("quelle carte jouer ? (-1 pour ne rien jouer)");
-				numCarte = readIntValue();	
-			}	
-			if(numCarte>=0){
-				joueurEnCours.jouerCarte(joueurEnCours.getMain().getPileDeCarte().elementAt(numCarte));
-				numCarte = -2;
-			}
-			jouerLesCartesDeLaireDeJeu();
-			Interface.Console("vous avez maintenant "+ joueurEnCours.getGemmes()+" gemmes.");
-			
-		}
-		if(chaudron>0){
-			finDuTour(joueurEnCours);
-		}
-		else{
-			finDuJeu();
-		}
+		if(!(joueurEnCours.getMain().getPileDeCarte().size()<1))
+			Interface.demandeAction(true);
+		else
+			Interface.demandeAction(false);
+//		int numCarte = -2;
+//		while (numCarte!=-1 && chaudron > 0 && joueurEnCours.getMain().tailleDeLaPile() > 0){ //tant qu'on veut jouer et qu'on a des cartes
+//			while(numCarte<-1 || numCarte>joueurEnCours.getMain().tailleDeLaPile()-1){	 //saisie protegee
+//				joueurEnCours.getMain().afficherToutes();
+//				Interface.Console("quelle carte jouer ? (-1 pour ne rien jouer)");
+//				numCarte = readIntValue();	
+//			}	
+//			if(numCarte>=0){
+//				joueurEnCours.jouerCarte(joueurEnCours.getMain().getPileDeCarte().elementAt(numCarte));
+//				numCarte = -2;
+//			}
+//			
+//			jouerLesCartesDeLaireDeJeu();
+//			Interface.Console("vous avez maintenant "+ joueurEnCours.getGemmes()+" gemmes.");
+//		}
+//		if(chaudron>0){
+//			finDuTour(joueurEnCours);
+//		}
+//		else{
+//			finDuJeu();
+//		}
 	}
 
-	public void finDuTour(Joueur joueurEnCours){
+	public void finDuTour(int input){
 		Interface.Console("c'est la fin de votre tour, vous pouvez : 1=piocher une gemme dans le chaudron OU 2=piocher deux cartes : ");
-		int input = -1;
-		while(input!=1 && input!=2){		
-			Interface.Console("entrez 1 ou 2:");
-			input = readIntValue();
-		}	
+//		int input = -1;
+//		while(input!=1 && input!=2){		
+//			Interface.Console("entrez 1 ou 2:");
+//			input = readIntValue();
+//		}	
+		Joueur joueurEnCours = joueurs.get(indexJoueur);
 		if (input==1){//pioche 1 gemme
 			Interface.Console("vous piochez 1 gemme dans le chaudron");
 			joueurEnCours.setGemmes(joueurEnCours.getGemmes()+1);
 			this.piocherDansLeChaudron(1);
-			
+			jeu();
 		}
 		else if (input ==2 ){ //pioche 2 cartes
 			Interface.Console("vous piochez 2 cartes");
 			joueurEnCours.piocherCartes(2);
+			jeu();
 		}
 		else{//erreur
 			Interface.Console("erreur fin du tour");
@@ -84,15 +91,17 @@ public class Partie extends Thread {
 	// la fonction qui alterne les tours de jeu entre les joueurs
 	public void jeu() {
 		indexJoueur = 0;
-		while (chaudron > 0) {
+//		while (chaudron > 0) {
+		if (chaudron > 0) {
 			Interface.toutesLesInfos();
-			tourDeJeu(joueurs.get(indexJoueur));
+			tourDeJeu();
 			if (indexJoueur == joueurs.size() - 1)
 				indexJoueur = 0;
 			else
 				indexJoueur++;
 		}
-		finDuJeu();
+		else
+			finDuJeu();
 	}
 	
 	public void finDuJeu(){

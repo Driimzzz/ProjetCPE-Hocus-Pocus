@@ -15,28 +15,28 @@ public class exec {
 
 	public static void main(String[] args) {
 		
-		Interface.gestionMessage("{methode:creerJeu;"
-				+ "joueurs:[Alice,Bob,Claire]"
-				+ "}");		
-		
-		Partie p = Interface.getPartie();
-		
-		p.getJoueurs().get(1).setGemmes(5);
-		
-		Carte carteHocus;
-		carteHocus = new Voleur(3, p);
-		p.getJoueurs().get(0).getMain().getPileDeCarte().set(1, carteHocus);
-		
-		Interface.setPartie(p);
-		
-		Interface.gestionMessage("{methode:carteJouee;numJoueur:0;numCarte:1}");
-		
-		Interface.gestionMessage("{methode:joueurVise;numJoueurVise:1}");
-		
-		Interface.gestionMessage("{methode:finCarteHocus}");
-		
-//				    
-//		Interface.Console("\n---simple partie---");
+//		Interface.gestionMessage("{methode:creerJeu;"
+//				+ "joueurs:[Alice,Bob,Claire]"
+//				+ "}");		
+//		
+//		Partie p = Interface.getPartie();
+//		
+//		p.getJoueurs().get(1).setGemmes(5);
+//		
+//		Carte carteHocus;
+//		carteHocus = new Voleur(3, p);
+//		p.getJoueurs().get(0).getMain().getPileDeCarte().set(1, carteHocus);
+//		
+//		Interface.setPartie(p);
+//		
+//		Interface.gestionMessage("{methode:carteJouee;numJoueur:0;numCarte:1}");
+//		
+//		Interface.gestionMessage("{methode:joueurVise;numJoueurVise:1}");
+//		
+//		Interface.gestionMessage("{methode:finCarteHocus}");
+//		
+////				    
+////		Interface.Console("\n---simple partie---");
 //	    
 //	    int nbJoueurs = 2;
 //		String[] nomJoueurs = {"Alice",
