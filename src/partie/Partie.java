@@ -72,17 +72,22 @@ public class Partie extends Thread {
 			Interface.Console("vous piochez 1 gemme dans le chaudron");
 			joueurEnCours.setGemmes(joueurEnCours.getGemmes()+1);
 			this.piocherDansLeChaudron(1);
-			jeu();
 		}
 		else if (input ==2 ){ //pioche 2 cartes
 			Interface.Console("vous piochez 2 cartes");
 			joueurEnCours.piocherCartes(2);
-			jeu();
 		}
 		else{//erreur
 			Interface.Console("erreur fin du tour");
 		}
 		Interface.Console("vous avez maintenant "+ joueurEnCours.getGemmes()+" gemmes.");
+		
+		//passe au jouer suivant
+		if (indexJoueur == joueurs.size() - 1)
+			indexJoueur = 0;
+		else
+			indexJoueur++;
+		jeu();
 	}
 	public void run () {
 		jeu();
@@ -95,10 +100,8 @@ public class Partie extends Thread {
 		if (chaudron > 0) {
 			Interface.toutesLesInfos();
 			tourDeJeu();
-			if (indexJoueur == joueurs.size() - 1)
-				indexJoueur = 0;
-			else
-				indexJoueur++;
+			
+			
 		}
 		else
 			finDuJeu();
@@ -141,7 +144,9 @@ public class Partie extends Thread {
 		defausse = new PileDeCartes();
 
 		bibliotheque = new Bibliotheque(this);
+		
 		indexJoueur = 0;
+
 		initJoueurs(nbJoueurs, nomsJoueurs);
 		initChaudron(partieRapide);
 
@@ -160,6 +165,8 @@ public class Partie extends Thread {
 			defausse = new PileDeCartes();
 
 			bibliotheque = new Bibliotheque(this);
+
+			indexJoueur = 0;
 
 			// creation des joueurs
 			joueurs = new ArrayList<Joueur>();
