@@ -19,16 +19,18 @@ public class Joueur {
 	public Joueur(String _nom,Partie maPartie){
 		this.setPartie(maPartie);
 		this.setNom(_nom);
-		this.setGemmes(0);
+		this.setGemmes(10);
 		this.setGrimoire(new Grimoire());
 		this.setMain(new Main());
 		Interface.Console("joueur créé : " + this.getNom());
 	}
 	
 	public void jouerCarte(Carte carteJouee){
-		this.getMain().getPileDeCarte().remove(carteJouee);
-		carteJouee.jouerLaCarte();
-		this.getPartie().ajouterAAireDeJeu(carteJouee);
+		if(this.getPartie().ajouterAAireDeJeu(carteJouee)){ //si on avait le droit de jouer la carte  
+			this.getMain().getPileDeCarte().remove(carteJouee);
+			carteJouee.jouerLaCarte();
+		}
+		Interface.toutesLesInfos();
 	}
 	
 	

@@ -104,6 +104,14 @@ public class Interface {
 				Error(e.getMessage());
 			}
 			
+				
+			try {
+				grosJson.put("aireDeJeu", partie.getAireDeJeu().toJson());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Error(e.getMessage());
+			}
+			
 			Jeu(grosJson.toString());
 		}
 		
@@ -169,8 +177,31 @@ public class Interface {
 
 	// le serveur demande au client de viser
 	public static void viserUnJoueur(int numJoueurVisant) {
-		Console("Le joueur numéro " + numJoueurVisant
-				+ " doit viser un joueur. Lequel?");
+		JSONObject grosJson = new JSONObject();
+		try {
+			grosJson.put("methode", "viserJoueur");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Error(e.getMessage());
+		}
+		try {
+			grosJson.put("numJoueurVisant", numJoueurVisant);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Error(e.getMessage());
+		}
+		JSONArray arr = new JSONArray();
+		for(Joueur j : partie.getJoueurs()){
+			arr.put(j.toJson());
+		}
+		try {
+			grosJson.put("joueurs", arr);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Error(e.getMessage());
+		}
+		
+		Jeu(grosJson.toString());
 	}
 
 	// le client repond quel joueur est visé

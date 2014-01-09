@@ -43,7 +43,7 @@ public class Bibliotheque {
 			this.cartes.ajouterUneCarte(new BaguetteMagique(maPartie));
 		
 		//2 contre-sorts
-		for (int i=0;i<2;i++) 
+		for (int i=0;i<4;i++) 
 			this.cartes.ajouterUneCarte(new ContreSort(maPartie));
 		
 		this.cartes.melanger();

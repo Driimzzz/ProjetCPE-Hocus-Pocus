@@ -72,7 +72,7 @@
 				</div>
 				<div class="ui-block-c player">
 					<div id="player2">
-							<div class="player-title">
+						<div class="player-title">
 							<div class="ui-grid-b">
 								<div class="ui-block-a carte"></div>
 								<div class="ui-block-b nom">></div>
@@ -90,7 +90,7 @@
 
 				<div class="ui-block-a player">
 					<div id="player4">
-							<div class="player-title">
+						<div class="player-title">
 							<div class="ui-grid-b">
 								<div class="ui-block-a carte"></div>
 								<div class="ui-block-b nom">></div>
@@ -109,8 +109,10 @@
 				<div class="ui-block-b" id="jeu">
 					<div class="player-title">Zone de Jeu</div>
 					<div class="ui-grid-b table">
-						<div class="ui-block-a" id="chaudron">15
-							<img src="img/HocusPocus/chaudron.gif" width="90%">
+						<button id="boutonTraiterAireDeJeu"
+							onclick='console.log("clic"); envoyerServeur("{methode:finCarteHocus}");'>Valider</button>
+						<div class="ui-block-a" id="chaudron">
+							15 <img src="img/HocusPocus/chaudron.gif" width="90%">
 						</div>
 						<div class="ui-block-b" id="bibliotheque">
 							<img src="img/HocusPocus/HocusPocus.png">
@@ -124,7 +126,7 @@
 
 				<div class="ui-block-c player">
 					<div id="player5">
-							<div class="player-title">
+						<div class="player-title">
 							<div class="ui-grid-b">
 								<div class="ui-block-a carte"></div>
 								<div class="ui-block-b nom">></div>
@@ -141,17 +143,13 @@
 				</div>
 			</div>
 			<div class="player-game" id="player0">
-				<div class="player-main">
-					
-				</div>
+				<div class="player-main"></div>
 				<div class="player-grimoire">
 					<img src="img/HocusPocus/HocusSacrifice21.png"> <img
 						src="img/HocusPocus/HocusSacrifice21.png"> <img
 						src="img/HocusPocus/HocusSacrifice21.png">
 				</div>
-				<div class="player-gemme">
-					
-				</div>
+				<div class="player-gemme"></div>
 			</div>
 		</div>
 		<div data-role="footer">
@@ -215,6 +213,32 @@
 			<button type="submit" data-icon="check" onclick="getPlayers();"
 				id="btnDemarrer">Démarrer</button>
 
+		</div>
+		<!-- /popup -->
+		
+				<!-- popup cibler un joueur -->
+		<div data-role="popup" id="popupCibler" data-theme="a"
+		data-dismissible="false"
+			class="ui-corner-all">
+			Qui viser?
+			<button id="boutonCiblageJ0" onclick='viserJoueur(0)'>
+				Joueur 1
+			</button>
+			<button id="boutonCiblageJ1" onclick='viserJoueur(1)'>
+				Joueur 2
+			</button>
+			<button id="boutonCiblageJ2" onclick='viserJoueur(2)'>
+				Joueur 3
+			</button>
+			<button id="boutonCiblageJ3" onclick='viserJoueur(3)'>
+				Joueur 4
+			</button>
+			<button id="boutonCiblageJ4" onclick='viserJoueur(4)'>
+				Joueur 5
+			</button>
+			<button id="boutonCiblageJ5" onclick='viserJoueur(5)'>
+				Joueur 6
+			</button>
 		</div>
 		<!-- /popup -->
 	</div>
