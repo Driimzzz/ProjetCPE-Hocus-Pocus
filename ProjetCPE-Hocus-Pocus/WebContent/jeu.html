@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hocus Pocus</title>
+<link rel="stylesheet" href="css/socket.css">
+<link rel="stylesheet" href="css/jeu.css">
+<link rel="stylesheet" href="css/jquery-mobile.css" />
+<script src="js/jquery.js"></script>
+<script src="js/jquery-mobile.js"></script>
+<script src="js/socket.js"></script>
+<script src="js/jeu.js"></script>
+<script src="js/message.js"></script>
+
+</head>
+<body>
+
+
+	<div data-role="page" id="map-page">
+
+
+		<div data-role="header">
+			<h1>Header</h1>
+		</div>
+
+
+		<div data-role="content"
+			style="background: radial-gradient(at 50% 38%, rgb(83, 194, 48), rgb(19, 131, 0)) no-repeat fixed center center lightblue;">
+
+
+			<div class="ui-grid-b" id="players-container">
+
+				<div class="ui-block-a player">
+					<div id="player1">
+
+						<div class="player-title">
+							<div class="ui-grid-b">
+								<div class="ui-block-a carte"></div>
+								<div class="ui-block-b nom">></div>
+								<div class="ui-block-c gemme"></div>
+							</div>
+						</div>
+						<div class="player-jeu">
+							<img src="img/HocusPocus/HocusPocus.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png">
+
+						</div>
+					</div>
+				</div>
+
+				<div class="ui-block-b player">
+					<div id="player3">
+						<div class="player-title">
+							<div class="ui-grid-b">
+								<div class="ui-block-a carte"></div>
+								<div class="ui-block-b nom">></div>
+								<div class="ui-block-c gemme"></div>
+							</div>
+						</div>
+
+						<div class="player-jeu">
+							<img src="img/HocusPocus/HocusPocus.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png">
+
+						</div>
+					</div>
+				</div>
+				<div class="ui-block-c player">
+					<div id="player2">
+						<div class="player-title">
+							<div class="ui-grid-b">
+								<div class="ui-block-a carte"></div>
+								<div class="ui-block-b nom">></div>
+								<div class="ui-block-c gemme"></div>
+							</div>
+						</div>
+						<div class="player-jeu">
+							<img src="img/HocusPocus/HocusPocus.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png">
+						</div>
+					</div>
+				</div>
+
+				<div class="ui-block-a player">
+					<div id="player4">
+						<div class="player-title">
+							<div class="ui-grid-b">
+								<div class="ui-block-a carte"></div>
+								<div class="ui-block-b nom">></div>
+								<div class="ui-block-c gemme"></div>
+							</div>
+						</div>
+						<div class="player-jeu">
+							<img src="img/HocusPocus/HocusPocus.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png">
+						</div>
+					</div>
+				</div>
+
+				<div class="ui-block-b" id="jeu">
+					<div class="player-title">Zone de Jeu</div>
+					<div class="ui-grid-b table">
+						<button id="boutonTraiterAireDeJeu"
+							onclick='console.log("clic"); envoyerServeur("{methode:finCarteHocus}");'>Valider</button>
+						<div class="ui-block-a" id="chaudron">
+							15 <img src="img/HocusPocus/chaudron.gif" width="90%">
+						</div>
+						<div class="ui-block-b" id="bibliotheque">
+							<img src="img/HocusPocus/HocusPocus.png">
+						</div>
+						<div class="ui-block-c" id="airedejeu">
+							<img src="img/HocusPocus/HocusPocus2.png">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="ui-block-c player">
+					<div id="player5">
+						<div class="player-title">
+							<div class="ui-grid-b">
+								<div class="ui-block-a carte"></div>
+								<div class="ui-block-b nom">></div>
+								<div class="ui-block-c gemme"></div>
+							</div>
+						</div>
+						<div class="player-jeu">
+							<img src="img/HocusPocus/HocusPocus.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png"> <img
+								src="img/HocusPocus/HocusSacrifice21.png">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="player-game" id="player0">
+				<div class="player-main"></div>
+				<div class="player-grimoire">
+					<img src="img/HocusPocus/HocusSacrifice21.png"> <img
+						src="img/HocusPocus/HocusSacrifice21.png"> <img
+						src="img/HocusPocus/HocusSacrifice21.png">
+				</div>
+				<div class="player-gemme"></div>
+			</div>
+		</div>
+		<div data-role="footer">
+			<a href="#show-console" data-role="button" data-icon="arrow-d">Console</a>
+			<a href="#popupJeu" data-rel="popup" data-position-to="window"
+				data-role="button" data-inline="true" data-icon="check"
+				data-theme="a" data-transition="pop">Démarrer Jeu</a>
+		</div>
+
+		<!-- panel -->
+		<div data-role="panel" data-position="right"
+			data-position-fixed="true" data-display="overlay" id="show-console">
+
+			<div id="console"></div>
+			<div id="message"></div>
+			<div id="menu-right">
+				<input type="text" id="chat" data-clear-btn="true" /> <select
+					name="flip-1" id="flip-1" data-role="slider" onChange="slide()">
+					<option value="1">Message</option>
+					<option value="2">Console</option>
+				</select>
+			</div>
+
+
+		</div>
+		<!-- /panel -->
+
+		<!-- /popup debut partie -->
+		<div data-role="popup" id="popupJeu" data-theme="a"
+			class="ui-corner-all">
+
+			<select id="selectNbJoueurs" name="nbJoueurs">
+				<option value="2" selected>2 joueurs</option>
+				<option value="3">3 joueurs</option>
+				<option value="4">4 joueurs</option>
+				<option value="5">5 joueurs</option>
+				<option value="6">6 joueurs</option>
+			</select>
+
+			<div id="nameInputJ0">
+				<input type="text" id="nomJ0" value="joueur 1">
+			</div>
+			<div id="nameInputJ1">
+				<input type="text" id="nomJ1" value="joueur 2">
+			</div>
+			<div id="nameInputJ2">
+				<input type="text" id="nomJ2" value="joueur 3">
+			</div>
+			<div id="nameInputJ3">
+				<input type="text" id="nomJ3" value="joueur 4">
+			</div>
+			<div id="nameInputJ4">
+				<input type="text" id="nomJ4" value="joueur 5">
+			</div>
+			<div id="nameInputJ5">
+				<input type="text" id="nomJ5" value="joueur 6">
+			</div>
+			<label><input name="partieRapide" value="partieRapide"
+				type="checkbox">Partie rapide </label>
+
+			<button type="submit" data-icon="check" onclick="getPlayers();"
+				id="btnDemarrer">Démarrer</button>
+
+		</div>
+		<!-- /popup -->
+		
+				<!-- popup cibler un joueur -->
+		<div data-role="popup" id="popupCibler" data-theme="a"
+		data-dismissible="false"
+			class="ui-corner-all">
+			Qui viser?
+			<button id="boutonCiblageJ0" onclick='viserJoueur(0)'>
+				Joueur 1
+			</button>
+			<button id="boutonCiblageJ1" onclick='viserJoueur(1)'>
+				Joueur 2
+			</button>
+			<button id="boutonCiblageJ2" onclick='viserJoueur(2)'>
+				Joueur 3
+			</button>
+			<button id="boutonCiblageJ3" onclick='viserJoueur(3)'>
+				Joueur 4
+			</button>
+			<button id="boutonCiblageJ4" onclick='viserJoueur(4)'>
+				Joueur 5
+			</button>
+			<button id="boutonCiblageJ5" onclick='viserJoueur(5)'>
+				Joueur 6
+			</button>
+		</div>
+		<!-- /popup -->
+		
+		<!-- popup choisir une action -->
+		<div data-role="popup" id="popupChoisirAction" data-theme="a"
+		data-dismissible="false"
+			class="ui-corner-all">
+			Que faire?
+			<button id="boutonChoisirAction0" onclick='choisirAction("jouerHocus")'>
+				Jouer une carte Hocus
+			</button>
+			<button id="boutonChoisirAction1" onclick='choisirAction("piocherGemme")'>
+				Piocher une gemme
+			</button><button id="boutonChoisirAction2" onclick='choisirAction("piocherCartes")'>
+				Piocher deux cartes
+			</button>
+		</div>
+		<!-- /popup -->
+		
+	</div>
+</body>
+</html>

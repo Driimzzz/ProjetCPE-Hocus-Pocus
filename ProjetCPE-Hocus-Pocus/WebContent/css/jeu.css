@@ -1,0 +1,220 @@
+
+#players-container{
+	width:100%;
+	height:100%;
+	border:none;
+	
+}
+.player{
+	height:30.33%;
+	overflow:hidden;
+	text-align:center;
+	margin:auto;
+	z-index:-1;
+	
+		
+}
+.player h1{
+	font-size:300%;
+	color:#FFF;
+	 -webkit-text-shadow: 2px 2px 7px rgba(0,0,0,0.9);
+  text-shadow: 2px 2px 7px rgba(0,0,0,0.9);
+  font-weight:bold;
+}
+
+
+.player-game{
+	color:white;
+	position:absolute; bottom:0; 
+	width:100%;
+	height:27%;
+	display:inline-block;
+}
+
+.table{
+	border: 5px dashed #FFF;
+	overflow:auto;
+	text-align:center;
+	padding:5%;
+	margin:auto;
+	z-index:0;
+	
+	}
+.player-title{
+	margin-top:3%;
+	width:100%;
+	height:18%;
+	color:#FFF;
+	 -webkit-text-shadow: 2px 2px 7px rgba(0,0,0,0.9);
+  text-shadow: 2px 2px 7px rgba(0,0,0,0.9);
+  font-weight:bold;
+  text-align:center;
+	
+}
+
+.player-main{
+	float:left;
+	width:60%;
+	height:100%;
+	
+}
+
+ .player-main img{
+	 width:13%;
+	float:left;
+	border: 5px solid #FFF;
+	padding:0;
+	margin:0;
+	margin-left:0.5%;
+	bottom:0%;
+	transform:rotate(7deg);
+-ms-transform:rotate(7deg); /* IE 9 */
+-webkit-transform:rotate(7deg); /* Safari and Chrome */
+border-radius:3px;
+ }
+ .player-main img:hover{
+ -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  -webkit-transform: scale(1.05,1.05);
+  -moz-transform: scale(1.05,1.05);
+  -o-transform: scale(1.05,1.05);
+  -ms-transform: scale(1.05,1.05);
+  transform: scale(1.05,1.05);
+}
+.player-gemme{
+	float:right;
+	width:10%;
+	height:100%;
+}
+.player-gemme img{
+	width:70%;
+}
+.player-grimoire{
+	float:left;
+	width:30%;
+	height:100%;
+
+}
+
+
+.player-grimoire img{
+	 width:26%;
+	float:left;
+	border: 5px solid #FFF;
+	padding:0;
+	margin:0;
+	margin-left:0.5%;
+	bottom:0%;
+	transform:rotate(7deg);
+-ms-transform:rotate(7deg); /* IE 9 */
+-webkit-transform:rotate(7deg); /* Safari and Chrome */
+border-radius:3px;
+ }
+ 
+.player-grimoire img:hover{
+ -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  -webkit-transform: scale(1.05,1.05);
+  -moz-transform: scale(1.05,1.05);
+  -o-transform: scale(1.05,1.05);
+  -ms-transform: scale(1.05,1.05);
+  transform: scale(1.05,1.05);
+}
+ 
+.player-jeu{
+	width:100%;
+	height:85%;
+	margin:auto;
+	text-align:center;
+	
+}
+.player-jeu img{
+	border: 4px solid #FFF;
+transform:rotate(7deg);
+-ms-transform:rotate(7deg); /* IE 9 */
+-webkit-transform:rotate(7deg); /* Safari and Chrome */
+	width:16.8%;
+	z-index:0;
+	border-radius:3px;
+}
+.player-jeu img:hover{
+ -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  -webkit-transform: scale(1.05,1.05);
+  -moz-transform: scale(1.05,1.05);
+  -o-transform: scale(1.05,1.05);
+  -ms-transform: scale(1.05,1.05);
+  transform: scale(1.05,1.05);
+}
+.player-jeu p{
+	position:inherit;
+}
+.player-cartes img{
+	border-radius:3px;
+transform:rotate(7deg);
+-ms-transform:rotate(7deg); /* IE 9 */
+-webkit-transform:rotate(7deg); /* Safari and Chrome */
+	height:5%;
+	z-index:0;
+	border-radius:3px;
+}
+#chaudron{
+	text-align:center;
+	color:#FFF;
+	 -webkit-text-shadow: 2px 2px 7px rgba(0,0,0,0.9);
+  text-shadow: 2px 2px 7px rgba(0,0,0,0.9);
+  font-weight:bold;
+}
+#chaudron img{
+}
+#chaudron img:hover{
+ -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  -webkit-transform: scale(1.05,1.05);
+  -moz-transform: scale(1.05,1.05);
+  -o-transform: scale(1.05,1.05);
+  -ms-transform: scale(1.05,1.05);
+  transform: scale(1.05,1.05);
+  border-radius:20%;
+  
+
+}
+
+#bibliotheque{
+	text-align:center;
+}
+#bibliotheque img{
+	border: 4px solid #FFF;
+	width:79%;
+	border-radius:3px;
+}
+#bibliotheque img:hover{
+ -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  -webkit-transform: scale(1.05,1.05);
+  -moz-transform: scale(1.05,1.05);
+  -o-transform: scale(1.05,1.05);
+  -ms-transform: scale(1.05,1.05);
+  transform: scale(1.05,1.05);
+  
+
+}
+#airedejeu {
+	text-align:center;
+}
+#airedejeu img{
+	border: 4px solid #FFF;
+	width:79%;
+	border-radius:3px;
+
+}
+#airedejeu img:hover{
+ -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  -webkit-transform: scale(1.05,1.05);
+  -moz-transform: scale(1.05,1.05);
+  -o-transform: scale(1.05,1.05);
+  -ms-transform: scale(1.05,1.05);
+  transform: scale(1.05,1.05);
+
+}
