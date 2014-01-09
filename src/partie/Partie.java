@@ -261,18 +261,26 @@ public class Partie extends Thread {
 		Partie.aireDeJeu = aireDeJeu;
 	}
 
-	public void ajouterAAireDeJeu(Carte carte) {
+	public boolean ajouterAAireDeJeu(Carte carte) {
 		if (aireDeJeu.tailleDeLaPile() < 1) {
-			if (carte.getType() == CarteType.hocus)
+			if (carte.getType() == CarteType.hocus){
 				aireDeJeu.ajouterUneCarte(carte);
-			else
+				return true;
+		}
+			else{
 				Interface
 						.Console("La premiere carte jouée doit être une HOCUS");
+				return false;
+			}
 		} else {
-			if (carte.getType() == CarteType.pocus)
+			if (carte.getType() == CarteType.pocus){
 				aireDeJeu.ajouterUneCarte(carte);
-			else
+				return true;
+			}
+			else{
 				Interface.Console("Une seule carte Hocus à la fois");
+				return false;
+			}
 		}
 
 	}
@@ -283,6 +291,7 @@ public class Partie extends Thread {
 			currentCarte.action();
 		}
 		setAireDeJeu(new PileDeCartes());
+		Interface.toutesLesInfos();
 	}
 
 	public PileDeCartes getDefausse() {

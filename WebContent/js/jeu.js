@@ -46,6 +46,7 @@ function getPlayers() {
 	}
 	envoyerServeur("{methode:creerJeu;joueurs:[" + joueurs + "]}");
 	InitJeu(joueurs);
+	$('#popupJeu').popup( "close" );
 }
 
 function getInfo(message) {
@@ -57,6 +58,16 @@ function getInfo(message) {
 				.html(
 						obJ.chaudron
 								+ '<img src="img/HocusPocus/chaudron.gif" width="90%">');
+		//l'aire de jeu
+		$("#airedejeu").html("");
+		$('#boutonTraiterAireDeJeu').hide();
+		for (var i = 0; i < obJ.aireDeJeu.length; i++) {
+			$("#airedejeu").append('<img src="img/HocusPocus/'
+									+ obJ.aireDeJeu[i]
+									+ '.png" style="margin-top:' + i*-170 + 'px;">');
+			$('#boutonTraiterAireDeJeu').show();
+		}
+		//chaque joueur
 		for (var i = 0; i < obJ.joueurs.length; i++) {
 			$("#player" + i + " .nom").html(obJ.joueurs[i].nom);
 			$("#player" + i + " .carte")
@@ -88,9 +99,29 @@ function getInfo(message) {
 			}
 		}
 	}
+	if (obJ.methode == "viserJoueur") {
+		$("#boutonCiblageJ0").hide();
+		$("#boutonCiblageJ1").hide();
+		$("#boutonCiblageJ2").hide();
+		$("#boutonCiblageJ3").hide();
+		$("#boutonCiblageJ4").hide();
+		$("#boutonCiblageJ5").hide();
+		for (var i = 0; i < obJ.joueurs.length; i++) {
+			if(obJ.numJoueurVisant != i){
+				$("#boutonCiblageJ"+i).show();
+				$("#boutonCiblageJ"+i).html(obJ.joueurs[i].nom);
+			}
+			
+		}
+		$("#popupCibler").popup("open");
+	}
 
 }
 function carteJouee(joueur, carte) {
 	envoyerServeur("{methode:carteJouee;numJoueur:" + joueur + ";numCarte:"
 			+ carte + "}");
+}
+function viserJoueur(numero){
+	envoyerServeur("{methode:joueurVise;numJoueurVise:" + numero + "}");
+	$("#popupCibler").popup("close");
 }
