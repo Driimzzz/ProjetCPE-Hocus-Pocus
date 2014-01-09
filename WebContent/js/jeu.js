@@ -2,7 +2,7 @@ var joueurs = [];
 var obJ = "";
 
 $(document).ready(function() {
-
+	
 	$('#selectNbJoueurs').change(function() {// affiche les zones d'input en
 		// fonction du nbd e joueurs
 		// choisis
@@ -49,6 +49,7 @@ function getPlayers() {
 }
 
 function getInfo(message) {
+	alert(message);
 	obJ = jQuery.parseJSON(message);
 	console.log(obJ);
 	if (obJ.methode == "toutesLesInfos") {
