@@ -211,8 +211,57 @@ public class Interface {
 		partie.getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
 	}
 
+	//le client informe le serveur la fin de la carte hocus
 	public static void finCarteHocus() {
 		partie.jouerLesCartesDeLaireDeJeu();
+		partie.tourDeJeu();
+	}
+	
+	//choix d'une action demande au client
+	public static void demandeAction(boolean carteHocus) {
+		JsonObject json = new JsonObject();
+		json.addProperty("methode", "demandeAction");
+		json.addProperty("peuCarteHocus", carteHocus); //si le joueur peu jouer une carte Hocus
+		Jeu(json.toString());
+		
+//		//Pour le test cote serveur
+//		int input = -1;
+//		while(input!=1 && input!=2){		
+//			Interface.Console("entrez 0 ou 1 ou 2:");
+//			input = Partie.readIntValue();
+//		}
+//		String strMsg="";		
+//		switch (input){
+//		case 0:
+//			strMsg= "{methode:reponseAction;action:jouerHocus}";
+//			break;
+//		case 1:
+//			strMsg= "{methode:reponseAction;action:piocherGemme}";
+//			break;
+//		case 2:
+//			strMsg= "{methode:reponseAction;action:piocherCartes}";
+//			break;
+//		}
+//		Message message = new Message(MessageType.Jeu, strMsg);
+//		gestionMessage(message);
+	}
+	
+	//choix d'une action demande au client
+	public static void reponseAction(String action) {
+		switch(action){
+		case "jouerHocus":			
+			break;		
+		case "piocherGemme":
+			partie.finDuTour(1);
+			break;
+		case "piocherCartes":
+			partie.finDuTour(2);
+			break;
+		default :
+			Error("Erreur Json dans la sythaxe de l'action");
+			break;
+		}
+		toutesLesInfos();
 	}
 
 	public static void gestionMessage(Message message) {
@@ -293,6 +342,17 @@ public class Interface {
 
 			case "finCarteHocus":
 				finCarteHocus();
+				break;
+				
+			case "reponseAction":
+				String action="";
+				try {
+					action = json.getString("action");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}//piocherGemme OU piocherCartes OU jouerHocus
+				reponseAction(action);
 				break;
 
 			default:
