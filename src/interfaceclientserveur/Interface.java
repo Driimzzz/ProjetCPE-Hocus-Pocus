@@ -103,25 +103,31 @@ public class Interface {
 				// TODO Auto-generated catch block
 				Error(e.getMessage());
 			}
+			try {
+				grosJson.put("joueurEnCour", partie.getJoueurJouant());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Error(e.getMessage());
+			}
 			JSONArray arr = new JSONArray();
 			int n = 0;
 			for (Joueur j : partie.getJoueurs()) {
 				arr.put(j.toJson(numJoueur, n));
 				n++;
 			}
-			if(numJoueur>=0){
+			if (numJoueur >= 0) {
 				try {
 					JSONObject buffer = (JSONObject) arr.get(numJoueur);
-					//arr.remove(numJoueur);
-					arr.put(numJoueur,arr.get(0));
-					//arr.remove(0);
+					// arr.remove(numJoueur);
+					arr.put(numJoueur, arr.get(0));
+					// arr.remove(0);
 					arr.put(0, buffer);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
+				}
 			}
-			
+
 			try {
 				grosJson.put("joueurs", arr);
 			} catch (JSONException e) {
@@ -192,16 +198,18 @@ public class Interface {
 
 	// informer le serveur quelle carte a été jouée par quel joueur
 	public static void carteJouee(int numJoueur, int numDansSaMain) {
-		
-		Joueur joueur = partie.getJoueurs().get(numJoueur);
-		Carte carteJouee = joueur.getMain().getPileDeCarte().get(numDansSaMain);
-		
-		if(carteJouee.getType()==CarteType.pocus)
-			joueur.jouerCarte(carteJouee);
-		else if(numJoueur==partie.getJoueurJouant())
-			joueur.jouerCarte(carteJouee);
-		else
-			Error("Carte interdite de jouer");
+		if (numJoueur <= partie.getJoueurs().size()) {
+			Joueur joueur = partie.getJoueurs().get(numJoueur);
+			Carte carteJouee = joueur.getMain().getPileDeCarte()
+					.get(numDansSaMain);
+
+			if (carteJouee.getType() == CarteType.pocus)
+				joueur.jouerCarte(carteJouee);
+			else if (numJoueur == partie.getJoueurJouant())
+				joueur.jouerCarte(carteJouee);
+			else
+				Error("Carte interdite de jouer");
+		}
 	}
 
 	// le serveur demande au client de viser
@@ -230,7 +238,7 @@ public class Interface {
 			Error(e.getMessage());
 		}
 
-		Jeu(grosJson.toString(),partie.getJoueurJouant());
+		Jeu(grosJson.toString(), partie.getJoueurJouant());
 	}
 
 	// le client repond quel joueur est visé
@@ -252,7 +260,7 @@ public class Interface {
 		json.addProperty("methode", "demandeAction");
 		json.addProperty("peuCarteHocus", carteHocus); // si le joueur peu jouer
 														// une carte Hocus
-		Jeu(json.toString(),partie.getJoueurJouant());
+		Jeu(json.toString(), partie.getJoueurJouant());
 
 		// //Pour le test cote serveur
 		// int input = -1;
@@ -334,9 +342,9 @@ public class Interface {
 
 			case "carteJouee":
 				bonJSON = true;
-			
+
 				int numCarte = 0;
-				
+
 				try {
 					numCarte = json.getInt("numCarte");
 				} catch (JSONException e) {

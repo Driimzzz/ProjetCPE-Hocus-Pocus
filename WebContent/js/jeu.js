@@ -32,6 +32,7 @@ function getInfo(message) {
 	if (obJ.methode == "toutesLesInfos") {
 		InitJeu(obJ.joueurs.length);
 		
+		
 		$("#chaudron")
 				.html(
 						obJ.chaudron
@@ -47,7 +48,11 @@ function getInfo(message) {
 		}
 		//chaque joueur
 		for (var i = 1; i < obJ.joueurs.length; i++) {
-			$("#player" + i + " .nom").html(obJ.joueurs[i].nom);
+			if(obJ.joueurs[i].id==obJ.joueurEnCour)
+				$("#player" + i + " .nom").html('<p style="color:red;">'+obJ.joueurs[i].nom+'</p>');
+			else
+				$("#player" + i + " .nom").html('<p>'+obJ.joueurs[i].nom+'</p>');
+			
 			$("#player" + i + " .carte")
 					.html(
 							obJ.joueurs[i].main

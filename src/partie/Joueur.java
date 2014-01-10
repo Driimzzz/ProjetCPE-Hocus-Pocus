@@ -55,6 +55,14 @@ public class Joueur {
 
 	public JSONObject toJson(int numJoueur, int j) {
 		JSONObject json = new JSONObject();
+		
+		try {
+			json.put("id", j);
+		} catch (JSONException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 		try {
 			json.put("nom", this.getNom());
 		} catch (JSONException e2) {
