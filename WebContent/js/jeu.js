@@ -1,20 +1,7 @@
-var joueurs = [];
 var obJ = "";
 
 $(document).ready(function() {
-	
-	$('#selectNbJoueurs').change(function() {// affiche les zones d'input en
-		// fonction du nbd e joueurs
-		// choisis
-		HideJeu();
-		for (var i = 0; i < 6; i++) {
-			if (i < $(this).val())
-				$('#nameInputJ' + i).show();
-			else
-				$('#nameInputJ' + i).hide();
-		}
-	}).change();
-
+	HideJeu();
 });
 
 function HideJeu() {
@@ -32,19 +19,8 @@ function InitJeu(players) {
 }
 
 function getPlayers() {
-	players = [];
 	HideJeu();
-	for (var i = 0; i < $('#selectNbJoueurs').val(); i++) {
-		joueurs.push($('#nomJ' + i).val());
-		$("#player" + i + " .nom").html($('#nomJ' + i).val());
-		$("#player" + i + " .carte")
-				.html(
-						'3 <img src="img/HocusPocus/HocusPocus.png" width="10%" style="border: 2px solid #FFF;">');
-		$("#player" + i + " .gemme").html(
-				'0 <img src="img/HocusPocus/gemmes.png" width="15%">');
-
-	}
-	envoyerServeur("{methode:creerJeu;joueurs:[" + joueurs + "]}");
+	envoyerServeur("{methode:creerJeu}");
 	$('#popupJeu').popup( "close" );
 }
 
@@ -80,6 +56,8 @@ function getInfo(message) {
 					.html(
 							obJ.joueurs[i].nbrGemme
 									+ ' <img src="img/HocusPocus/gemmes.png" width="15%">');
+			if(obJ.joueurs[i].main!=0)
+				$("#player" + i + " .player-jeu").html('<img src="img/HocusPocus/HocusPocus.png">');
 
 		}
 		$("#player" + 0 + " .player-main").html("");
