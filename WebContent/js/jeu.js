@@ -1,6 +1,7 @@
 var obJ = "";
 
 $(document).ready(function() {
+	$('.clock_seconds').hide();
 	HideJeu();
 });
 
@@ -39,12 +40,12 @@ function getInfo(message) {
 								+ '<img src="img/HocusPocus/chaudron.gif" width="90%">');
 		//l'aire de jeu
 		$("#airedejeu").html("");
-		$('#boutonTraiterAireDeJeu').hide();
 		for (var i = 0; i < obJ.aireDeJeu.length; i++) {
 			$("#airedejeu").append('<img src="img/HocusPocus/'
 									+ obJ.aireDeJeu[i]
 									+ '.png" style="margin-top:' + i*-170 + 'px;">');
-			$('#boutonTraiterAireDeJeu').show();
+			// on débute le chrono
+			chrono();
 		}
 		//chaque joueur
 		for (var i = 1; i < obJ.joueurs.length; i++) {

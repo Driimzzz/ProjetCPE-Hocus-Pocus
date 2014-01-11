@@ -1,0 +1,52 @@
+/**********************************/
+/*              CLOCK             */
+/**********************************/
+
+.clock_seconds {
+	position:absolute;
+	left:50%;
+	top:40%;
+
+   
+}
+
+.bgLayer { 
+    position:absolute; 
+	left:80px;
+}
+
+.topLayer { 
+    position:absolute; 
+    width:188px;
+    height:50px;
+    background-repeat:no-repeat;
+	
+}
+
+
+.text { position:absolute; top:45px; left:42px; width:100px;  height:50px;}
+
+.val {
+    font-family: 'Yanone';
+    font-size:47px;
+    font-weight:bold;
+    color:#FFF;
+    text-align:center;
+    line-height:50px;
+    margin-top:12px;
+    width:100px;
+    text-shadow:0px 0px 11px black;
+}
+
+.type_seconds {
+	background-color:red;
+    font-family: 'Yanone';
+    color:#ffdc50;
+    width:100px;
+    text-align:center;
+    font-size:13px;
+    line-height:20px;
+    font-weight:bold;
+    text-transform:uppercase;
+    text-shadow:0px 0px 11px black;
+}

@@ -116,15 +116,15 @@ public class Interface {
 	}
 
 	// choix d'une action demande au client
-	public static void reponseAction(String action) {
+	public static void reponseAction(int numJoueur,String action) {
 		switch (action) {
 		case "jouerHocus":
 			break;
 		case "piocherGemme":
-			partie.finDuTour(1);
+			partie.finDuTour(numJoueur,1);
 			break;
 		case "piocherCartes":
-			partie.finDuTour(2);
+			partie.finDuTour(numJoueur,2);
 			break;
 		default:
 			Error("Erreur Json dans la sythaxe de l'action");
@@ -190,7 +190,7 @@ public class Interface {
 				int numJoueurVise;
 				try {
 					numJoueurVise = json.getInt("numJoueurVise");
-					partie.joueurVise(numJoueurVise);
+					partie.joueurVise(message.getAuteur(),numJoueurVise);
 				} catch (JSONException e) {
 					bonJSON = false;
 					Error(e.getMessage());
@@ -209,7 +209,7 @@ public class Interface {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}// piocherGemme OU piocherCartes OU jouerHocus
-				reponseAction(action);
+				reponseAction(message.getAuteur(),action);
 				break;
 
 			default:

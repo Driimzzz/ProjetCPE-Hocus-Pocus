@@ -17,6 +17,9 @@ import java.util.Scanner;
 
 
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +36,7 @@ public class Partie extends Thread {
 	private int indexJoueur;
 	static private PileDeCartes aireDeJeu;
 	static private PileDeCartes defausse;
+	Timer timerFinCarte;
 
 	public void tourDeJeu() {
 		Joueur joueurEnCours = joueurs.get(indexJoueur);
@@ -66,34 +70,39 @@ public class Partie extends Thread {
 //		}
 	}
 
-	public void finDuTour(int input){
+	public void finDuTour(int numJoueur, int input){
 		Interface.Console("c'est la fin de votre tour, vous pouvez : 1=piocher une gemme dans le chaudron OU 2=piocher deux cartes : ");
 //		int input = -1;
 //		while(input!=1 && input!=2){		
 //			Interface.Console("entrez 1 ou 2:");
 //			input = readIntValue();
 //		}	
-		Joueur joueurEnCours = joueurs.get(indexJoueur);
-		if (input==1){//pioche 1 gemme
-			Interface.Console("vous piochez 1 gemme dans le chaudron");
-			joueurEnCours.setGemmes(joueurEnCours.getGemmes()+1);
-			this.piocherDansLeChaudron(1);
-		}
-		else if (input ==2 ){ //pioche 2 cartes
-			Interface.Console("vous piochez 2 cartes");
-			joueurEnCours.piocherCartes(2);
-		}
-		else{//erreur
-			Interface.Console("erreur fin du tour");
-		}
-		Interface.Console("vous avez maintenant "+ joueurEnCours.getGemmes()+" gemmes.");
 		
-		//passe au jouer suivant
-		if (indexJoueur == joueurs.size() - 1)
-			indexJoueur = 0;
-		else
-			indexJoueur++;
-		jeu();
+		//on vérifie l'auteur
+		if(indexJoueur==numJoueur)
+		{
+			Joueur joueurEnCours = joueurs.get(indexJoueur);
+			if (input==1){//pioche 1 gemme
+				Interface.Console("vous piochez 1 gemme dans le chaudron");
+				joueurEnCours.setGemmes(joueurEnCours.getGemmes()+1);
+				this.piocherDansLeChaudron(1);
+			}
+			else if (input ==2 ){ //pioche 2 cartes
+				Interface.Console("vous piochez 2 cartes");
+				joueurEnCours.piocherCartes(2);
+			}
+			else{//erreur
+				Interface.Console("erreur fin du tour");
+			}
+			Interface.Console("vous avez maintenant "+ joueurEnCours.getGemmes()+" gemmes.");
+			
+			//passe au jouer suivant
+			if (indexJoueur == joueurs.size() - 1)
+				indexJoueur = 0;
+			else
+				indexJoueur++;
+			jeu();
+		}
 	}
 	public void run () {
 		jeu();
@@ -393,15 +402,29 @@ public class Partie extends Thread {
 
 		// informer le serveur quelle carte a été jouée par quel joueur
 		public  void carteJouee(int numJoueur, int numDansSaMain) {
+			//protection de la donnée
 			if (numJoueur <= getJoueurs().size()) {
+				
+				//nouvelle carte on reset le timer
+				if(timerFinCarte!=null)
+					timerFinCarte.cancel();
+				
 				Joueur joueur = getJoueurs().get(numJoueur);
 				Carte carteJouee = joueur.getMain().getPileDeCarte()
 						.get(numDansSaMain);
-
+				//on vérifie que c'est bien à lui de jouer +hocus/pocus
 				if (carteJouee.getType() == CarteType.pocus)
+				{
 					joueur.jouerCarte(carteJouee);
+					timerFinCarte= new Timer();
+					timerFinCarte.schedule(new TimerTaskFinTour(), 9000);
+				}
 				else if (numJoueur == getJoueurJouant())
+				{
 					joueur.jouerCarte(carteJouee);
+					timerFinCarte= new Timer();
+					timerFinCarte.schedule(new TimerTaskFinTour(), 9000);
+				}
 				else
 					Interface.Error("Carte interdite de jouer");
 			}
@@ -437,17 +460,27 @@ public class Partie extends Thread {
 		}
 
 		// le client repond quel joueur est visé
-		public  void joueurVise(int numJoueurVise) {
-			Joueur jVise = getJoueurs().get(numJoueurVise);
-			Interface.Console("vous visez le joueur numéro " + numJoueurVise);
-			getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
+		public  void joueurVise(int numJoueur,int numJoueurVise) {
+			//on vérifie l'auteur du message
+			if (numJoueur == getJoueurJouant())
+			{
+				Joueur jVise = getJoueurs().get(numJoueurVise);
+				Interface.Console("vous visez le joueur numéro " + numJoueurVise);
+				getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
+			}
 		}
 
 		// le client informe le serveur la fin de la carte hocus
 		public  void finCarteHocus() {
-			jouerLesCartesDeLaireDeJeu();
-			tourDeJeu();
+		
+				jouerLesCartesDeLaireDeJeu();
+				tourDeJeu();
 		}
-
-
+		// dès qu'une carte est jouée nous avons un certain temps pour en poser d'autres sinon tour suivant!
+		 class TimerTaskFinTour extends TimerTask {
+		        public void run() {
+		            timerFinCarte.cancel(); //Terminate the timer thread
+		            finCarteHocus();
+		        }
+		    }
 }

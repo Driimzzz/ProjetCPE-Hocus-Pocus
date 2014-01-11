@@ -11,6 +11,7 @@ import cartes.Carte.CarteType;
 
 public class Joueur {
 	private int gemmes;
+	private long id;
 	private Main main;
 	private Grimoire grimoire;
 	private String nom;

@@ -6,11 +6,13 @@
 <title>Hocus Pocus</title>
 <link rel="stylesheet" href="css/socket.css">
 <link rel="stylesheet" href="css/jeu.css">
+<link rel="stylesheet" href="css/chrono.css">
 <link rel="stylesheet" href="css/jquery-mobile.css" />
 <script src="js/jquery.js"></script>
 <script src="js/jquery-mobile.js"></script>
 <script src="js/socket.js"></script>
 <script src="js/jeu.js"></script>
+<script src="js/chrono.js"></script>
 <script src="js/message.js"></script>
 
 </head>
@@ -21,14 +23,14 @@
 
 
 		<div data-role="header">
-			<h1>Header</h1>
+			<h1>Hocus Pocus</h1>
 		</div>
 
 
 		<div data-role="content"
 			style="background: radial-gradient(at 50% 38%, rgb(83, 194, 48), rgb(19, 131, 0)) no-repeat fixed center center lightblue;">
 
-
+<div class="clock_seconds"><div class="bgLayer"><div class="topLayer"></div><canvas id="canvas_seconds" width="188" height="168"></canvas><div class="text"><p class="val">8</p></div></div></div>
 			<div class="ui-grid-b" id="players-container">
 
 				<div class="ui-block-a player">
@@ -87,8 +89,6 @@
 				<div class="ui-block-b" id="jeu">
 					<div class="player-title">Zone de Jeu</div>
 					<div class="ui-grid-b table">
-						<button id="boutonTraiterAireDeJeu"
-							onclick='console.log("clic"); envoyerServeur("{methode:finCarteHocus}");'>Valider</button>
 						<div class="ui-block-a" id="chaudron" onclick='choisirAction("piocherGemme")'>
 							15 <img src="img/HocusPocus/chaudron.gif" width="90%" onclick='choisirAction("piocherGemme")'>
 						</div>
