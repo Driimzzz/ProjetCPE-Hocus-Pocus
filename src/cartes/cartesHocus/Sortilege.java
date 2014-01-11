@@ -21,9 +21,7 @@ public class Sortilege extends Hocus{
 			
 			Joueur joueurJouant = this.getPartie().getJoueurs().get(this.getPartie().getJoueurJouant());
 			joueurJouant.setGemmes(joueurJouant.getGemmes()+this.getForce());
-			
-			Interface.Console(joueurJouant.getNom() + " pioche "+this.getForce()+" gemmes dans le chaudron");
-			Interface.Console("Il reste "+ this.getPartie().getChaudron() +" gemmes dans le chaudron");
+			Interface.Console(joueurJouant.getNom() + "lance un sortilege "+this.getForce()+" contre le chaudron");
 		}
 	}
 	

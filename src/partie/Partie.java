@@ -41,7 +41,6 @@ public class Partie extends Thread {
 	public void tourDeJeu() {
 		Joueur joueurEnCours = joueurs.get(indexJoueur);
 		Interface.Console("c'est le tour de " + joueurEnCours.getNom());
-		Interface.Console("vous avez "+ joueurEnCours.getGemmes()+" gemmes.");
 		
 		if(!(joueurEnCours.getMain().getPileDeCarte().size()<1))
 			Interface.demandeAction(true);
@@ -71,7 +70,7 @@ public class Partie extends Thread {
 	}
 
 	public void finDuTour(int numJoueur, int input){
-		Interface.Console("c'est la fin de votre tour, vous pouvez : 1=piocher une gemme dans le chaudron OU 2=piocher deux cartes : ");
+		//Interface.Console("c'est la fin de votre tour, vous pouvez : 1=piocher une gemme dans le chaudron OU 2=piocher deux cartes : ");
 //		int input = -1;
 //		while(input!=1 && input!=2){		
 //			Interface.Console("entrez 1 ou 2:");
@@ -83,18 +82,18 @@ public class Partie extends Thread {
 		{
 			Joueur joueurEnCours = joueurs.get(indexJoueur);
 			if (input==1){//pioche 1 gemme
-				Interface.Console("vous piochez 1 gemme dans le chaudron");
+				Interface.Console(joueurEnCours.getNom()+" pioche 1 gemme dans le chaudron");
 				joueurEnCours.setGemmes(joueurEnCours.getGemmes()+1);
 				this.piocherDansLeChaudron(1);
 			}
 			else if (input ==2 ){ //pioche 2 cartes
-				Interface.Console("vous piochez 2 cartes");
+				Interface.Console(joueurEnCours.getNom()+" pioche 2 cartes");
 				joueurEnCours.piocherCartes(2);
 			}
 			else{//erreur
 				Interface.Console("erreur fin du tour");
 			}
-			Interface.Console("vous avez maintenant "+ joueurEnCours.getGemmes()+" gemmes.");
+			Interface.Console(joueurEnCours.getNom()+" a maintenant "+ joueurEnCours.getGemmes()+" gemmes.");
 			
 			//passe au jouer suivant
 			if (indexJoueur == joueurs.size() - 1)
@@ -127,7 +126,7 @@ public class Partie extends Thread {
 		afficherJoueurs();
 	}
 	
-	public static int readIntValue() 
+	/*public static int readIntValue() 
 	{ 
 	
 		do{
@@ -143,7 +142,7 @@ public class Partie extends Thread {
 		Interface.input="";
 		return nbr;
 	   
-	}
+	}*/
 	
 	public void afficherJoueurs(){
 		Interface.Console("liste des joueurs : ");
@@ -195,13 +194,13 @@ public class Partie extends Thread {
 			}
 			initChaudron(partieRapide);
 
-			for (int i = 0; i < clients.size(); i++) {
+			/*for (int i = 0; i < clients.size(); i++) {
 				Interface.Console("affichage de la main de "
 						+ this.getJoueurs().get(i).getNom());
 				this.getJoueurs().get(i).getMain().afficherToutes();
 			}
 			Interface.Console("affichage de la bibliotheque :");
-			bibliotheque.getCartes().afficherToutes();
+			bibliotheque.getCartes().afficherToutes();*/
 		}
 		
 	private void initChaudron(boolean partieRapide) {
@@ -227,7 +226,7 @@ public class Partie extends Thread {
 			}
 		} else
 			chaudron = 15;
-		Interface.Console("chaudron initialisé à : " + this.getChaudron());
+		/*Interface.Console("chaudron initialisé à : " + this.getChaudron());*/
 	}
 
 	//non mutlijoueur
@@ -250,7 +249,7 @@ public class Partie extends Thread {
 
 	public void piocherDansLeChaudron(int nbrDeGemmes) {
 		setChaudron(chaudron - nbrDeGemmes);
-		Interface.Console("il reste " + chaudron + " gemmes dans le chaudron");
+		Interface.Console("Il reste " + chaudron + " gemmes dans le chaudron");
 		if (chaudron <= 0){
 			finDuJeu();
 		}
@@ -394,8 +393,7 @@ public class Partie extends Thread {
 		// retourner au client quel joueur doit jouer
 		public  void joueurEnCour() {
 			int num = getJoueurJouant();
-			Interface.Console("C'est le tour du joueur numero " + num);
-			Interface.Console("Nommé : " + getJoueurs().get(num).getNom());
+			Interface.Console("C'est le tour du joueur numero " + getJoueurs().get(num).getNom());
 		}
 		
 
@@ -465,7 +463,7 @@ public class Partie extends Thread {
 			if (numJoueur == getJoueurJouant())
 			{
 				Joueur jVise = getJoueurs().get(numJoueurVise);
-				Interface.Console("vous visez le joueur numéro " + numJoueurVise);
+				Interface.Console(getJoueurs().get(numJoueur).getNom()+" vise " + jVise.getNom());
 				getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
 			}
 		}

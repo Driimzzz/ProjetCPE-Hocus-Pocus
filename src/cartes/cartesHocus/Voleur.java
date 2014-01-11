@@ -45,16 +45,11 @@ public class Voleur extends Hocus{
 	public void action() {
 		if(isValide())
 		{
-			Interface.Console("vol "+this.getForce()+" gemmes à un joueur");
-			
 			int gemmesVolees = joueurVise.perdreDesGemmes(this.getForce());
-			Interface.Console("Vous volez à "+joueurVise.getNom());
-			Interface.Console("Il lui reste "+joueurVise.getGemmes()+" gemmes");
-			
 			Joueur joueurJouant = this.getPartie().getJoueurs().get(this.getPartie().getJoueurJouant());
 			joueurJouant.setGemmes(joueurJouant.getGemmes()+gemmesVolees);
 			
-			Interface.Console(joueurJouant.getNom()+" a maintenant "+joueurJouant.getGemmes()+" gemmes");	
+			Interface.Console(joueurJouant.getNom() +" vole "+this.getForce()+" gemmes à "+joueurVise.getNom());
 		}	
 	}
 
