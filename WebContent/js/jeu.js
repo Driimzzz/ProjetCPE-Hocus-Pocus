@@ -45,11 +45,7 @@ function getInfo(message) {
 							+ '.png" style="margin-top:' + i * -170 + 'px;">');
 
 		}
-		// on débute le chrono
-		if (obJ.aireDeJeu.length != 0) {
-			clearInterval(cdown);
-			chrono();
-		}
+	
 
 		// chaque joueur
 		for (var i = 1; i < obJ.joueurs.length; i++) {
@@ -110,6 +106,12 @@ function getInfo(message) {
 			$("#boutonChoisirAction0").show();
 
 		$("#popupChoisirAction").popup("open");
+	}
+	
+	// on débute le chrono
+	if (obJ.methode == "lancerChrono") {
+		clearInterval(cdown);
+		chrono();
 	}
 
 }

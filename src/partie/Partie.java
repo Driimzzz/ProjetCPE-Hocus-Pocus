@@ -24,6 +24,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.JsonObject;
+
 import websocket.console.Client;
 import cartes.*;
 import cartes.Carte.CarteType;
@@ -403,9 +405,7 @@ public class Partie extends Thread {
 			//protection de la donnée
 			if (numJoueur <= getJoueurs().size()) {
 				
-				//nouvelle carte on reset le timer
-				if(timerFinCarte!=null)
-					timerFinCarte.cancel();
+				
 				
 				Joueur joueur = getJoueurs().get(numJoueur);
 				Carte carteJouee = joueur.getMain().getPileDeCarte()
@@ -414,14 +414,12 @@ public class Partie extends Thread {
 				if (carteJouee.getType() == CarteType.pocus)
 				{
 					joueur.jouerCarte(carteJouee);
-					timerFinCarte= new Timer();
-					timerFinCarte.schedule(new TimerTaskFinTour(), 9000);
+					lancerChrono();
 				}
 				else if (numJoueur == getJoueurJouant())
 				{
 					joueur.jouerCarte(carteJouee);
-					timerFinCarte= new Timer();
-					timerFinCarte.schedule(new TimerTaskFinTour(), 9000);
+					lancerChrono();
 				}
 				else
 					Interface.Error("Carte interdite de jouer");
@@ -473,6 +471,18 @@ public class Partie extends Thread {
 		
 				jouerLesCartesDeLaireDeJeu();
 				tourDeJeu();
+		}
+		
+		private void lancerChrono()
+		{
+			JsonObject json = new JsonObject();
+			json.addProperty("methode", "lancerChrono");										
+			Interface.Jeu(json.toString(),-1);
+			//nouvelle carte on reset le timer
+			if(timerFinCarte!=null)
+				timerFinCarte.cancel();
+			timerFinCarte= new Timer();
+			timerFinCarte.schedule(new TimerTaskFinTour(), 9000);
 		}
 		// dès qu'une carte est jouée nous avons un certain temps pour en poser d'autres sinon tour suivant!
 		 class TimerTaskFinTour extends TimerTask {
