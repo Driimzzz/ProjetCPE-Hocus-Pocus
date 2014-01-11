@@ -1,7 +1,10 @@
+
+
+var cdown;
+
 function chrono() {
 
 	$('.clock_seconds').show();
-	clearInterval(cdown);
 	function deg(deg) {
 
 		return (Math.PI / 180) * deg - (Math.PI / 180) * 90
