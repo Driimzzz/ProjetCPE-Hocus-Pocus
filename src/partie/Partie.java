@@ -15,6 +15,12 @@ import java.util.Scanner;
 
 
 
+
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import websocket.console.Client;
 import cartes.*;
 import cartes.Carte.CarteType;
@@ -98,7 +104,7 @@ public class Partie extends Thread {
 		//indexJoueur = 0;
 //		while (chaudron > 0) {
 		if (chaudron > 0) {
-			Interface.toutesLesInfos();
+			toutesLesInfos();
 			tourDeJeu();
 			
 			
@@ -307,7 +313,7 @@ public class Partie extends Thread {
 			currentCarte.action();
 		}
 		setAireDeJeu(new PileDeCartes());
-		Interface.toutesLesInfos();
+		toutesLesInfos();
 	}
 
 	public PileDeCartes getDefausse() {
@@ -317,5 +323,131 @@ public class Partie extends Thread {
 	public void setDefausse(PileDeCartes defausse) {
 		Partie.defausse = defausse;
 	}
+	
+	// le serveur envois toutes les infos relative à la partie
+		public void toutesLesInfos() {
+			for (int numJoueur = 0; numJoueur < getJoueurs().size(); numJoueur++) {
+				JSONObject grosJson = new JSONObject();
+				try {
+					grosJson.put("methode", "toutesLesInfos");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					Interface.Error(e.getMessage());
+				}
+				try {
+					grosJson.put("chaudron", getChaudron());
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					Interface.Error(e.getMessage());
+				}
+				try {
+					grosJson.put("joueurEnCour", getJoueurJouant());
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					Interface.Error(e.getMessage());
+				}
+				JSONArray arr = new JSONArray();
+				int n = 0;
+				for (Joueur j : getJoueurs()) {
+					arr.put(j.toJson(numJoueur, n));
+					n++;
+				}
+				if (numJoueur >= 0) {
+					try {
+						JSONObject buffer = (JSONObject) arr.get(numJoueur);
+						// arr.remove(numJoueur);
+						arr.put(numJoueur, arr.get(0));
+						// arr.remove(0);
+						arr.put(0, buffer);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						Interface.Error(e.getMessage());
+					}
+				}
+
+				try {
+					grosJson.put("joueurs", arr);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					Interface.Error(e.getMessage());
+				}
+
+				try {
+					grosJson.put("aireDeJeu", getAireDeJeu().toJson());
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					Interface.Error(e.getMessage());
+				}
+
+				Interface.Jeu(grosJson.toString(), numJoueur);
+			}
+		}
+		// retourner au client quel joueur doit jouer
+		public  void joueurEnCour() {
+			int num = getJoueurJouant();
+			Interface.Console("C'est le tour du joueur numero " + num);
+			Interface.Console("Nommé : " + getJoueurs().get(num).getNom());
+		}
+		
+
+
+		// informer le serveur quelle carte a été jouée par quel joueur
+		public  void carteJouee(int numJoueur, int numDansSaMain) {
+			if (numJoueur <= getJoueurs().size()) {
+				Joueur joueur = getJoueurs().get(numJoueur);
+				Carte carteJouee = joueur.getMain().getPileDeCarte()
+						.get(numDansSaMain);
+
+				if (carteJouee.getType() == CarteType.pocus)
+					joueur.jouerCarte(carteJouee);
+				else if (numJoueur == getJoueurJouant())
+					joueur.jouerCarte(carteJouee);
+				else
+					Interface.Error("Carte interdite de jouer");
+			}
+		}
+
+		// le serveur demande au client de viser
+		public void viserUnJoueur(int numJoueurVisant) {
+			JSONObject grosJson = new JSONObject();
+			try {
+				grosJson.put("methode", "viserJoueur");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Interface.Error(e.getMessage());
+			}
+			try {
+				grosJson.put("numJoueurVisant", numJoueurVisant);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Interface.Error(e.getMessage());
+			}
+			JSONArray arr = new JSONArray();
+			for (Joueur j : getJoueurs()) {
+				arr.put(j.toJson());
+			}
+			try {
+				grosJson.put("joueurs", arr);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Interface.Error(e.getMessage());
+			}
+
+			Interface.Jeu(grosJson.toString(), getJoueurJouant());
+		}
+
+		// le client repond quel joueur est visé
+		public  void joueurVise(int numJoueurVise) {
+			Joueur jVise = getJoueurs().get(numJoueurVise);
+			Interface.Console("vous visez le joueur numéro " + numJoueurVise);
+			getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
+		}
+
+		// le client informe le serveur la fin de la carte hocus
+		public  void finCarteHocus() {
+			jouerLesCartesDeLaireDeJeu();
+			tourDeJeu();
+		}
+
 
 }

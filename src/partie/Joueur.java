@@ -34,7 +34,7 @@ public class Joueur {
 			this.getMain().getPileDeCarte().remove(carteJouee);
 			carteJouee.jouerLaCarte();
 		}
-		Interface.toutesLesInfos();
+		partie.toutesLesInfos();
 	}
 
 	//

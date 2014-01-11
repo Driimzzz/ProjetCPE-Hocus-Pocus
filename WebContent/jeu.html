@@ -89,11 +89,11 @@
 					<div class="ui-grid-b table">
 						<button id="boutonTraiterAireDeJeu"
 							onclick='console.log("clic"); envoyerServeur("{methode:finCarteHocus}");'>Valider</button>
-						<div class="ui-block-a" id="chaudron">
-							15 <img src="img/HocusPocus/chaudron.gif" width="90%">
+						<div class="ui-block-a" id="chaudron" onclick='choisirAction("piocherGemme")'>
+							15 <img src="img/HocusPocus/chaudron.gif" width="90%" onclick='choisirAction("piocherGemme")'>
 						</div>
-						<div class="ui-block-b" id="bibliotheque">
-							<img src="img/HocusPocus/HocusPocus.png">
+						<div class="ui-block-b" id="bibliotheque" onclick='choisirAction("piocherCartes")'>
+							<img src="img/HocusPocus/HocusPocus.png" onclick='choisirAction("piocherCartes")'>
 						</div>
 						<div class="ui-block-c" id="airedejeu">
 							<img src="img/HocusPocus/HocusPocus2.png">

@@ -10,6 +10,7 @@ import partie.Partie;
 public class Voleur extends Hocus{
 	
 	private Joueur joueurVise;
+	private Partie partie;
 
 //	public Voleur(){		
 //		super.setNom("Voleur");
@@ -18,6 +19,7 @@ public class Voleur extends Hocus{
 	
 	public Voleur(int force,Partie partie){
 		super(partie);
+		this.partie=partie;
 		super.setNom("Voleur");
 		super.setDescription("Piochez des gemmes chez un autre joueur");
 		super.setForce(force);
@@ -34,7 +36,7 @@ public class Voleur extends Hocus{
 //			this.getPartie().afficherJoueurs();
 //			numJoueur = partie.Partie.readIntValue();	//methode readinvalue créee dans la classe partie ca demande un input d'un int
 //		}	
-		Interface.viserUnJoueur(this.getPartie().getJoueurJouant());
+		partie.viserUnJoueur(this.getPartie().getJoueurJouant());
 		//joueurVise = this.getPartie().getJoueurs().get(numJoueur);		
 		
 	}

@@ -75,11 +75,6 @@ public class Interface {
 		SocketAnnotation.broadcast(message);
 	}
 
-	public static void creerJeu(String[] nomJoueurs) {
-		partie = new Partie(nomJoueurs.length, nomJoueurs, true);
-		partie.start();
-
-	}
 
 	// multijoueur (il faut ouvrir plusieurs fenêtres pour le simuler)
 	public static void creerJeu(List<Client> clients) {
@@ -87,173 +82,9 @@ public class Interface {
 		partie.start();
 	}
 
-	// le serveur envois toutes les infos relative à la partie
-	public static void toutesLesInfos() {
-		for (int numJoueur = 0; numJoueur < partie.getJoueurs().size(); numJoueur++) {
-			JSONObject grosJson = new JSONObject();
-			try {
-				grosJson.put("methode", "toutesLesInfos");
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				Error(e.getMessage());
-			}
-			try {
-				grosJson.put("chaudron", partie.getChaudron());
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				Error(e.getMessage());
-			}
-			try {
-				grosJson.put("joueurEnCour", partie.getJoueurJouant());
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				Error(e.getMessage());
-			}
-			JSONArray arr = new JSONArray();
-			int n = 0;
-			for (Joueur j : partie.getJoueurs()) {
-				arr.put(j.toJson(numJoueur, n));
-				n++;
-			}
-			if (numJoueur >= 0) {
-				try {
-					JSONObject buffer = (JSONObject) arr.get(numJoueur);
-					// arr.remove(numJoueur);
-					arr.put(numJoueur, arr.get(0));
-					// arr.remove(0);
-					arr.put(0, buffer);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-			try {
-				grosJson.put("joueurs", arr);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				Error(e.getMessage());
-			}
-
-			try {
-				grosJson.put("aireDeJeu", partie.getAireDeJeu().toJson());
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				Error(e.getMessage());
-			}
-
-			Jeu(grosJson.toString(), numJoueur);
-		}
-	}
-
-	// peu renvoyer au client la main d'un joueur selon son numero.
-	// TODO du coté client afficher ou mettre à jour la main du joueur
-	public static void lesMainsDesJoueurs() {
-		JSONObject headJson = new JSONObject();
-		try {
-			headJson.put("methode", "afficherToutesLesMains");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Error(e.getMessage());
-		}
-
-		JSONArray arr = new JSONArray();
-
-		for (int numeroDuJoueur = 0; numeroDuJoueur < partie.getJoueurs()
-				.size(); numeroDuJoueur++) {
-			Joueur joueurVise = partie.getJoueurs().get(numeroDuJoueur);
-			JSONObject json = new JSONObject();
-			try {
-				json.put("numeroJoueur", numeroDuJoueur);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				Error(e.getMessage());
-			}
-			try {
-				json.put("mainJoueur", joueurVise.getMain().toJson());
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				Error(e.getMessage());
-			}
-
-			arr.put(json);
-		}
-
-		try {
-			headJson.put("mains", arr);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		Jeu(headJson.toString());
-	}
-
-	// retourner au client quel joueur doit jouer
-	public static void joueurEnCour() {
-		int num = partie.getJoueurJouant();
-		Console("C'est le tour du joueur numero " + num);
-		Console("Nommé : " + partie.getJoueurs().get(num).getNom());
-	}
-
-	// informer le serveur quelle carte a été jouée par quel joueur
-	public static void carteJouee(int numJoueur, int numDansSaMain) {
-		if (numJoueur <= partie.getJoueurs().size()) {
-			Joueur joueur = partie.getJoueurs().get(numJoueur);
-			Carte carteJouee = joueur.getMain().getPileDeCarte()
-					.get(numDansSaMain);
-
-			if (carteJouee.getType() == CarteType.pocus)
-				joueur.jouerCarte(carteJouee);
-			else if (numJoueur == partie.getJoueurJouant())
-				joueur.jouerCarte(carteJouee);
-			else
-				Error("Carte interdite de jouer");
-		}
-	}
-
-	// le serveur demande au client de viser
-	public static void viserUnJoueur(int numJoueurVisant) {
-		JSONObject grosJson = new JSONObject();
-		try {
-			grosJson.put("methode", "viserJoueur");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Error(e.getMessage());
-		}
-		try {
-			grosJson.put("numJoueurVisant", numJoueurVisant);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Error(e.getMessage());
-		}
-		JSONArray arr = new JSONArray();
-		for (Joueur j : partie.getJoueurs()) {
-			arr.put(j.toJson());
-		}
-		try {
-			grosJson.put("joueurs", arr);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Error(e.getMessage());
-		}
-
-		Jeu(grosJson.toString(), partie.getJoueurJouant());
-	}
-
-	// le client repond quel joueur est visé
-	public static void joueurVise(int numJoueurVise) {
-		Joueur jVise = partie.getJoueurs().get(numJoueurVise);
-		Console("vous visez le joueur numéro " + numJoueurVise);
-		partie.getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
-	}
-
-	// le client informe le serveur la fin de la carte hocus
-	public static void finCarteHocus() {
-		partie.jouerLesCartesDeLaireDeJeu();
-		partie.tourDeJeu();
-	}
-
+	
+	
+	
 	// choix d'une action demande au client
 	public static void demandeAction(boolean carteHocus) {
 		JsonObject json = new JsonObject();
@@ -299,7 +130,7 @@ public class Interface {
 			Error("Erreur Json dans la sythaxe de l'action");
 			break;
 		}
-		toutesLesInfos();
+		partie.toutesLesInfos();
 	}
 
 	public static void gestionMessage(Message message) {
@@ -352,14 +183,14 @@ public class Interface {
 					Error(e.getMessage());
 				}
 				if (bonJSON)
-					carteJouee(message.getAuteur(), numCarte);
+					partie.carteJouee(message.getAuteur(), numCarte);
 				break;
 
 			case "joueurVise":
 				int numJoueurVise;
 				try {
 					numJoueurVise = json.getInt("numJoueurVise");
-					joueurVise(numJoueurVise);
+					partie.joueurVise(numJoueurVise);
 				} catch (JSONException e) {
 					bonJSON = false;
 					Error(e.getMessage());
@@ -367,7 +198,7 @@ public class Interface {
 				break;
 
 			case "finCarteHocus":
-				finCarteHocus();
+				partie.finCarteHocus();
 				break;
 
 			case "reponseAction":
