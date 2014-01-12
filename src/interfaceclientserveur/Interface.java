@@ -86,11 +86,11 @@ public class Interface {
 	
 	
 	// choix d'une action demande au client
-	public static void demandeAction(boolean carteHocus) {
+	public static void demandeAction(boolean carteHocus,boolean peuPiocherCartes ) {
 		JsonObject json = new JsonObject();
 		json.addProperty("methode", "demandeAction");
 		json.addProperty("peuCarteHocus", carteHocus); // si le joueur peu jouer
-														// une carte Hocus
+		json.addProperty("peuPiocherCartes", peuPiocherCartes);
 		Jeu(json.toString(), partie.getJoueurJouant());
 
 		// //Pour le test cote serveur

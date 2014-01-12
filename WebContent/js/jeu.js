@@ -45,7 +45,6 @@ function getInfo(message) {
 							+ '.png" style="margin-top:' + i * -170 + 'px;">');
 
 		}
-	
 
 		// chaque joueur
 		for (var i = 1; i < obJ.joueurs.length; i++) {
@@ -100,14 +99,25 @@ function getInfo(message) {
 	}
 
 	if (obJ.methode == "demandeAction") {
-		if (!obJ.peuCarteHocus)
-			$("#boutonChoisirAction0").hide();
-		else
-			$("#boutonChoisirAction0").show();
+		if (!obJ.peuPiocherCartes) {
+			$("#boutonChoisirAction2").hide();
+			if (!obJ.peuCarteHocus)
+				$("#boutonChoisirAction0").hide();
+			else
+				$("#boutonChoisirAction0").show();
+
+		}
+		else{
+			$("#boutonChoisirAction2").show();
+			if (!obJ.peuCarteHocus)
+				$("#boutonChoisirAction0").hide();
+			else
+				$("#boutonChoisirAction0").show();
+		}
 
 		$("#popupChoisirAction").popup("open");
 	}
-	
+
 	// on débute le chrono
 	if (obJ.methode == "lancerChrono") {
 		clearInterval(cdown);
