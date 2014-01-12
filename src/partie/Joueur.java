@@ -23,22 +23,55 @@ public class Joueur {
 		this.setGemmes(10);
 		this.setGrimoire(new Grimoire());
 		this.setMain(new Main());
+		for(int i=0;i<3;i++)
+			this.getGrimoire().ajouterUneCarte(getPartie().getBibliotheque().getCartes().tirerUneCarte());
 		Interface.Console("joueur créé : " + this.getNom());
 	}
 
-	public void jouerCarte(Carte carteJouee) {
+	public void jouerCarte(Carte carteJouee, boolean duGrimoire, int numJoueur) {
 
 		if (this.getPartie().ajouterAAireDeJeu(carteJouee)) { // si on avait
-																// le droit
-																// de jouer
-																// la carte
-			this.getMain().getPileDeCarte().remove(carteJouee);
+			// le droit
+			// de jouer
+			// la carte
+			if (!duGrimoire)
+				this.getMain().getPileDeCarte().remove(carteJouee);
+			else{
+				this.getGrimoire().getPileDeCarte().remove(carteJouee);
+				JSONObject json = new JSONObject();
+				try {
+					json.put("methode", "demandeCompleterGrimoire");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					Interface.Error(e.getMessage());
+				}
+				try {
+					json.put("numeroJoueur", numJoueur);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					Interface.Error(e.getMessage());
+				}
+				try {
+					json.put("main", this.main.toJson());
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Interface.Jeu(json.toString(), numJoueur);
+			}
 			carteJouee.jouerLaCarte();
 		}
 		partie.toutesLesInfos();
 	}
 
-	//
+	public void completerGrimoire(int numCarte){
+		if((numCarte>=0)&&(numCarte<this.getMain().tailleDeLaPile())){
+			Carte carteABouger = this.getMain().getPileDeCarte().get(numCarte);
+			this.getMain().getPileDeCarte().remove(carteABouger);
+			this.getGrimoire().ajouterUneCarte(carteABouger);
+		}
+	}
+	
 	public void piocherCartes(int nbCartes) {
 		for (int i = 0; i < nbCartes; i++)
 			this.getMain().ajouterUneCarte(
@@ -53,17 +86,33 @@ public class Joueur {
 		gemmes -= nbrVoles;
 		return nbrVoles;
 	}
-
+	public boolean aDesHocusDansSonJeu(){
+		for (int i=0;i<this.getMain().tailleDeLaPile();i++){
+			if (this.getMain().getPileDeCarte().get(i).getType() == Carte.CarteType.hocus)
+				return true;
+		}
+		for (int i=0;i<this.getGrimoire().tailleDeLaPile();i++){
+			if (this.getGrimoire().getPileDeCarte().get(i).getType() == Carte.CarteType.hocus)
+				return true;
+		}	
+		return false;
+	}
+	public boolean peutPiocherCarte(){
+		if ((this.getGrimoire().tailleDeLaPile() + this.getMain().tailleDeLaPile()) >=9 )
+			return false;
+		else
+			return true;
+	}
 	public JSONObject toJson(int numJoueur, int j) {
 		JSONObject json = new JSONObject();
-		
+
 		try {
 			json.put("id", j);
 		} catch (JSONException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		
+
 		try {
 			json.put("nom", this.getNom());
 		} catch (JSONException e2) {
@@ -75,6 +124,12 @@ public class Joueur {
 		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}
+		try {
+			json.put("grimoire", this.grimoire.toJson());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		if (numJoueur == j) {
 			try {
@@ -116,7 +171,12 @@ public class Joueur {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		try {
+			json.put("grimoire", this.grimoire.toJson());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return json;
 	}
 

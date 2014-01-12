@@ -58,7 +58,28 @@
 	height:100%;
 	
 }
-
+#popupCompleterGrimoire img{
+	 width:13%;
+	float:left;
+	border: 5px solid #FFF;
+	padding:0;
+	margin:0;
+	margin-left:0.5%;
+	bottom:0%;
+	transform:rotate(7deg);
+-ms-transform:rotate(7deg); /* IE 9 */
+-webkit-transform:rotate(7deg); /* Safari and Chrome */
+border-radius:3px;
+ }
+#popupCompleterGrimoire img:hover{
+ -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  -webkit-transform: scale(1.05,1.05);
+  -moz-transform: scale(1.05,1.05);
+  -o-transform: scale(1.05,1.05);
+  -ms-transform: scale(1.05,1.05);
+  transform: scale(1.05,1.05);
+}
  .player-main img{
 	 width:13%;
 	float:left;

@@ -36,17 +36,7 @@ public class Partie extends Thread {
 		Joueur joueurEnCours = joueurs.get(indexJoueur);
 		Interface.Console("c'est le tour de " + joueurEnCours.getNom());
 
-		if (joueurEnCours.getMain().getPileDeCarte().size() >= 6) {
-			if (!(joueurEnCours.getMain().getPileDeCarte().size() < 1))
-				Interface.demandeAction(true, false);
-			else
-				Interface.demandeAction(false, false);
-		} else {
-			if (!(joueurEnCours.getMain().getPileDeCarte().size() < 1))
-				Interface.demandeAction(true, true);
-			else
-				Interface.demandeAction(false, true);
-		}
+		Interface.demandeAction(joueurEnCours.aDesHocusDansSonJeu(), joueurEnCours.peutPiocherCarte());
 
 		// int numCarte = -2;
 		// while (numCarte!=-1 && chaudron > 0 &&
@@ -412,25 +402,35 @@ public class Partie extends Thread {
 	public void carteJouee(int numJoueur, int numDansSaMain) {
 		// protection de la donnée
 		if (numJoueur <= getJoueurs().size()) {
-
+			Carte carteJouee;
 			Joueur joueur = getJoueurs().get(numJoueur);
-			Carte carteJouee = joueur.getMain().getPileDeCarte()
-					.get(numDansSaMain);
+			boolean duGrimoire;
+			if (numDansSaMain<10){
+				carteJouee = joueur.getMain().getPileDeCarte().get(numDansSaMain);
+				duGrimoire = false;
+			}
+			else{// 10 11 12 = les cartes du grimoire
+				numDansSaMain-=10;
+				carteJouee = joueur.getGrimoire().getPileDeCarte().get(numDansSaMain);
+				duGrimoire = true;
+			}
+			
+			
 			// on vérifie que c'est bien à lui de jouer +hocus/pocus
 			if (carteJouee.getType() == CarteType.pocus) {
-				joueur.jouerCarte(carteJouee);
+				joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
 				lancerChrono();
 			} else if (numJoueur == getJoueurJouant()) {
-				if (!carteJouee.getNom().equals("Sortilege"))// on lance le
-																// chrono et on
-																// joue la carte
-																// sortilege que
-																// quand on a
-																// vise
-				{
-					joueur.jouerCarte(carteJouee);
+//				if (!carteJouee.getNom().equals("Sortilege"))// on lance le
+//																// chrono et on
+//																// joue la carte
+//																// sortilege que
+//																// quand on a
+//																// vise
+//				{
+					joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
 					lancerChrono();
-				}
+//				}
 			} else
 				Interface.Error("Carte interdite de jouer");
 		}

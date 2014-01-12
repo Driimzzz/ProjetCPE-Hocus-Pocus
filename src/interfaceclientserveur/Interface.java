@@ -212,6 +212,17 @@ public class Interface {
 				reponseAction(message.getAuteur(),action);
 				break;
 
+			case "completerGrimoire":
+				try {
+					if(message.getAuteur() == json.getInt("numJoueur")){
+						partie.getJoueurs().get(message.getAuteur()).completerGrimoire(json.getInt("numCarte"));
+					}
+					break;
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			default:
 				Error("erreur dans la sythaxe json de methode");
 				break;
