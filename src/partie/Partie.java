@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -39,14 +38,14 @@ public class Partie extends Thread {
 
 		if (joueurEnCours.getMain().getPileDeCarte().size() >= 6) {
 			if (!(joueurEnCours.getMain().getPileDeCarte().size() < 1))
-				Interface.demandeAction(true,false);
+				Interface.demandeAction(true, false);
 			else
-				Interface.demandeAction(false,false);
-		}else{
+				Interface.demandeAction(false, false);
+		} else {
 			if (!(joueurEnCours.getMain().getPileDeCarte().size() < 1))
-				Interface.demandeAction(true,true);
+				Interface.demandeAction(true, true);
 			else
-				Interface.demandeAction(false,true);
+				Interface.demandeAction(false, true);
 		}
 
 		// int numCarte = -2;
@@ -94,12 +93,16 @@ public class Partie extends Thread {
 				joueurEnCours.setGemmes(joueurEnCours.getGemmes() + 1);
 				this.piocherDansLeChaudron(1);
 			} else if (input == 2) { // pioche 2 cartes
-				if (joueurEnCours.getMain().getPileDeCarte().size()<6) {
-					Interface.Console(joueurEnCours.getNom() + " pioche 2 cartes");
-					if(6-joueurEnCours.getMain().getPileDeCarte().size()>=2)
+				if (joueurEnCours.getMain().getPileDeCarte().size() < 6) {
+					Interface.Console(joueurEnCours.getNom()
+							+ " pioche 2 cartes");
+					if (6 - joueurEnCours.getMain().getPileDeCarte().size() >= 2)
 						joueurEnCours.piocherCartes(2);
 					else
-						joueurEnCours.piocherCartes(6-joueurEnCours.getMain().getPileDeCarte().size());
+						joueurEnCours.piocherCartes(6 - joueurEnCours.getMain()
+								.getPileDeCarte().size());
+				} else {
+					Interface.Console("trop de cartes dans votre main");
 				}
 			} else {// erreur
 				Interface.Console("erreur fin du tour");
@@ -418,40 +421,19 @@ public class Partie extends Thread {
 				joueur.jouerCarte(carteJouee);
 				lancerChrono();
 			} else if (numJoueur == getJoueurJouant()) {
-				joueur.jouerCarte(carteJouee);
-				lancerChrono();
+				if (!carteJouee.getNom().equals("Sortilege"))// on lance le
+																// chrono et on
+																// joue la carte
+																// sortilege que
+																// quand on a
+																// vise
+				{
+					joueur.jouerCarte(carteJouee);
+					lancerChrono();
+				}
 			} else
 				Interface.Error("Carte interdite de jouer");
 		}
-	}
-
-	// le serveur demande au client de viser
-	public void viserUnJoueur(int numJoueurVisant) {
-		JSONObject grosJson = new JSONObject();
-		try {
-			grosJson.put("methode", "viserJoueur");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Interface.Error(e.getMessage());
-		}
-		try {
-			grosJson.put("numJoueurVisant", numJoueurVisant);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Interface.Error(e.getMessage());
-		}
-		JSONArray arr = new JSONArray();
-		for (Joueur j : getJoueurs()) {
-			arr.put(j.toJson());
-		}
-		try {
-			grosJson.put("joueurs", arr);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Interface.Error(e.getMessage());
-		}
-
-		Interface.Jeu(grosJson.toString(), getJoueurJouant());
 	}
 
 	// le client repond quel joueur est visé
