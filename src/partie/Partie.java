@@ -3,12 +3,7 @@ package partie;
 import interfaceclientserveur.Interface;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.InputMismatchException;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,7 +31,8 @@ public class Partie extends Thread {
 		Joueur joueurEnCours = joueurs.get(indexJoueur);
 		Interface.Console("c'est le tour de " + joueurEnCours.getNom());
 
-		Interface.demandeAction(joueurEnCours.aDesHocusDansSonJeu(), joueurEnCours.peutPiocherCarte());
+		Interface.demandeAction(joueurEnCours.aDesHocusDansSonJeu(),
+				joueurEnCours.peutPiocherCarte());
 
 		// int numCarte = -2;
 		// while (numCarte!=-1 && chaudron > 0 &&
@@ -405,35 +401,64 @@ public class Partie extends Thread {
 			Carte carteJouee;
 			Joueur joueur = getJoueurs().get(numJoueur);
 			boolean duGrimoire;
-			if (numDansSaMain<10){
-				carteJouee = joueur.getMain().getPileDeCarte().get(numDansSaMain);
+			if (numDansSaMain < 10) {
+				carteJouee = joueur.getMain().getPileDeCarte()
+						.get(numDansSaMain);
 				duGrimoire = false;
-			}
-			else{// 10 11 12 = les cartes du grimoire
-				numDansSaMain-=10;
-				carteJouee = joueur.getGrimoire().getPileDeCarte().get(numDansSaMain);
+			} else {// 10 11 12 = les cartes du grimoire
+				numDansSaMain -= 10;
+				carteJouee = joueur.getGrimoire().getPileDeCarte()
+						.get(numDansSaMain);
 				duGrimoire = true;
 			}
-			
-			
+
 			// on vérifie que c'est bien à lui de jouer +hocus/pocus
 			if (carteJouee.getType() == CarteType.pocus) {
 				joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
 				lancerChrono();
 			} else if (numJoueur == getJoueurJouant()) {
-//				if (!carteJouee.getNom().equals("Sortilege"))// on lance le
-//																// chrono et on
-//																// joue la carte
-//																// sortilege que
-//																// quand on a
-//																// vise
-//				{
-					joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
-					lancerChrono();
-//				}
+				// if (!carteJouee.getNom().equals("Sortilege"))// on lance le
+				// // chrono et on
+				// // joue la carte
+				// // sortilege que
+				// // quand on a
+				// // vise
+				// {
+				joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
+				lancerChrono();
+				// }
 			} else
 				Interface.Error("Carte interdite de jouer");
 		}
+	}
+
+	// le serveur demande au client de viser
+	public void viserUnJoueur(int numJoueurVisant) {
+		JSONObject grosJson = new JSONObject();
+		try {
+			grosJson.put("methode", "viserJoueur");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Interface.Error(e.getMessage());
+		}
+		try {
+			grosJson.put("numJoueurVisant", numJoueurVisant);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Interface.Error(e.getMessage());
+		}
+		JSONArray arr = new JSONArray();
+		for (Joueur j : this.getJoueurs()) {
+			arr.put(j.toJson());
+		}
+		try {
+			grosJson.put("joueurs", arr);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Interface.Error(e.getMessage());
+		}
+
+		Interface.Jeu(grosJson.toString(), this.getJoueurJouant());
 	}
 
 	// le client repond quel joueur est visé

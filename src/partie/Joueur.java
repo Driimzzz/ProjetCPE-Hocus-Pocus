@@ -59,7 +59,12 @@ public class Joueur {
 				}
 				Interface.Jeu(json.toString(), numJoueur);
 			}
-			carteJouee.jouerLaCarte();
+			if("Chat Noir".equals(carteJouee.getNom())){
+				carteJouee.setJoueurVise(partie.getJoueurs().get(numJoueur));//pour definir dans quelle main ira la carte
+				carteJouee.jouerLaCarte();
+			}				
+			else
+				carteJouee.jouerLaCarte();
 		}
 		partie.toutesLesInfos();
 	}
