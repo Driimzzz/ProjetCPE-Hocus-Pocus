@@ -1,6 +1,8 @@
 package partie;
 
 import cartes.*;
+import cartes.cartesHocus.Hibou;
+import cartes.cartesHocus.Malediction;
 import cartes.cartesHocus.Sacrifice;
 import cartes.cartesHocus.Sortilege;
 import cartes.cartesHocus.Voleur;
@@ -70,6 +72,19 @@ public class Bibliotheque {
 		// 2 eclairs
 		for (int i = 0; i < 2; i++)
 			this.cartes.ajouterUneCarte(new Eclair(maPartie));
+		
+		this.cartes.ajouterUneCarte(new Malediction(2,maPartie));
+		this.cartes.ajouterUneCarte(new Malediction(1,maPartie));
+		this.cartes.ajouterUneCarte(new Malediction(1,maPartie));
+		
+		this.cartes.ajouterUneCarte(new Hibou(1, maPartie));
+		this.cartes.ajouterUneCarte(new Hibou(1, maPartie));
+		this.cartes.ajouterUneCarte(new Hibou(2, maPartie));
+		
+		for (int i = 0; i < 20; i++){//cartes en test
+			this.cartes.ajouterUneCarte(new Malediction(1,maPartie));
+			this.cartes.ajouterUneCarte(new Hibou(1, maPartie));
+		}	
 
 		this.cartes.melanger();
 	}

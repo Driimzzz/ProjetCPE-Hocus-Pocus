@@ -145,9 +145,39 @@ function getInfo(message) {
 				}
 		$("#popupCompleterGrimoire").popup("open");
 	}
+	
+	//pour malediction et hibou incomplet
+	if (obJ.methode == "demandeCartesDuGrimoire") {
+		$("#popupCompleterGrimoire").html("<h2>Quelle carte de ce grimoire voulez vous?</h2>");
+		arrayGrim = new Array();
+		for (var i = 0; i < obJ.grim.length; i++) {
+			$("#popupCompleterGrimoire").append(
+							'<img src="img/HocusPocus/' + obJ.grim[i]
+									+ '.png" onclick="choixDansGrimoire(' + i + ','
+									+ obJ.nbrCartes + ','
+									+ obJ.numJoueurQuiChoisi+','
+									+ obJ.numJoueurGrimoire+')">');
+				}
+		$("#popupCompleterGrimoire").popup("open");
+	}
 
 	
 }
+
+//pour malediction et hibou incomplet
+var arrayGrim;
+function choixDansGrimoire(numJoue,nbrCarte,numJoueurQuiChoisi,numJoueurGrimoire){
+	arrayGrim.push(numJoue);
+	if(arrayGrim.length ==nbrCarte){
+		envoyerServeur("{ methode:reponseCartesDuGrimoire;" +
+				" numJoueurVise: "+ numJoueurGrimoire + ";" +
+				" numJoueur:"+ numJoueurQuiChoisi + ";" +
+				" grimoire:[" + arrayGrim +"]"+
+				"}");
+		$("#popupCompleterGrimoire").popup("close");
+	}
+}
+
 function completerGrimoire(carte, joueur) {
 	envoyerServeur("{methode:completerGrimoire;numJoueur:" + joueur + ";numCarte:" + carte + "}");
 	$("#popupCompleterGrimoire").popup("close");
