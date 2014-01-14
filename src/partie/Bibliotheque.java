@@ -1,12 +1,14 @@
 package partie;
 
 import cartes.*;
+import cartes.cartesHocus.Abracadabra;
 import cartes.cartesHocus.Hibou;
 import cartes.cartesHocus.Inspiration;
 import cartes.cartesHocus.Malediction;
 import cartes.cartesHocus.Sacrifice;
 import cartes.cartesHocus.Sortilege;
 import cartes.cartesHocus.Voleur;
+import cartes.cartesHocus.Vortex;
 import cartes.cartesPocus.BaguetteMagique;
 import cartes.cartesPocus.ChatNoir;
 import cartes.cartesPocus.ContreSort;
@@ -89,8 +91,11 @@ public class Bibliotheque {
 		this.cartes.ajouterUneCarte(new Inspiration(3,maPartie));
 		this.cartes.ajouterUneCarte(new Inspiration(3,maPartie));
 		
-//		for (int i = 0; i < 20; i++)
-//			this.cartes.ajouterUneCarte(new Inspiration(2,maPartie));
+		this.cartes.ajouterUneCarte(new Abracadabra(maPartie));
+		this.cartes.ajouterUneCarte(new Abracadabra(maPartie));
+		
+		for (int i = 0; i < 20; i++)
+			this.cartes.ajouterUneCarte(new Vortex(maPartie));
 
 		this.cartes.melanger();
 	}
