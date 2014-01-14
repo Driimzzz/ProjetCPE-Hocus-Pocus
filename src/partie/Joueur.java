@@ -118,7 +118,7 @@ public class Joueur {
 				Interface.Error(e.getMessage());
 			}
 			try {
-				json.put("numeroJoueur", this.getId());
+				json.put("numeroJoueur", this.getPositionPartie());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				Interface.Error(e.getMessage());

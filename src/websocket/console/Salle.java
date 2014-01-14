@@ -24,6 +24,15 @@ public class Salle {
 		Salle.clients = clients;
 	}
 
+	public static Client getClientByID(int ID)
+	{
+		for(Client c:clients)
+		{
+			if(c.getId()==ID)
+				return c;
+		}
+		return null;
+	}
 
 	public static List<Message> getMessages() {
 		return messages;

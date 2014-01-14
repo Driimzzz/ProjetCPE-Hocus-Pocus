@@ -39,8 +39,6 @@ import partie.Joueur;
 
 import com.sun.xml.internal.ws.client.ClientSchemaValidationTube;
 
-
-
 @ServerEndpoint(value = "/websocket/console")
 public class SocketAnnotation {
 
@@ -78,7 +76,6 @@ public class SocketAnnotation {
 		SocketAnnotation.salle = salle;
 	}
 
-
 	public SocketAnnotation() {
 
 	}
@@ -96,8 +93,7 @@ public class SocketAnnotation {
 		String mess = String.format("%s %s", client.getNickname(),
 				"has joined.");
 		Message message = new Message(MessageType.Message, mess, client);
-		Message message2 = new Message(MessageType.Jeu, listeJoueurs(),
-				client);
+		Message message2 = new Message(MessageType.Jeu, listeJoueurs(), client);
 		broadcast(message2);
 		broadcast(message);
 
@@ -111,8 +107,7 @@ public class SocketAnnotation {
 		String mess = String.format("%s %s", client.getNickname(),
 				"has disconnected.");
 		Message message = new Message(MessageType.Message, mess, client);
-		Message message2 = new Message(MessageType.Jeu, listeJoueurs(),
-				client);
+		Message message2 = new Message(MessageType.Jeu, listeJoueurs(), client);
 		broadcast(message2);
 		broadcast(message);
 	}
@@ -147,25 +142,26 @@ public class SocketAnnotation {
 	// envoie à'lutilsisateur concerné
 	private static void send2User(Message message) {
 		try {
-
-			Client client = Salle.getClients().get(
-					(int) message.getDestination());
-			client.setLastMessage(message.getiDmessage());
-			try {
-				client.getSession().getBasicRemote()
-						.sendText(message.toString());
-			} catch (IOException e) {
-				broadcast(new Message(MessageType.Error, e.getMessage()));
-				Salle.getClients().remove(client);
+			Client client = Salle.getClientByID(message.getDestination());
+			if (client != null) {
+				client.setLastMessage(message.getiDmessage());
 				try {
-					client.getSession().close();
-				} catch (IOException e1) {
-					broadcast(new Message(MessageType.Error, e1.getMessage()));
+					client.getSession().getBasicRemote()
+							.sendText(message.toString());
+				} catch (IOException e) {
+					broadcast(new Message(MessageType.Error, e.getMessage()));
+					Salle.getClients().remove(client);
+					try {
+						client.getSession().close();
+					} catch (IOException e1) {
+						broadcast(new Message(MessageType.Error,
+								e1.getMessage()));
+					}
+					String mess = String.format("%s %s", client.getNickname(),
+							"has been disconnected.");
+					message = new Message(MessageType.Message, mess, client);
+					broadcast(message);
 				}
-				String mess = String.format("%s %s", client.getNickname(),
-						"has been disconnected.");
-				message = new Message(MessageType.Message, mess, client);
-				broadcast(message);
 			}
 		} catch (Exception e) {
 			broadcast(new Message(MessageType.Error, e.getMessage()));

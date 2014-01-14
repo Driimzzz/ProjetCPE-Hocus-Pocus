@@ -314,7 +314,8 @@ public class Partie extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Interface.Jeu(grosJson.toString(), numJoueurQuiChoisi);
+		Joueur j=getJoueurs().get(numJoueurQuiChoisi);
+		Interface.Jeu(grosJson.toString(), j.getId());
 
 //		Message msg = new Message(MessageType.Jeu,
 //				"{ methode:reponseCartesDuGrimoire;" +
@@ -409,15 +410,15 @@ public class Partie extends Thread {
 				// TODO Auto-generated catch block
 				Interface.Error(e.getMessage());
 			}
+			Joueur j=joueurs.get(numJoueur);
 
-			Interface.Jeu(grosJson.toString(), numJoueur);
-			Joueur joueurEnCours = joueurs.get(indexJoueur);
-			JsonObject json = new JsonObject();
-			json.addProperty("methode", "joueurEnCour");
-			Interface.Jeu(json.toString(), joueurEnCours.getId());
-			Interface.Console("C'est le tour de " + joueurEnCours.getNom());
-			
+			Interface.Jeu(grosJson.toString(), j.getId());	
 		}
+		Joueur joueurEnCours = joueurs.get(indexJoueur);
+		JsonObject json = new JsonObject();
+		json.addProperty("methode", "joueurEnCour");
+		Interface.Jeu(json.toString(), joueurEnCours.getId());
+		Interface.Console("C'est le tour de " + joueurEnCours.getNom());
 	}
 
 
@@ -486,8 +487,8 @@ public class Partie extends Thread {
 			// TODO Auto-generated catch block
 			Interface.Error(e.getMessage());
 		}
-
-		Interface.Jeu(grosJson.toString(), this.getJoueurJouant());
+		Joueur j = getJoueurs().get(indexJoueur);
+		Interface.Jeu(grosJson.toString(), j.getId());
 	}
 
 	// le client repond quel joueur est visé
@@ -515,7 +516,7 @@ public class Partie extends Thread {
 	private void lancerChrono() {
 		JsonObject json = new JsonObject();
 		json.addProperty("methode", "lancerChrono");
-		Interface.Jeu(json.toString(), -1);
+		Interface.Jeu(json.toString());
 		// nouvelle carte on reset le timer
 		if (timerFinCarte != null)
 			timerFinCarte.cancel();
