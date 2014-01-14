@@ -13,6 +13,7 @@ public class Sacrifice extends Hocus{
 		super(partie);
 		super.setNom("Sacrifice");
 		super.setDescription("Désignez un joueur pour qu'il remette deux gemmes dans le chaudron.");
+		super.setJevise(true);
 	}
 	
 	@Override

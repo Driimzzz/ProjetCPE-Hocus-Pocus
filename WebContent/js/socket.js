@@ -1,5 +1,3 @@
-
-
 function Message(type, message) {
 	this.type = type;
 	this.message = message;
@@ -52,14 +50,13 @@ Chat.initialize = function() {
 Chat.sendMessage = (function() {
 	var message = document.getElementById('chat').value;
 	if (message != '') {
-		var mess = new Message($("#flip-1").val(), message);
+		var mess = new Message(1, message);
 		Chat.socket.send(JSON.stringify(mess));
 		document.getElementById('chat').value = '';
 	}
 });
 
-function envoyerServeur(s)
-{
+function envoyerServeur(s) {
 	var mess = new Message(3, s);
 	Chat.socket.send(JSON.stringify(mess));
 }
@@ -67,39 +64,29 @@ function envoyerServeur(s)
 var Client = {};
 
 Client.log = (function(message) {
-	//type chat message
+	// type chat message
 	if (message.type == 1)
 		$("#message").append("<p>" + message.message + "</p>");
-	//type message console
-	if (message.type == 2)
-		$("#console").append("<p>" + message.message + "</p>");
-	//
-	if(message.type==0)
-		$("#console").append("<p style='color:red;'>" + message.message + "</p>");
-	
-	//message de type jeu 
-	if(message.type==3)
+	// type message console
+	if (message.type == 2) {
+		$("#infojeu").html("<p>" + message.message + "</p>");
+	}
+	// error en rouge
+	if (message.type == 0) {
+		("#infojeu").html("<p>" + message.message + "</p>");
+	}
+
+	// message de type jeu
+	if (message.type == 3)
 		getInfo(message.message);
-	
+
 	//
-	if(message.type==4)
+	if (message.type == 4)
 		alert(message.message);
 
 	console.scrollTop = console.scrollHeight;
 });
 
+
+
 Chat.initialize();
-slide();
-
-function slide() {
-	if ($("#flip-1").val() == 1) {
-		$("#message").show();
-		$("#console").hide();
-	}
-	else if ($("#flip-1").val() == 2) {
-		$("#console").show();
-		$("#message").hide();
-	}
-	
-
-}

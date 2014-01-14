@@ -25,6 +25,7 @@ public class Voleur extends Hocus{
 		super.setNom("Voleur");
 		super.setDescription("Piochez des gemmes chez un autre joueur");
 		super.setForce(force);
+		super.setJevise(true);
 	}
 	
 	@Override

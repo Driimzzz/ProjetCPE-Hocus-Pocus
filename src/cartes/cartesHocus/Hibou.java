@@ -12,6 +12,7 @@ public class Hibou extends Hocus{
 		super.setNom("Hibou");
 		super.setDescription("Piochez des cartes dans le grimoire d'un joueur désigné");
 		super.setForce(force);
+		super.setJevise(true);
 	}
 	
 	@Override
@@ -24,8 +25,8 @@ public class Hibou extends Hocus{
 	public void action() {
 		if(isValide())
 		{
-			int numJoueurGrimoire =getPartie().getJoueurByID(joueurVise.getId());
-			int numJoueurQuiChoisi = numJoueurGrimoire;
+			int numJoueurGrimoire =joueurVise.getPositionPartie();
+			int numJoueurQuiChoisi = getPartie().getJoueurJouant();
 			getPartie().demanderCartesDuGrimoire(numJoueurGrimoire, numJoueurQuiChoisi, this.getForce());
 		}
 	}

@@ -32,11 +32,14 @@ public class Partie extends Thread {
 	Timer timerFinCarte;
 
 	public void tourDeJeu() {
-		Joueur joueurEnCours = joueurs.get(indexJoueur);
-		Interface.Console("c'est le tour de " + joueurEnCours.getNom());
-
-		Interface.demandeAction(joueurEnCours.aDesHocusDansSonJeu(),
-				joueurEnCours.peutPiocherCarte());
+		
+		for(Joueur j: getJoueurs())
+		{
+			if(j.getGrimoire().getPileDeCarte().size()<3)
+				this.getJoueurs().get(j.getPositionPartie()).demandeCompleterGrimoire();
+		}
+		/*Interface.demandeAction(joueurEnCours.aDesHocusDansSonJeu(),
+				joueurEnCours.peutPiocherCarte());*/
 
 	}
 
@@ -44,36 +47,42 @@ public class Partie extends Thread {
 
 		// on vérifie l'auteur
 		if (indexJoueur == numJoueur) {
-			Joueur joueurEnCours = joueurs.get(indexJoueur);
-			if (input == 1) {// pioche 1 gemme
-				Interface.Console(joueurEnCours.getNom()
-						+ " pioche 1 gemme dans le chaudron");
-				joueurEnCours.setGemmes(joueurEnCours.getGemmes() + 1);
-				this.piocherDansLeChaudron(1);
-			} else if (input == 2) { // pioche 2 cartes
-				if (joueurEnCours.getMain().getPileDeCarte().size() < 6) {
+			if(this.getAireDeJeu().getPileDeCarte().size()==0)
+			{
+				Joueur joueurEnCours = joueurs.get(indexJoueur);
+				if (input == 1) {// pioche 1 gemme
 					Interface.Console(joueurEnCours.getNom()
-							+ " pioche 2 cartes");
-					if (6 - joueurEnCours.getMain().getPileDeCarte().size() >= 2)
-						joueurEnCours.piocherCartes(2);
-					else
-						joueurEnCours.piocherCartes(6 - joueurEnCours.getMain()
-								.getPileDeCarte().size());
-				} else {
-					Interface.Console("trop de cartes dans votre main");
+							+ " pioche 1 gemme dans le chaudron");
+					joueurEnCours.setGemmes(joueurEnCours.getGemmes() + 1);
+					this.piocherDansLeChaudron(1);
+				} else if (input == 2) { // pioche 2 cartes
+					if (joueurEnCours.getMain().getPileDeCarte().size() < 6) {
+						Interface.Console(joueurEnCours.getNom()
+								+ " pioche 2 cartes");
+						if (6 - joueurEnCours.getMain().getPileDeCarte().size() >= 2)
+							joueurEnCours.piocherCartes(2);
+						else
+							joueurEnCours.piocherCartes(6 - joueurEnCours.getMain()
+									.getPileDeCarte().size());
+					} else {
+						Interface.Console("trop de cartes dans votre main");
+					}
+				} else {// erreur
+					Interface.Console("erreur fin du tour");
 				}
-			} else {// erreur
-				Interface.Console("erreur fin du tour");
+				Interface.Console(joueurEnCours.getNom() + " a maintenant "
+						+ joueurEnCours.getGemmes() + " gemmes.");
+	
+				// passe au jouer suivant
+				if (indexJoueur == joueurs.size() - 1)
+					indexJoueur = 0;
+				else
+					indexJoueur++;
+				jeu();
 			}
-			Interface.Console(joueurEnCours.getNom() + " a maintenant "
-					+ joueurEnCours.getGemmes() + " gemmes.");
-
-			// passe au jouer suivant
-			if (indexJoueur == joueurs.size() - 1)
-				indexJoueur = 0;
-			else
-				indexJoueur++;
-			jeu();
+		}
+		else{
+			Interface.Error("Attendez la fin de la carte Hocus.");
 		}
 	}
 
@@ -107,31 +116,9 @@ public class Partie extends Thread {
 		}
 	}
 
-	// constructeur non mutlijoueur de la partie
-	public Partie(int nbJoueurs, String[] nomsJoueurs, boolean partieRapide) {
-		Interface.Console("construction partie : ");
-		aireDeJeu = new PileDeCartes();
-		defausse = new PileDeCartes();
-
-		bibliotheque = new Bibliotheque(this);
-
-		indexJoueur = 0;
-
-		initJoueurs(nbJoueurs, nomsJoueurs);
-		initChaudron(partieRapide);
-
-		for (int i = 0; i < nbJoueurs; i++) {
-			Interface.Console("affichage de la main de "
-					+ this.getJoueurs().get(i).getNom());
-			this.getJoueurs().get(i).getMain().afficherToutes();
-		}
-		Interface.Console("affichage de la bibliotheque :");
-		bibliotheque.getCartes().afficherToutes();
-	}
-
+	
 	// constructeur multijoueur de la partie
 	public Partie(List<Client> clients, boolean partieRapide) {
-		Interface.Console("construction partie : ");
 		aireDeJeu = new PileDeCartes();
 		defausse = new PileDeCartes();
 
@@ -143,7 +130,7 @@ public class Partie extends Thread {
 		joueurs = new ArrayList<Joueur>();
 		for (int i = 0; i < clients.size(); i++) {
 			this.getJoueurs().add(
-					new Joueur(clients.get(i).getNickname(), this, clients.get(i).getId()));
+					new Joueur(clients.get(i).getNickname(), this, clients.get(i).getId(),i));
 		}
 
 		// distribution des cartes aux joueurs
@@ -188,21 +175,7 @@ public class Partie extends Thread {
 		/* Interface.Console("chaudron initialisé à : " + this.getChaudron()); */
 	}
 
-	// non mutlijoueur
-	private void initJoueurs(int nbJoueurs, String[] nomsJoueurs) {
-
-		// creation des joueurs
-		joueurs = new ArrayList<Joueur>();
-		for (int i = 0; i < nbJoueurs; i++) {
-			this.getJoueurs().add(new Joueur(nomsJoueurs[i], this, i));
-		}
-
-		// distribution des cartes aux joueurs
-		for (int i = 0; i < nbJoueurs; i++) {
-			this.getJoueurs().get(i).piocherCartes(5);
-		}
-
-	}
+	
 
 	public void piocherDansLeChaudron(int nbrDeGemmes) {
 		setChaudron(chaudron - nbrDeGemmes);
@@ -220,7 +193,6 @@ public class Partie extends Thread {
 	{
 		for(int i=0;i<getJoueurs().size();i++)
 		{
-			System.out.println(getJoueurs().get(i).getId()+ " "+ID+ " "+i);
 			if(getJoueurs().get(i).getId()==ID)
 				return i;
 		}
@@ -292,6 +264,12 @@ public class Partie extends Thread {
 		if(!("Hibou".equals(hocus.getNom()))
 				&&!("Malediction".equals(hocus.getNom()))){
 				setAireDeJeu(new PileDeCartes());
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 		toutesLesInfos();
 	}
@@ -372,7 +350,7 @@ public class Partie extends Thread {
 				this.getJoueurs().get(getJoueurJouant()).getMain()
 						.ajouterUneCarte(carteChoisie);
 			}
-			this.getJoueurs().get(joueurGrimoire).demandeCompleterGrimoire();
+			//this.getJoueurs().get(joueurGrimoire).demandeCompleterGrimoire();
 		}
 		else if ("Malediction".equals(strComp)) {
 			// defausser les carte choisies par joueurjouant
@@ -380,9 +358,11 @@ public class Partie extends Thread {
 				this.getJoueurs().get(joueurGrimoire).getGrimoire()
 						.enleverCarte(numCarteGrim);
 			}
-			this.getJoueurs().get(joueurGrimoire).demandeCompleterGrimoire();
+			//this.getJoueurs().get(joueurGrimoire).demandeCompleterGrimoire();
 		}
 		setAireDeJeu(new PileDeCartes());
+		toutesLesInfos();
+		tourDeJeu();
 	}
 
 	// le serveur envois toutes les infos relative à la partie
@@ -441,15 +421,24 @@ public class Partie extends Thread {
 			}
 
 			Interface.Jeu(grosJson.toString(), numJoueur);
+			Joueur joueurEnCours = joueurs.get(indexJoueur);
+			JsonObject json = new JsonObject();
+			json.addProperty("methode", "joueurEnCour");
+			//on laisse lire l'info précédente
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//nouvelle info
+			Interface.Jeu(json.toString(), joueurEnCours.getId());
+			Interface.Console("C'est le tour de " + joueurEnCours.getNom());
+			
 		}
 	}
 
-	// retourner au client quel joueur doit jouer
-	public void joueurEnCour() {
-		int num = getJoueurJouant();
-		Interface.Console("C'est le tour du joueur numero "
-				+ getJoueurs().get(num).getNom());
-	}
+
 
 	// informer le serveur quelle carte a été jouée par quel joueur
 	public void carteJouee(int numJoueur, int numDansSaMain) {
@@ -482,7 +471,8 @@ public class Partie extends Thread {
 				// // vise
 				// {
 				joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
-				lancerChrono();
+				if(!carteJouee.isJevise())
+					lancerChrono();
 				// }
 			} else
 				Interface.Error("Carte interdite de jouer");
@@ -526,6 +516,7 @@ public class Partie extends Thread {
 			Interface.Console(getJoueurs().get(numJoueur).getNom() + " vise "
 					+ jVise.getNom());
 			getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
+			lancerChrono();
 		}
 	}
 

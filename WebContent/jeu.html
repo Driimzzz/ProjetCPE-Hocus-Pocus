@@ -92,9 +92,9 @@
 				</div>
 
 				<div class="ui-block-b" id="jeu">
-					<div class="player-title">Zone de Jeu</div>
+					<div class="player-title" id="infojeu"></div>
 					<div class="ui-grid-b table">
-						<div class="ui-block-a" id="chaudron">
+						<div class="ui-block-a" id="chaudron" onclick='choisirAction("piocherGemme")'>
 							15 <img src="img/HocusPocus/chaudron.gif" width="90%" onclick='choisirAction("piocherGemme")'>
 						</div>
 						<div class="ui-block-b" id="bibliotheque">
@@ -131,23 +131,16 @@
 			</div>
 		</div>
 		<div data-role="footer">
-			<a href="#show-console" data-role="button" data-icon="arrow-d">Console</a>
-			<a href=""
-				data-role="button" data-inline="true" data-icon="check"
-				data-theme="a"  onclick="getPlayers();">Démarrer Jeu</a>
+			<a href="#show-console" data-role="button" data-icon="arrow-d">Chat</a>
 		</div>
 
 		<!-- panel -->
 		<div data-role="panel" data-position="right"
 			data-position-fixed="true" data-display="overlay" id="show-console">
 
-			<div id="console"></div>
 			<div id="message"></div>
 			<div id="menu-right">
-				<input type="text" id="chat" data-clear-btn="true" /> <select
-					name="flip-1" id="flip-1" data-role="slider" onChange="slide()">
-					<option value="1">Message</option>
-					<option value="2">Console</option>
+				<input type="text" id="chat" data-clear-btn="true" /> 
 				</select>
 			</div>
 
@@ -182,20 +175,7 @@
 		</div>
 		<!-- /popup -->
 		
-		<!-- popup choisir une action -->
-		<div data-role="popup" id="popupChoisirAction" data-theme="a"
-		data-dismissible="false"
-			class="ui-corner-all">
-			Que faire?
-			<button id="boutonChoisirAction0" onclick='choisirAction("jouerHocus")'>
-				Jouer une carte Hocus
-			</button>
-			<button id="boutonChoisirAction1" onclick='choisirAction("piocherGemme")'>
-				Piocher une gemme
-			</button><button id="boutonChoisirAction2" onclick='choisirAction("piocherCartes")'>
-				Piocher deux cartes
-			</button>
-		</div>
+
        
         
 		<!-- /popup -->

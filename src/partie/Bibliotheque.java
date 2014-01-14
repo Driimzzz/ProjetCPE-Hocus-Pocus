@@ -81,10 +81,7 @@ public class Bibliotheque {
 		this.cartes.ajouterUneCarte(new Hibou(1, maPartie));
 		this.cartes.ajouterUneCarte(new Hibou(2, maPartie));
 		
-		for (int i = 0; i < 20; i++){//cartes en test
-			this.cartes.ajouterUneCarte(new Malediction(1,maPartie));
-			this.cartes.ajouterUneCarte(new Hibou(1, maPartie));
-		}	
+		
 
 		this.cartes.melanger();
 	}

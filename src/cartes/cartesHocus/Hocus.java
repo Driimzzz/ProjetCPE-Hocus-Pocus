@@ -6,6 +6,7 @@ import cartes.Carte;
 public class Hocus extends Carte{
 		
 	private int force; //valeur du pouvoir
+	private boolean jevise;
 	
 	@Override
 	public int getForce() {
@@ -15,7 +16,14 @@ public class Hocus extends Carte{
 	public void setForce(int force) {
 		this.force = force;
 	}
-	
+	@Override
+	public boolean isJevise() {
+		return jevise;
+	}
+	@Override
+	public void setJevise(boolean jevise) {
+		this.jevise = jevise;
+	}
 	protected Hocus(Partie partie){
 		super(partie);
 		setForce(0);

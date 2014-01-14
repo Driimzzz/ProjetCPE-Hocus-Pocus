@@ -11,6 +11,7 @@ public class Sortilege extends Hocus{
 		super.setNom("Sortilege");
 		super.setDescription("Piochez des gemmes dans le chaudron");
 		super.setForce(force);
+		super.setJevise(false);
 		
 	}
 		

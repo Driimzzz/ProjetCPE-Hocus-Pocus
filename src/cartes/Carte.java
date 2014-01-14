@@ -108,4 +108,14 @@ public class Carte {
 
 	}
 
+	public boolean isJevise() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void setJevise(boolean jevise) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

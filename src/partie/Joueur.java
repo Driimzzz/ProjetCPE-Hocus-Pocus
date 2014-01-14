@@ -12,14 +12,16 @@ import cartes.Carte.CarteType;
 public class Joueur {
 	private int gemmes;
 	private int id;
+	private int positionPartie;
 	private Main main;
 	private Grimoire grimoire;
 	private String nom;
 	private Partie partie;
 
-	public Joueur(String _nom, Partie maPartie,int id) {
+	public Joueur(String _nom, Partie maPartie,int id, int positionPartie) {
 		this.setPartie(maPartie);
 		this.setId(id);
+		this.setPositionPartie(positionPartie);
 		this.setNom(_nom);
 		this.setGemmes(10);
 		this.setGrimoire(new Grimoire());
@@ -102,26 +104,31 @@ public class Joueur {
 	}
 	
 	public void demandeCompleterGrimoire(){
-		JSONObject json = new JSONObject();
-		try {
-			json.put("methode", "demandeCompleterGrimoire");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Interface.Error(e.getMessage());
+		//pour completer il faut des cartes dans sa main !!
+		if(this.getMain().getPileDeCarte().size()>0)
+		{
+			JSONObject json = new JSONObject();
+			try {
+				json.put("methode", "demandeCompleterGrimoire");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Interface.Error(e.getMessage());
+			}
+			try {
+				json.put("numeroJoueur", this.getId());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Interface.Error(e.getMessage());
+			}
+			try {
+				json.put("main", this.main.toJson());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Interface.Jeu(json.toString(), this.getId());
 		}
-		try {
-			json.put("numeroJoueur", this.getId());
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Interface.Error(e.getMessage());
-		}
-		try {
-			json.put("main", this.main.toJson());
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Interface.Jeu(json.toString(), this.getId());
+		
 	}
 	
 	
@@ -204,6 +211,14 @@ public class Joueur {
 
 	
 	
+	public int getPositionPartie() {
+		return positionPartie;
+	}
+
+	public void setPositionPartie(int positionPartie) {
+		this.positionPartie = positionPartie;
+	}
+
 	public int getId() {
 		return id;
 	}

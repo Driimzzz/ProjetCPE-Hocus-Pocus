@@ -12,6 +12,7 @@ public class Malediction extends Hocus{
 		super.setNom("Malediction");
 		super.setDescription("Piochez des cartes dans le grimoire d'un joueur désigné");
 		super.setForce(force);
+		super.setJevise(true);
 	}
 	
 	@Override
@@ -24,7 +25,7 @@ public class Malediction extends Hocus{
 	public void action() {
 		if(isValide())
 		{
-			int numJoueurGrimoire = getPartie().getJoueurByID(joueurVise.getId());
+			int numJoueurGrimoire = joueurVise.getPositionPartie();
 			int numJoueurQuiChoisi = getPartie().getJoueurJouant();
 			getPartie().demanderCartesDuGrimoire(numJoueurGrimoire, numJoueurQuiChoisi, this.getForce());
 		}

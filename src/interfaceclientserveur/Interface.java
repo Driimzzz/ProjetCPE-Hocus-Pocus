@@ -93,7 +93,7 @@ public class Interface {
 	
 	
 	// choix d'une action demande au client
-	public static void demandeAction(boolean carteHocus,boolean peuPiocherCartes ) {
+	/*public static void demandeAction(boolean carteHocus,boolean peuPiocherCartes ) {
 		JsonObject json = new JsonObject();
 		json.addProperty("methode", "demandeAction");
 		json.addProperty("peuCarteHocus", carteHocus); // si le joueur peu jouer
@@ -101,7 +101,7 @@ public class Interface {
 		Jeu(json.toString(), partie.getJoueurJouant());
 
 
-	}
+	}*/
 
 	// choix d'une action demande au client
 	public static void reponseAction(int numJoueur,String action) {
@@ -251,6 +251,7 @@ public class Interface {
 			Console(">" + input);
 		}
 		if (message.getType() == MessageType.Message) {
+			message.setMessage(message.getAuteur().getNickname()+": "+message.getMessage());
 			SocketAnnotation.broadcast(message);
 		}
 	}

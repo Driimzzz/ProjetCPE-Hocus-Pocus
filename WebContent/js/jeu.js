@@ -1,4 +1,5 @@
 var obJ = "";
+var cdowntitre;
 
 $(document).ready(function() {
 	$('.clock_seconds').hide();
@@ -34,6 +35,7 @@ function getInfo(message) {
 	// alert(obJ);
 
 	if (obJ.methode == "toutesLesInfos") {
+
 		InitJeu(obJ.joueurs.length);
 
 		$("#chaudron")
@@ -51,12 +53,16 @@ function getInfo(message) {
 
 		// chaque joueur
 		for (var i = 1; i < obJ.joueurs.length; i++) {
-			if (obJ.joueurs[i].id == obJ.joueurEnCour)
+			if (obJ.joueurs[i].id == obJ.joueurEnCour) {
 				$("#player" + i + " .nom").html(
 						'<p style="color:red;">' + obJ.joueurs[i].nom + '</p>');
-			else
+			}
+
+			else {
 				$("#player" + i + " .nom").html(
 						'<p>' + obJ.joueurs[i].nom + '</p>');
+
+			}
 
 			$("#player" + i + " .carte")
 					.html(
@@ -95,6 +101,9 @@ function getInfo(message) {
 					'<img src="img/HocusPocus/' + obJ.joueurs[0].grimoire[j]
 							+ '.png" onclick="carteJouee(' + 1 + j + ')">');
 		}
+			document.title = "Hocus Pocus";
+			clearInterval(cdowntitre);
+		
 	}
 	if (obJ.methode == "viserJoueur") {
 		$("#boutonCiblageJ0").hide();
@@ -154,43 +163,54 @@ function getInfo(message) {
 	if (obJ.methode == "listeJoueurs") {
 		$("#listeJoueurs").html('');
 		for (var i = 0; i < obJ.joueurs.length; i++) {
-			$("#listeJoueurs").append("<td class='tdjoueur' style='background-color:#006633;'><h1>"+obJ.joueurs[i].nickname+"</h1></td>");
+			$("#listeJoueurs").append(
+					"<td class='tdjoueur' style='background-color:#006633;'><h1>"
+							+ obJ.joueurs[i].nickname + "</h1></td>");
 		}
-		for (var i = obJ.joueurs.length; i <6 ; i++) {
-			$("#listeJoueurs").append("<td class='tdjoueur' style='background-color:#933;'></td>");
+		for (var i = obJ.joueurs.length; i < 6; i++) {
+			$("#listeJoueurs")
+					.append(
+							"<td class='tdjoueur' style='background-color:#933;'></td>");
 		}
-		$("#listeJoueurs").append('<td class="tdbouton" onclick="getPlayers();">Jouer</td>');
+		$("#listeJoueurs").append(
+				'<td class="tdbouton" onclick="getPlayers();">Jouer</td>');
 	}
 
-	
-	//pour malediction et hibou incomplet
+	// pour malediction et hibou incomplet
 	if (obJ.methode == "demandeCartesDuGrimoire") {
-		$("#popupCompleterGrimoire").html("<h2>Quelle carte de ce grimoire voulez vous?</h2>");
+		$("#popupCompleterGrimoire").html(
+				"<h2>Selectionnez " + obJ.nbrCartes + " carte(s) !</h2>");
 		arrayGrim = new Array();
 		for (var i = 0; i < obJ.grim.length; i++) {
 			$("#popupCompleterGrimoire").append(
-							'<img src="img/HocusPocus/' + obJ.grim[i]
-									+ '.png" onclick="choixDansGrimoire(' + i + ','
-									+ obJ.nbrCartes + ','
-									+ obJ.numJoueurQuiChoisi+','
-									+ obJ.numJoueurGrimoire+')">');
-				}
+					'<img src="img/HocusPocus/' + obJ.grim[i]
+							+ '.png" id="cartesGrimoire' + i
+							+ '" onclick="choixDansGrimoire(' + i + ','
+							+ obJ.nbrCartes + ',' + obJ.numJoueurQuiChoisi
+							+ ',' + obJ.numJoueurGrimoire + ')">');
+		}
 		$("#popupCompleterGrimoire").popup("open");
 
+	}
+	if (obJ.methode == "joueurEnCour") {
+		clearInterval(cdowntitre);
+		clignoteTitre("C'est votre tour de jeu !");
 	}
 
 }
 
-//pour malediction et hibou incomplet
+// pour malediction et hibou incomplet
 var arrayGrim;
-function choixDansGrimoire(numJoue,nbrCarte,numJoueurQuiChoisi,numJoueurGrimoire){
+function choixDansGrimoire(numJoue, nbrCarte, numJoueurQuiChoisi,
+		numJoueurGrimoire) {
 	arrayGrim.push(numJoue);
-	if(arrayGrim.length ==nbrCarte){
-		envoyerServeur("{ methode:reponseCartesDuGrimoire;" +
-				" numJoueurVise: "+ numJoueurGrimoire + ";" +
-				" numJoueur:"+ numJoueurQuiChoisi + ";" +
-				" grimoire:[" + arrayGrim +"]"+
-				"}");
+	$("#cartesGrimoire" + numJoue).css("border-color", "red");
+	if (arrayGrim.length == nbrCarte) {
+		console.log(arrayGrim);
+		envoyerServeur("{ methode:reponseCartesDuGrimoire;"
+				+ " numJoueurVise: " + numJoueurGrimoire + ";" + " numJoueur:"
+				+ numJoueurQuiChoisi + ";" + " grimoire:[" + arrayGrim + "]"
+				+ "}");
 		$("#popupCompleterGrimoire").popup("close");
 	}
 }
@@ -211,4 +231,20 @@ function viserJoueur(numero) {
 function choisirAction(action) {
 	envoyerServeur("{methode:reponseAction;action:" + action + "}");
 	$("#popupChoisirAction").popup("close");
+}
+
+function clignoteTitre(message) {
+	var bool = true;
+	cdowntitre = setInterval(function() {
+		if (bool) {
+			document.title = message;
+			bool = false;
+		}
+
+		else {
+			document.title = "Hocus Pocus";
+			bool = true;
+		}
+
+	}, 1000);
 }
