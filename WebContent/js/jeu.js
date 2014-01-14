@@ -150,7 +150,7 @@ function getInfo(message) {
 		}
 		$("#popupCompleterGrimoire").popup("open");
 	}
-<<<<<<< HEAD
+
 	if (obJ.methode == "listeJoueurs") {
 		$("#listeJoueurs").html('');
 		for (var i = 0; i < obJ.joueurs.length; i++) {
@@ -160,7 +160,8 @@ function getInfo(message) {
 			$("#listeJoueurs").append("<td class='tdjoueur' style='background-color:#933;'></td>");
 		}
 		$("#listeJoueurs").append('<td class="tdbouton" onclick="getPlayers();">Jouer</td>');
-=======
+	}
+
 	
 	//pour malediction et hibou incomplet
 	if (obJ.methode == "demandeCartesDuGrimoire") {
@@ -175,7 +176,7 @@ function getInfo(message) {
 									+ obJ.numJoueurGrimoire+')">');
 				}
 		$("#popupCompleterGrimoire").popup("open");
->>>>>>> 71e0889ba23896a307914f02dc733333399f52e9
+
 	}
 
 }
