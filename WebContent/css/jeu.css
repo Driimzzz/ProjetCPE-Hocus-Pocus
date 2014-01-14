@@ -276,3 +276,15 @@ transform:rotate(7deg);
   box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
 
 }
+#target{
+	position:absolute;
+	left:50%;
+	top:40%;
+	margin:auto;
+	width:100px;
+	height:100px;
+	background-image:url(../img/HocusPocus/target.png);
+	background-repeat:no-repeat;
+	background-position:center;
+
+}

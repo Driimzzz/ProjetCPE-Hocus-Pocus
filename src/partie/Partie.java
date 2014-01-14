@@ -497,6 +497,9 @@ public class Partie extends Thread {
 			Joueur jVise = getJoueurs().get(numJoueurVise);
 			Interface.Console(getJoueurs().get(numJoueur).getNom() + " vise "
 					+ jVise.getNom());
+			JsonObject json = new JsonObject();
+			json.addProperty("methode", "jeSuisVise");
+			Interface.Jeu(json.toString(), jVise.getId());
 			getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
 			lancerChrono();
 		}

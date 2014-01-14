@@ -56,6 +56,7 @@ function chrono() {
 
 				if (seconds > 7) {
 					$('.clock_seconds').hide();
+					$("#target").hide();
 					clearInterval(cdown);
 
 				} else {

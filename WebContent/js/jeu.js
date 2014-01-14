@@ -11,6 +11,7 @@ function HideJeu() {
 	for (var i = 0; i < 6; i++) {
 		$("#player" + i).hide();
 	}
+	$("#target").hide();
 	$("#jeu").hide();
 	$("#popupConnectionJoueurs").show();
 }
@@ -196,6 +197,10 @@ function getInfo(message) {
 	if (obJ.methode == "joueurEnCour") {
 		clearInterval(cdowntitre);
 		clignoteTitre("C'est votre tour de jeu !");
+	}
+	
+	if (obJ.methode == "jeSuisVise") {
+		$("#target").show();
 	}
 
 }
