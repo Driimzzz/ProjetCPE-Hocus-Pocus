@@ -31,6 +31,12 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import partie.Joueur;
+
 import com.sun.xml.internal.ws.client.ClientSchemaValidationTube;
 
 import websocket.console.Message.ParseException;
@@ -63,7 +69,6 @@ public class SocketAnnotation {
 	}
 
 	private Client client;
-	
 
 	public static Salle getSalle() {
 		return salle;
@@ -72,6 +77,7 @@ public class SocketAnnotation {
 	public static void setSalle(Salle salle) {
 		SocketAnnotation.salle = salle;
 	}
+
 
 	public SocketAnnotation() {
 
@@ -85,12 +91,14 @@ public class SocketAnnotation {
 		client.setNickname(GUEST_PREFIX + client.getId());
 		client.setSession(session);
 		Salle.getClients().add(client);
-		//met à jour les mesages buffered
-		//bufferedMessages();
+		// met à jour les mesages buffered
+		// bufferedMessages();
 		String mess = String.format("%s %s", client.getNickname(),
 				"has joined.");
-		Message message = new Message(MessageType.Message, mess,
+		Message message = new Message(MessageType.Message, mess, client.getId());
+		Message message2 = new Message(MessageType.Jeu, listeJoueurs(),
 				client.getId());
+		broadcast(message2);
 		broadcast(message);
 
 	}
@@ -102,8 +110,10 @@ public class SocketAnnotation {
 
 		String mess = String.format("%s %s", client.getNickname(),
 				"has disconnected.");
-		Message message = new Message(MessageType.Message, mess,
+		Message message = new Message(MessageType.Message, mess, client.getId());
+		Message message2 = new Message(MessageType.Jeu, listeJoueurs(),
 				client.getId());
+		broadcast(message2);
 		broadcast(message);
 	}
 
@@ -120,7 +130,7 @@ public class SocketAnnotation {
 			// TODO Auto-generated catch block
 			broadcast(new Message(MessageType.Error, e.getMessage()));
 		}
-		//broadcast(message);
+		// broadcast(message);
 		Interface.gestionMessage(message);
 	}
 
@@ -154,8 +164,7 @@ public class SocketAnnotation {
 				}
 				String mess = String.format("%s %s", client.getNickname(),
 						"has been disconnected.");
-				message = new Message(MessageType.Message, mess,
-						client.getId());
+				message = new Message(MessageType.Message, mess, client.getId());
 				broadcast(message);
 			}
 		} catch (Exception e) {
@@ -181,8 +190,7 @@ public class SocketAnnotation {
 				}
 				String mess = String.format("%s %s", client.getNickname(),
 						"has been disconnected.");
-				message = new Message(MessageType.Message, mess,
-						client.getId());
+				message = new Message(MessageType.Message, mess, client.getId());
 				broadcast(message);
 			}
 		}
@@ -198,6 +206,27 @@ public class SocketAnnotation {
 
 	}
 
+	private String listeJoueurs() {
+		JSONObject grosJson = new JSONObject();
+		try {
+			grosJson.put("methode", "listeJoueurs");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Interface.Error(e.getMessage());
+		}
+
+		JSONArray arr = new JSONArray();
+		for (Client j : Salle.getClients()) {
+			arr.put(j.toJson());
+		}
+
+		try {
+			grosJson.put("joueurs", arr);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Interface.Error(e.getMessage());
+		}
+		return grosJson.toString();
+	}
+
 }
-
-

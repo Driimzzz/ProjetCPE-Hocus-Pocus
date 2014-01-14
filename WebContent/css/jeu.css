@@ -239,3 +239,40 @@ transform:rotate(7deg);
   transform: scale(1.05,1.05);
 
 }
+#listeJoueurs{
+	margin:auto;
+	width:100%;
+	height:35%;
+}
+.tdbouton{
+	height:80px;
+	width:16%;
+	background: #CCC; 
+	border-radius:5px;
+	border: 1px solid rgba(0,0,0,1);
+	text-align:center;
+	color:#000;
+	 -webkit-text-shadow: 2px 2px 7px rgba(0,0,0,0.9);
+  text-shadow: 2px 2px 7px rgba(0,0,0,0.9);
+  font-weight:bold;
+	 -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+
+}
+
+.tdjoueur{
+	height:80px;
+	width:16%;
+	background: #CCC; 
+	background: -moz-repeating-linear-gradient( 45deg, rgba(255,255,255,.2) 0, rgba(255,255,255,.2) 10px, rgba(255,255,255,0) 10px, rgba(255,255,255,0) 20px ), -moz-linear-gradient( rgba(255,255,255,.1) 50%, rgba(255,255,255,0) 60% ), #CCC; background: repeating-linear-gradient( 45deg, rgba(255,255,255,.2) 0, rgba(255,255,255,.2) 10px, rgba(255,255,255,0) 10px, rgba(255,255,255,0) 20px ), linear-gradient( rgba(255,255,255,.1) 50%, rgba(255,255,255,0) 60% ), #CCC;
+	border-radius:5px;
+	border: 1px solid rgba(0,0,0,1);
+	text-align:center;
+	color:#FFF;
+	 -webkit-text-shadow: 2px 2px 7px rgba(0,0,0,0.9);
+  text-shadow: 2px 2px 7px rgba(0,0,0,0.9);
+  font-weight:bold;
+	 -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+  box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
+
+}

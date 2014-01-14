@@ -3,6 +3,7 @@ var obJ = "";
 $(document).ready(function() {
 	$('.clock_seconds').hide();
 	HideJeu();
+
 });
 
 function HideJeu() {
@@ -10,6 +11,7 @@ function HideJeu() {
 		$("#player" + i).hide();
 	}
 	$("#jeu").hide();
+	$("#popupConnectionJoueurs").show();
 }
 
 function InitJeu(players) {
@@ -17,12 +19,13 @@ function InitJeu(players) {
 		$("#player" + i).show();
 	}
 	$("#jeu").show();
+	$("#popupConnectionJoueurs").hide();
 }
 
 function getPlayers() {
 	HideJeu();
 	envoyerServeur("{methode:creerJeu}");
-	$('#popupJeu').popup("close");
+	$("#popupConnectionJoueurs").hide();
 }
 
 function getInfo(message) {
@@ -70,8 +73,8 @@ function getInfo(message) {
 				$("#player" + i + " .player-jeu").html("");
 			for (var j = 0; j < obJ.joueurs[i].grimoire.length; j++) {
 				$("#player" + i + " .player-jeu").append(
-						'<img src="img/HocusPocus/' + obJ.joueurs[i].grimoire[j]
-								+ '.png">');
+						'<img src="img/HocusPocus/'
+								+ obJ.joueurs[i].grimoire[j] + '.png">');
 			}
 
 		}
@@ -90,7 +93,7 @@ function getInfo(message) {
 		for (var j = 0; j < obJ.joueurs[0].grimoire.length; j++) {
 			$("#player" + 0 + " .player-grimoire").append(
 					'<img src="img/HocusPocus/' + obJ.joueurs[0].grimoire[j]
-							+ '.png" onclick="carteJouee(' + 1+j + ')">');
+							+ '.png" onclick="carteJouee(' + 1 + j + ')">');
 		}
 	}
 	if (obJ.methode == "viserJoueur") {
@@ -118,8 +121,7 @@ function getInfo(message) {
 			else
 				$("#boutonChoisirAction0").show();
 
-		}
-		else{
+		} else {
 			$("#boutonChoisirAction2").show();
 			if (!obJ.peuCarteHocus)
 				$("#boutonChoisirAction0").hide();
@@ -137,19 +139,32 @@ function getInfo(message) {
 	}
 
 	if (obJ.methode == "demandeCompleterGrimoire") {
-		$("#popupCompleterGrimoire").html("<h2>Vous devez completer votre grimoire, quelle carte poser?</h2>")
+		$("#popupCompleterGrimoire")
+				.html(
+						"<h2>Vous devez completer votre grimoire, quelle carte poser?</h2>")
 		for (var i = 0; i < obJ.main.length; i++) {
 			$("#popupCompleterGrimoire").append(
-							'<img src="img/HocusPocus/' + obJ.main[i]
-									+ '.png" onclick="completerGrimoire(' + i + ',' + obJ.numeroJoueur + ')">');
-				}
+					'<img src="img/HocusPocus/' + obJ.main[i]
+							+ '.png" onclick="completerGrimoire(' + i + ','
+							+ obJ.numeroJoueur + ')">');
+		}
 		$("#popupCompleterGrimoire").popup("open");
 	}
+	if (obJ.methode == "listeJoueurs") {
+		$("#listeJoueurs").html('');
+		for (var i = 0; i < obJ.joueurs.length; i++) {
+			$("#listeJoueurs").append("<td class='tdjoueur' style='background-color:#006633;'><h1>"+obJ.joueurs[i].nickname+"</h1></td>");
+		}
+		for (var i = obJ.joueurs.length; i <6 ; i++) {
+			$("#listeJoueurs").append("<td class='tdjoueur' style='background-color:#933;'></td>");
+		}
+		$("#listeJoueurs").append('<td class="tdbouton" onclick="getPlayers();">Jouer</td>');
+	}
 
-	
 }
 function completerGrimoire(carte, joueur) {
-	envoyerServeur("{methode:completerGrimoire;numJoueur:" + joueur + ";numCarte:" + carte + "}");
+	envoyerServeur("{methode:completerGrimoire;numJoueur:" + joueur
+			+ ";numCarte:" + carte + "}");
 	$("#popupCompleterGrimoire").popup("close");
 }
 function carteJouee(carte) {
@@ -164,4 +179,3 @@ function choisirAction(action) {
 	envoyerServeur("{methode:reponseAction;action:" + action + "}");
 	$("#popupChoisirAction").popup("close");
 }
-
