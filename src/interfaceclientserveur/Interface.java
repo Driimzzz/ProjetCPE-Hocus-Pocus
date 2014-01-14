@@ -9,9 +9,11 @@ import org.json.JSONObject;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.sun.org.apache.xml.internal.serializer.ToUnknownStream;
 
 import cartes.Carte;
 import cartes.Carte.CarteType;
+import partie.Grimoire;
 import partie.Joueur;
 import partie.Partie;
 import websocket.console.Client;
@@ -93,26 +95,7 @@ public class Interface {
 		json.addProperty("peuPiocherCartes", peuPiocherCartes);
 		Jeu(json.toString(), partie.getJoueurJouant());
 
-		// //Pour le test cote serveur
-		// int input = -1;
-		// while(input!=1 && input!=2){
-		// Interface.Console("entrez 0 ou 1 ou 2:");
-		// input = Partie.readIntValue();
-		// }
-		// String strMsg="";
-		// switch (input){
-		// case 0:
-		// strMsg= "{methode:reponseAction;action:jouerHocus}";
-		// break;
-		// case 1:
-		// strMsg= "{methode:reponseAction;action:piocherGemme}";
-		// break;
-		// case 2:
-		// strMsg= "{methode:reponseAction;action:piocherCartes}";
-		// break;
-		// }
-		// Message message = new Message(MessageType.Jeu, strMsg);
-		// gestionMessage(message);
+
 	}
 
 	// choix d'une action demande au client
@@ -216,12 +199,28 @@ public class Interface {
 				try {
 					if(message.getAuteur() == json.getInt("numJoueur")){
 						partie.getJoueurs().get(message.getAuteur()).completerGrimoire(json.getInt("numCarte"));
+						partie.toutesLesInfos();
 					}
 					break;
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			
+			case "reponseCartesDuGrimoire":
+				try {
+					if(message.getAuteur() == json.getInt("numJoueur")){
+						
+						int joueurGrimoire = json.getInt("numJoueurVise");						
+						JSONArray carteArr = json.getJSONArray("grimoire");						
+						partie.reponseCartesDuGrimoire(carteArr, joueurGrimoire);	
+						
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
 				
 			default:
 				Error("erreur dans la sythaxe json de methode");

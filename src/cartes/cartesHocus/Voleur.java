@@ -58,7 +58,8 @@ public class Voleur extends Hocus{
 	public Joueur getJoueurVise() {
 		return joueurVise;
 	}
-
+	
+	@Override
 	public void setJoueurVise(Joueur joueurVise) {
 		this.joueurVise = joueurVise;
 	}	

@@ -11,14 +11,15 @@ import cartes.Carte.CarteType;
 
 public class Joueur {
 	private int gemmes;
-	private long id;
+	private int id;
 	private Main main;
 	private Grimoire grimoire;
 	private String nom;
 	private Partie partie;
 
-	public Joueur(String _nom, Partie maPartie) {
+	public Joueur(String _nom, Partie maPartie,int id) {
 		this.setPartie(maPartie);
+		this.setId(id);
 		this.setNom(_nom);
 		this.setGemmes(10);
 		this.setGrimoire(new Grimoire());
@@ -38,26 +39,7 @@ public class Joueur {
 				this.getMain().getPileDeCarte().remove(carteJouee);
 			else{
 				this.getGrimoire().getPileDeCarte().remove(carteJouee);
-				JSONObject json = new JSONObject();
-				try {
-					json.put("methode", "demandeCompleterGrimoire");
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					Interface.Error(e.getMessage());
-				}
-				try {
-					json.put("numeroJoueur", numJoueur);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					Interface.Error(e.getMessage());
-				}
-				try {
-					json.put("main", this.main.toJson());
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Interface.Jeu(json.toString(), numJoueur);
+				demandeCompleterGrimoire();
 			}
 			if("Chat Noir".equals(carteJouee.getNom())){
 				carteJouee.setJoueurVise(partie.getJoueurs().get(numJoueur));//pour definir dans quelle main ira la carte
@@ -74,6 +56,16 @@ public class Joueur {
 			Carte carteABouger = this.getMain().getPileDeCarte().get(numCarte);
 			this.getMain().getPileDeCarte().remove(carteABouger);
 			this.getGrimoire().ajouterUneCarte(carteABouger);
+			
+			if(getGrimoire().getPileDeCarte().size()<3){ //cas où plusieurs carte du grimoires on été retirées
+				try {
+					Thread.sleep(500); // besoin d'attendre pour que le client ne soit pas surchargé
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				this.demandeCompleterGrimoire();
+			}
 		}
 	}
 	
@@ -108,6 +100,31 @@ public class Joueur {
 		else
 			return true;
 	}
+	
+	public void demandeCompleterGrimoire(){
+		JSONObject json = new JSONObject();
+		try {
+			json.put("methode", "demandeCompleterGrimoire");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Interface.Error(e.getMessage());
+		}
+		try {
+			json.put("numeroJoueur", this.getId());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Interface.Error(e.getMessage());
+		}
+		try {
+			json.put("main", this.main.toJson());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Interface.Jeu(json.toString(), this.getId());
+	}
+	
+	
 	public JSONObject toJson(int numJoueur, int j) {
 		JSONObject json = new JSONObject();
 
@@ -183,6 +200,16 @@ public class Joueur {
 			e.printStackTrace();
 		}
 		return json;
+	}
+
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Partie getPartie() {

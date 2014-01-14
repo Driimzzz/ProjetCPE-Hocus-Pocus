@@ -4,6 +4,7 @@ import interfaceclientserveur.Interface;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,9 +12,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import websocket.console.Client;
+import websocket.console.Message;
+import websocket.console.SocketAnnotation.MessageType;
 import cartes.*;
 import cartes.Carte.CarteType;
 
@@ -34,41 +38,9 @@ public class Partie extends Thread {
 		Interface.demandeAction(joueurEnCours.aDesHocusDansSonJeu(),
 				joueurEnCours.peutPiocherCarte());
 
-		// int numCarte = -2;
-		// while (numCarte!=-1 && chaudron > 0 &&
-		// joueurEnCours.getMain().tailleDeLaPile() > 0){ //tant qu'on veut
-		// jouer et qu'on a des cartes
-		// while(numCarte<-1 ||
-		// numCarte>joueurEnCours.getMain().tailleDeLaPile()-1){ //saisie
-		// protegee
-		// joueurEnCours.getMain().afficherToutes();
-		// Interface.Console("quelle carte jouer ? (-1 pour ne rien jouer)");
-		// numCarte = readIntValue();
-		// }
-		// if(numCarte>=0){
-		// joueurEnCours.jouerCarte(joueurEnCours.getMain().getPileDeCarte().elementAt(numCarte));
-		// numCarte = -2;
-		// }
-		//
-		// jouerLesCartesDeLaireDeJeu();
-		// Interface.Console("vous avez maintenant "+
-		// joueurEnCours.getGemmes()+" gemmes.");
-		// }
-		// if(chaudron>0){
-		// finDuTour(joueurEnCours);
-		// }
-		// else{
-		// finDuJeu();
-		// }
 	}
 
 	public void finDuTour(int numJoueur, int input) {
-		// Interface.Console("c'est la fin de votre tour, vous pouvez : 1=piocher une gemme dans le chaudron OU 2=piocher deux cartes : ");
-		// int input = -1;
-		// while(input!=1 && input!=2){
-		// Interface.Console("entrez 1 ou 2:");
-		// input = readIntValue();
-		// }
 
 		// on vérifie l'auteur
 		if (indexJoueur == numJoueur) {
@@ -127,18 +99,6 @@ public class Partie extends Thread {
 		afficherJoueurs();
 	}
 
-	/*
-	 * public static int readIntValue() {
-	 * 
-	 * do{ try { Thread.sleep(100);
-	 * 
-	 * } catch (InterruptedException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); } }while("".equals(Interface.input)); int
-	 * nbr=Integer.parseInt(Interface.input); Interface.input=""; return nbr;
-	 * 
-	 * }
-	 */
-
 	public void afficherJoueurs() {
 		Interface.Console("liste des joueurs : ");
 		for (int i = 0; i < getJoueurs().size(); i++) {
@@ -183,7 +143,7 @@ public class Partie extends Thread {
 		joueurs = new ArrayList<Joueur>();
 		for (int i = 0; i < clients.size(); i++) {
 			this.getJoueurs().add(
-					new Joueur(clients.get(i).getNickname(), this));
+					new Joueur(clients.get(i).getNickname(), this, i));
 		}
 
 		// distribution des cartes aux joueurs
@@ -234,7 +194,7 @@ public class Partie extends Thread {
 		// creation des joueurs
 		joueurs = new ArrayList<Joueur>();
 		for (int i = 0; i < nbJoueurs; i++) {
-			this.getJoueurs().add(new Joueur(nomsJoueurs[i], this));
+			this.getJoueurs().add(new Joueur(nomsJoueurs[i], this, i));
 		}
 
 		// distribution des cartes aux joueurs
@@ -311,12 +271,18 @@ public class Partie extends Thread {
 
 	}
 
-	public void jouerLesCartesDeLaireDeJeu() {
-		while (aireDeJeu.tailleDeLaPile() > 0) {
+	public void jouerLesCartesDeLaireDeJeu() {		
+		while (aireDeJeu.tailleDeLaPile() > 1) {
 			Carte currentCarte = aireDeJeu.tirerUneCarte();
 			currentCarte.action();
+		}		
+		Carte hocus = this.getAireDeJeu().getPileDeCarte().get(0);
+		hocus.action();
+		
+		if(!("Hibou".equals(hocus.getNom()))
+				&&!("Malediction".equals(hocus.getNom()))){
+				setAireDeJeu(new PileDeCartes());
 		}
-		setAireDeJeu(new PileDeCartes());
 		toutesLesInfos();
 	}
 
@@ -326,6 +292,87 @@ public class Partie extends Thread {
 
 	public void setDefausse(PileDeCartes defausse) {
 		Partie.defausse = defausse;
+	}
+
+	// ----------Communication client / serveur --------------
+	// le serveur demande le cartes du grimoire d'un joueur
+	public void demanderCartesDuGrimoire(int numJoueurGrimoire,
+			int numJoueurQuiChoisi, int nbrCartes) {
+		JSONObject grosJson = new JSONObject();
+		try {
+			grosJson.put("methode", "demandeCartesDuGrimoire");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			grosJson.put("nbrCartes", nbrCartes);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			grosJson.put("numJoueurQuiChoisi", numJoueurQuiChoisi);
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			grosJson.put("numJoueurGrimoire", numJoueurGrimoire);
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		JSONArray grim = this.getJoueurs().get(numJoueurGrimoire).getGrimoire()
+				.toJson();
+
+		try {
+			grosJson.put("grim", grim);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Interface.Jeu(grosJson.toString(), numJoueurQuiChoisi);
+
+//		Message msg = new Message(MessageType.Jeu,
+//				"{ methode:reponseCartesDuGrimoire;" +
+//						" numJoueurVise: "+ numJoueurGrimoire + ";" +
+//						" numJoueur:"+ numJoueurQuiChoisi + ";" +
+//						" grimoire:" + "[0,1]"+
+//						"}", numJoueurQuiChoisi);
+//		Interface.gestionMessage(msg);
+	}
+
+	// reponse du client
+	public void reponseCartesDuGrimoire(JSONArray carteArr, int joueurGrimoire) {
+		PileDeCartes pile = this.getAireDeJeu();
+		int taille = pile.tailleDeLaPile();
+		Stack<Carte> pileCarte = pile.getPileDeCarte();
+		Carte carteHocus = pileCarte.get(0);
+		String strComp = carteHocus.getNom();
+		if ("Hibou".equals(strComp)) {
+			// mettre les carte choisies dans la main du joueurjouant
+			for (int numCarteGrim = 0; numCarteGrim < carteArr.length(); numCarteGrim++) {
+				Carte carteChoisie = this.getJoueurs().get(joueurGrimoire)
+						.getGrimoire().enleverCarte(numCarteGrim);
+				this.getJoueurs().get(getJoueurJouant()).getMain()
+						.ajouterUneCarte(carteChoisie);
+			}
+			this.getJoueurs().get(joueurGrimoire).demandeCompleterGrimoire();
+		}
+		else if ("Malediction".equals(strComp)) {
+			// defausser les carte choisies par joueurjouant
+			for (int numCarteGrim = 0; numCarteGrim < carteArr.length(); numCarteGrim++) {
+				this.getJoueurs().get(joueurGrimoire).getGrimoire()
+						.enleverCarte(numCarteGrim);
+			}
+			this.getJoueurs().get(joueurGrimoire).demandeCompleterGrimoire();
+		}
+		setAireDeJeu(new PileDeCartes());
 	}
 
 	// le serveur envois toutes les infos relative à la partie
