@@ -40,7 +40,7 @@ public class ChatNoir extends Pocus{
 	public void action() {
 		if(isValide())
 		{
-			this.getPartie().getAireDeJeu().getPileDeCarte().remove(0);
+			this.getPartie().getAireDeJeu().getPileDeCarte().get(0).setEstValide(false);
 			joueur.getMain().ajouterUneCarte(carteVisee);
 //			saMain.ajouterUneCarte(carteVisee);
 //			joueur.setMain(saMain);

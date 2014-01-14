@@ -87,7 +87,7 @@ public class Carte {
 
 	@Override
 	public String toString() {
-		return getType() + "-->" + getNom() + " : " + getDescription();
+		return getType()  +" "+ getNom();
 	}
 
 	// Dummy functions

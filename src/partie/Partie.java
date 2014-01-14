@@ -424,14 +424,6 @@ public class Partie extends Thread {
 			Joueur joueurEnCours = joueurs.get(indexJoueur);
 			JsonObject json = new JsonObject();
 			json.addProperty("methode", "joueurEnCour");
-			//on laisse lire l'info précédente
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			//nouvelle info
 			Interface.Jeu(json.toString(), joueurEnCours.getId());
 			Interface.Console("C'est le tour de " + joueurEnCours.getNom());
 			
