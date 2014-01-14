@@ -84,7 +84,7 @@ function getInfo(message) {
 			}
 
 		}
-		$("#player-name").html("<p align='center'>"+obJ.joueurs[0].nom+"</p>");
+		$("#player-name").html(obJ.joueurs[0].nom);
 		$("#player" + 0 + " .player-main").html("");
 		$("#player" + 0 + " .player-gemme")
 				.html(
@@ -194,7 +194,6 @@ function getInfo(message) {
 
 	}
 	if (obJ.methode == "joueurEnCour") {
-		$("#player-name").html("<p align='center' style='color:red;'>"+obJ.joueurs[0].nom+"</p>");
 		clearInterval(cdowntitre);
 		clignoteTitre("C'est votre tour de jeu !");
 	}

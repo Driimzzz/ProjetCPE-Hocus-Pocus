@@ -73,7 +73,7 @@ Client.log = (function(message) {
 	}
 	// error en rouge
 	if (message.type == 0) {
-		("#infojeu").html("<p>" + message.message + "</p>");
+		$("#infojeu").html("<p>" + message.message + "</p>");
 	}
 
 	// message de type jeu
