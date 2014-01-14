@@ -56,17 +56,7 @@ public class Partie extends Thread {
 					joueurEnCours.setGemmes(joueurEnCours.getGemmes() + 1);
 					this.piocherDansLeChaudron(1);
 				} else if (input == 2) { // pioche 2 cartes
-					if (joueurEnCours.getMain().getPileDeCarte().size() < 6) {
-						Interface.Console(joueurEnCours.getNom()
-								+ " pioche 2 cartes");
-						if (6 - joueurEnCours.getMain().getPileDeCarte().size() >= 2)
-							joueurEnCours.piocherCartes(2);
-						else
-							joueurEnCours.piocherCartes(6 - joueurEnCours.getMain()
-									.getPileDeCarte().size());
-					} else {
-						Interface.Console("trop de cartes dans votre main");
-					}
+					joueurEnCours.piocherCartes(2);
 				} else {// erreur
 					Interface.Console("erreur fin du tour");
 				}
@@ -104,7 +94,7 @@ public class Partie extends Thread {
 	}
 
 	public void finDuJeu() {
-		Interface.Console("c'est la fin du jeu, tableau des scores : ");
+		Interface.Console("C'est la fin du jeu, tableau des scores : ");
 		afficherJoueurs();
 	}
 

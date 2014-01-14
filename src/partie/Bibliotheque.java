@@ -2,6 +2,7 @@ package partie;
 
 import cartes.*;
 import cartes.cartesHocus.Hibou;
+import cartes.cartesHocus.Inspiration;
 import cartes.cartesHocus.Malediction;
 import cartes.cartesHocus.Sacrifice;
 import cartes.cartesHocus.Sortilege;
@@ -81,7 +82,15 @@ public class Bibliotheque {
 		this.cartes.ajouterUneCarte(new Hibou(1, maPartie));
 		this.cartes.ajouterUneCarte(new Hibou(2, maPartie));
 		
+		this.cartes.ajouterUneCarte(new Inspiration(2,maPartie));
+		this.cartes.ajouterUneCarte(new Inspiration(2,maPartie));
+		this.cartes.ajouterUneCarte(new Inspiration(2,maPartie));
 		
+		this.cartes.ajouterUneCarte(new Inspiration(3,maPartie));
+		this.cartes.ajouterUneCarte(new Inspiration(3,maPartie));
+		
+//		for (int i = 0; i < 20; i++)
+//			this.cartes.ajouterUneCarte(new Inspiration(2,maPartie));
 
 		this.cartes.melanger();
 	}
