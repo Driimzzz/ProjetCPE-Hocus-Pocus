@@ -94,7 +94,7 @@ public class Bibliotheque {
 		this.cartes.ajouterUneCarte(new Abracadabra(maPartie));
 		this.cartes.ajouterUneCarte(new Abracadabra(maPartie));
 		
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 2; i++)
 			this.cartes.ajouterUneCarte(new Vortex(maPartie));
 
 		this.cartes.melanger();
