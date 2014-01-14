@@ -80,9 +80,12 @@ public class Joueur {
 
 	// Le joueur perds des gemmes
 	public int perdreDesGemmes(int nbrVoles) {
-		if (gemmes - nbrVoles < 0)
+		if (gemmes - nbrVoles < 0){
 			nbrVoles = gemmes;
-		gemmes -= nbrVoles;
+			gemmes = 0;
+		}
+		else
+			gemmes -= nbrVoles;
 		return nbrVoles;
 	}
 	public boolean aDesHocusDansSonJeu(){
