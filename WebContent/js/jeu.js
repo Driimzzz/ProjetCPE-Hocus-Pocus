@@ -141,7 +141,7 @@ function getInfo(message) {
 	if (obJ.methode == "demandeCompleterGrimoire") {
 		$("#popupCompleterGrimoire")
 				.html(
-						"<h2>Vous devez completer votre grimoire, quelle carte poser?</h2>")
+						"<h2>Vous devez completer votre grimoire, quelle carte poser?</h2>");
 		for (var i = 0; i < obJ.main.length; i++) {
 			$("#popupCompleterGrimoire").append(
 					'<img src="img/HocusPocus/' + obJ.main[i]

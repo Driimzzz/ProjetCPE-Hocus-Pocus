@@ -143,7 +143,7 @@ public class Partie extends Thread {
 		joueurs = new ArrayList<Joueur>();
 		for (int i = 0; i < clients.size(); i++) {
 			this.getJoueurs().add(
-					new Joueur(clients.get(i).getNickname(), this, i));
+					new Joueur(clients.get(i).getNickname(), this, clients.get(i).getId()));
 		}
 
 		// distribution des cartes aux joueurs
@@ -215,6 +215,16 @@ public class Partie extends Thread {
 	// GETTERS & SETTERS ********************
 	public int getJoueurJouant() {
 		return indexJoueur;
+	}
+	public int getJoueurByID(int ID)
+	{
+		for(int i=0;i<getJoueurs().size();i++)
+		{
+			System.out.println(getJoueurs().get(i).getId()+ " "+ID+ " "+i);
+			if(getJoueurs().get(i).getId()==ID)
+				return i;
+		}
+		return -1;
 	}
 
 	public int getChaudron() {

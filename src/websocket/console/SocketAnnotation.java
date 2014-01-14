@@ -39,7 +39,7 @@ import partie.Joueur;
 
 import com.sun.xml.internal.ws.client.ClientSchemaValidationTube;
 
-import websocket.console.Message.ParseException;
+
 
 @ServerEndpoint(value = "/websocket/console")
 public class SocketAnnotation {
@@ -95,9 +95,9 @@ public class SocketAnnotation {
 		// bufferedMessages();
 		String mess = String.format("%s %s", client.getNickname(),
 				"has joined.");
-		Message message = new Message(MessageType.Message, mess, client.getId());
+		Message message = new Message(MessageType.Message, mess, client);
 		Message message2 = new Message(MessageType.Jeu, listeJoueurs(),
-				client.getId());
+				client);
 		broadcast(message2);
 		broadcast(message);
 
@@ -110,9 +110,9 @@ public class SocketAnnotation {
 
 		String mess = String.format("%s %s", client.getNickname(),
 				"has disconnected.");
-		Message message = new Message(MessageType.Message, mess, client.getId());
+		Message message = new Message(MessageType.Message, mess, client);
 		Message message2 = new Message(MessageType.Jeu, listeJoueurs(),
-				client.getId());
+				client);
 		broadcast(message2);
 		broadcast(message);
 	}
@@ -125,8 +125,8 @@ public class SocketAnnotation {
 		Message message = new Message();
 		try {
 			message = message.parseFromString(mess);
-			message.setAuteur(client.getId());
-		} catch (ParseException e) {
+			message.setAuteur(client);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			broadcast(new Message(MessageType.Error, e.getMessage()));
 		}
@@ -164,7 +164,7 @@ public class SocketAnnotation {
 				}
 				String mess = String.format("%s %s", client.getNickname(),
 						"has been disconnected.");
-				message = new Message(MessageType.Message, mess, client.getId());
+				message = new Message(MessageType.Message, mess, client);
 				broadcast(message);
 			}
 		} catch (Exception e) {
@@ -190,7 +190,7 @@ public class SocketAnnotation {
 				}
 				String mess = String.format("%s %s", client.getNickname(),
 						"has been disconnected.");
-				message = new Message(MessageType.Message, mess, client.getId());
+				message = new Message(MessageType.Message, mess, client);
 				broadcast(message);
 			}
 		}

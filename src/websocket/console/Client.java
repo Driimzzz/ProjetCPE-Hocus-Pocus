@@ -5,11 +5,14 @@ import javax.websocket.Session;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import partie.Partie;
+
 public class Client {
 	private int id;
 	private Session session;
 	private String nickname;
 	private int lastMessage;
+	private Partie partie;
 	
 	
 	public Client() {
@@ -21,6 +24,13 @@ public class Client {
 		this.id = id;
 		this.session = session;
 		this.nickname = nickname;
+	}
+	
+	public Partie getPartie() {
+		return partie;
+	}
+	public void setPartie(Partie partie) {
+		this.partie = partie;
 	}
 	public int getId() {
 		return id;

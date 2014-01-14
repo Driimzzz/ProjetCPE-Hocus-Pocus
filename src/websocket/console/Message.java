@@ -46,7 +46,7 @@ public final class Message {
 	private static final AtomicInteger messageIds = new AtomicInteger(0);
 	
 	private int iDmessage;
-	private int auteur=-1;
+	private Client auteur;
     private int type;
     private String message;
     private int destination=-1;
@@ -58,10 +58,10 @@ public final class Message {
 	public void setiDmessage(int iDmessage) {
 		this.iDmessage = iDmessage;
 	}
-	public int getAuteur() {
+	public Client getAuteur() {
 		return auteur;
 	}
-	public void setAuteur(int auteur) {
+	public void setAuteur(Client auteur) {
 		this.auteur = auteur;
 	}
 	public MessageType getType() {
@@ -93,14 +93,14 @@ public final class Message {
         this.message = message;
         iDmessage=messageIds.getAndIncrement();
     }
-	public Message(int type, String message,int auteur) {
+	public Message(int type, String message,Client auteur) {
 
         this.type = type;
         this.message = message;
         this.auteur=auteur;
         iDmessage=messageIds.getAndIncrement();
     }
-	public Message(MessageType type, String message,int auteur) {
+	public Message(MessageType type, String message,Client auteur) {
 
         this.type = type.ordinal();
         this.message = message;
@@ -124,35 +124,49 @@ public final class Message {
     }
 
     public String toJson(){
-    	Gson gson = new GsonBuilder().create(); 
-    	return gson.toJson(this, Message.class);
+    	
+    	JSONObject json = new JSONObject();
+
+		try {
+			json.put("type", this.type);
+		} catch (JSONException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+
+		try {
+			json.put("message", this.getMessage());
+		} catch (JSONException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		return json.toString();
 	}
     
-    public Message parseFromString(String str)
-            throws ParseException {
-        Message m;
+    public Message parseFromString(String str) {
+        int type=-1;
+        String message="";
 
-        try {
-        	Gson gson = new GsonBuilder().create(); 
-             m = gson.fromJson(str, Message.class);
-             
-           
-        } catch (RuntimeException ex) {
-            return new Message(MessageType.Error, ex.getMessage());
-        }
-        return m;
-    }
-
-    public static class ParseException extends Exception {
-        private static final long serialVersionUID = -6651972769789842960L;
-
-        public ParseException(Throwable root) {
-            super(root);
-        }
-
-        public ParseException(String message) {
-            super(message);
-        }
+        JSONObject json = new JSONObject();
+		try {
+			json = new JSONObject(str);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			message = (String) json.get("message");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			type = (int) json.getInt("type");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return new Message(SocketAnnotation.MessageType.getMessageType(type),message);
     }
 
 

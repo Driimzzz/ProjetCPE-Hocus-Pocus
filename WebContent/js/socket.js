@@ -1,9 +1,8 @@
 
 
-function Message(type, message, destination) {
+function Message(type, message) {
 	this.type = type;
 	this.message = message;
-	this.destination = destination;
 }
 var Chat = {};
 
@@ -53,7 +52,7 @@ Chat.initialize = function() {
 Chat.sendMessage = (function() {
 	var message = document.getElementById('chat').value;
 	if (message != '') {
-		var mess = new Message($("#flip-1").val(), message, -1);
+		var mess = new Message($("#flip-1").val(), message);
 		Chat.socket.send(JSON.stringify(mess));
 		document.getElementById('chat').value = '';
 	}
@@ -61,7 +60,7 @@ Chat.sendMessage = (function() {
 
 function envoyerServeur(s)
 {
-	var mess = new Message(3, s, -1);
+	var mess = new Message(3, s);
 	Chat.socket.send(JSON.stringify(mess));
 }
 

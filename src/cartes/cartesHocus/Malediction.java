@@ -24,7 +24,7 @@ public class Malediction extends Hocus{
 	public void action() {
 		if(isValide())
 		{
-			int numJoueurGrimoire = joueurVise.getId();
+			int numJoueurGrimoire = getPartie().getJoueurByID(joueurVise.getId());
 			int numJoueurQuiChoisi = getPartie().getJoueurJouant();
 			getPartie().demanderCartesDuGrimoire(numJoueurGrimoire, numJoueurQuiChoisi, this.getForce());
 		}

@@ -24,7 +24,7 @@ public class Hibou extends Hocus{
 	public void action() {
 		if(isValide())
 		{
-			int numJoueurGrimoire = joueurVise.getId();
+			int numJoueurGrimoire =getPartie().getJoueurByID(joueurVise.getId());
 			int numJoueurQuiChoisi = numJoueurGrimoire;
 			getPartie().demanderCartesDuGrimoire(numJoueurGrimoire, numJoueurQuiChoisi, this.getForce());
 		}
