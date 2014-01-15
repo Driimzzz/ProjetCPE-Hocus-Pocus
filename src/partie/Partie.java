@@ -24,7 +24,7 @@ import cartes.Carte.CarteType;
 public class Partie extends Thread {
 	private int chaudron;// le nb de gemmes dans le chaudron
 
-	static private List<Joueur> joueurs;
+    private List<Joueur> joueurs;
 	static Bibliotheque bibliotheque;
 	private int indexJoueur;
 	static private PileDeCartes aireDeJeu;
@@ -210,7 +210,7 @@ public class Partie extends Thread {
 	}
 
 	public void setJoueurs(List<Joueur> joueurs) {
-		Partie.joueurs = joueurs;
+		this.joueurs = joueurs;
 	}
 
 	public PileDeCartes getAireDeJeu() {
