@@ -9,6 +9,7 @@ import cartes.cartesHocus.Sacrifice;
 import cartes.cartesHocus.Sortilege;
 import cartes.cartesHocus.Voleur;
 import cartes.cartesHocus.Vortex;
+import cartes.cartesPocus.Amulette;
 import cartes.cartesPocus.BaguetteMagique;
 import cartes.cartesPocus.ChatNoir;
 import cartes.cartesPocus.ContreSort;
@@ -66,7 +67,7 @@ public class Bibliotheque {
 
 		// 2 sacrifices
 		for (int i = 0; i < 2; i++)
-			this.cartes.ajouterUneCarte(new Sacrifice(maPartie));
+			this.cartes.ajouterUneCarte(new Sacrifice(2, maPartie));
 
 		// 2 chats noirs
 		for (int i = 0; i < 2; i++)
@@ -75,6 +76,11 @@ public class Bibliotheque {
 		// 2 eclairs
 		for (int i = 0; i < 2; i++)
 			this.cartes.ajouterUneCarte(new Eclair(maPartie));
+		
+		// 2 amulettes
+		for (int i = 0; i < 2; i++)
+			this.cartes.ajouterUneCarte(new Amulette(maPartie));
+		
 		
 		this.cartes.ajouterUneCarte(new Malediction(2,maPartie));
 		this.cartes.ajouterUneCarte(new Malediction(1,maPartie));

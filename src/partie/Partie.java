@@ -442,10 +442,22 @@ public class Partie extends Thread {
 			}
 
 			// on vérifie que c'est bien à lui de jouer +hocus/pocus
-			if (carteJouee.getType() == CarteType.pocus) {
+			if (carteJouee.getType() == CarteType.pocus) {//POCUS
+				if ("Amulette".equals(carteJouee.getNom())) {
+					if (this.getAireDeJeu().getPileDeCarte().get(0).isJevise()) {
+						if (this.getAireDeJeu().getPileDeCarte().get(0).getJoueurVise() != joueur) {
+							Interface.Console("La carte doit être ciblée contre vous");
+							return;//pas ok : on sort de la fonction
+						} else {// c'est ok: on sort du if et on joue la carte
+						}
+					} else{//pas ok : on sort de la fonction
+						Interface.Console("La carte doit être ciblée contre vous");
+						return;
+					}
+				}
 				joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
 				lancerChrono();
-			} else if (numJoueur == getJoueurJouant()) {
+			} else if (numJoueur == getJoueurJouant()) {//HOCUS
 				// if (!carteJouee.getNom().equals("Sortilege"))// on lance le
 				// // chrono et on
 				// // joue la carte
@@ -453,6 +465,7 @@ public class Partie extends Thread {
 				// // quand on a
 				// // vise
 				// {
+				
 				joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
 				if(!carteJouee.isJevise())
 					lancerChrono();
