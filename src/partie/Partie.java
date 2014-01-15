@@ -446,12 +446,12 @@ public class Partie extends Thread {
 				if ("Amulette".equals(carteJouee.getNom())) {
 					if (this.getAireDeJeu().getPileDeCarte().get(0).isJevise()) {
 						if (this.getAireDeJeu().getPileDeCarte().get(0).getJoueurVise() != joueur) {
-							Interface.Console("La carte doit être ciblée contre vous");
+							Interface.Console("La carte doit être ciblée contre vous",this);
 							return;//pas ok : on sort de la fonction
 						} else {// c'est ok: on sort du if et on joue la carte
 						}
 					} else{//pas ok : on sort de la fonction
-						Interface.Console("La carte doit être ciblée contre vous");
+						Interface.Console("La carte doit être ciblée contre vous",this);
 						return;
 					}
 				}

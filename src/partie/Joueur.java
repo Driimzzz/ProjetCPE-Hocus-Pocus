@@ -26,15 +26,14 @@ public class Joueur {
 		this.setGemmes(10);
 		this.setGrimoire(new Grimoire());
 		this.setMain(new Main());
-<<<<<<< HEAD
+
 		for(int i=0;i<3;i++)
 			this.getGrimoire().ajouterUneCarte(getPartie().getBibliotheque().getCartes().tirerUneCarte());
-=======
+
 		for (int i = 0; i < 3; i++)
 			this.getGrimoire().ajouterUneCarte(
 					getPartie().getBibliotheque().getCartes().tirerUneCarte());
-		Interface.Console("joueur créé : " + this.getNom());
->>>>>>> 7ea0710b91d107d45f8f59e4a4fe7b297b1947ee
+
 	}
 
 	public void jouerCarte(Carte carteJouee, boolean duGrimoire, int numJoueur) {
