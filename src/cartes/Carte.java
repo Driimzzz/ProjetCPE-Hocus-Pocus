@@ -16,8 +16,10 @@ public class Carte {
 
 	private Partie partie;
 
-	private Joueur joueurVise; //ajout de la propriété joueurVise a toutes les cartes mais on ne s'en servira pas pour toutes.
-	
+	private Joueur joueurVise; // ajout de la propriété joueurVise a toutes les
+								// cartes mais on ne s'en servira pas pour
+								// toutes.
+
 	public Joueur getJoueurVise() {
 		return joueurVise;
 	}
@@ -48,7 +50,7 @@ public class Carte {
 		// catch (JSONException e) { // // TODO
 		// Auto-generated catch block //
 		// e.printStackTrace(); // }
-		return nom.trim(); 
+		return nom.trim();
 	}
 
 	public boolean isValide() {
@@ -93,7 +95,7 @@ public class Carte {
 
 	@Override
 	public String toString() {
-		return getType()  +" "+ getNom();
+		return getType() + " " + getNom();
 	}
 
 	// Dummy functions
@@ -121,7 +123,7 @@ public class Carte {
 
 	public void setJevise(boolean jevise) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

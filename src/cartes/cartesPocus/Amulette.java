@@ -33,7 +33,7 @@ public class Amulette extends Pocus{
 		if(isValide())
 		{
 			carteVisee.setEstValide(false);
-			Interface.Console("La carte "+carteVisee+" est détruite");
+			Interface.Console("La carte "+carteVisee+" est détruite",getPartie());
 		}		
 	}
 }

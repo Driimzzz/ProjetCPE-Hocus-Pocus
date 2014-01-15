@@ -30,9 +30,6 @@ public class Joueur {
 		for(int i=0;i<3;i++)
 			this.getGrimoire().ajouterUneCarte(getPartie().getBibliotheque().getCartes().tirerUneCarte());
 
-		for (int i = 0; i < 3; i++)
-			this.getGrimoire().ajouterUneCarte(
-					getPartie().getBibliotheque().getCartes().tirerUneCarte());
 
 	}
 
