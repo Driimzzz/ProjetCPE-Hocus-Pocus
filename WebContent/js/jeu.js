@@ -17,6 +17,11 @@ function HideJeu() {
 }
 
 function InitJeu(players) {
+	
+	// les joueurs quittent tous la partie, il en reste plus qu'un, il quitte alors aussi
+	if(players<=1)
+		document.location.reload(true);
+	HideJeu();
 	for (var i = 0; i < players; i++) {
 		$("#player" + i).show();
 	}
@@ -103,9 +108,9 @@ function getInfo(message) {
 					'<img src="img/HocusPocus/' + obJ.joueurs[0].grimoire[j]
 							+ '.png" onclick="carteJouee(' + 1 + j + ')">');
 		}
-			document.title = "Hocus Pocus";
-			clearInterval(cdowntitre);
-		
+		document.title = "Hocus Pocus";
+		clearInterval(cdowntitre);
+
 	}
 	if (obJ.methode == "viserJoueur") {
 		$("#boutonCiblageJ0").hide();
@@ -174,8 +179,9 @@ function getInfo(message) {
 					.append(
 							"<td class='tdjoueur' style='background-color:#933;'></td>");
 		}
-		$("#listeJoueurs").append(
-				'<td class="tdbouton" onclick="getPlayers();">Jouer</td>');
+		if (obJ.joueurs.length > 1)
+			$("#listeJoueurs").append(
+					'<td class="tdbouton" onclick="getPlayers();">Jouer</td>');
 	}
 
 	// pour malediction et hibou incomplet
@@ -198,7 +204,7 @@ function getInfo(message) {
 		clearInterval(cdowntitre);
 		clignoteTitre("C'est votre tour de jeu !");
 	}
-	
+
 	if (obJ.methode == "jeSuisVise") {
 		$("#target").show();
 	}

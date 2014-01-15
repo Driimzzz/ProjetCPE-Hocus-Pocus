@@ -80,26 +80,23 @@ public class Interface {
 
 	// multijoueur (il faut ouvrir plusieurs fenêtres pour le simuler)
 	public static void creerJeu() {
-		Partie partie = new Partie(SocketAnnotation.getSalle().getClientsLibre(), true);
-		partie.start();
-		for (Client c : SocketAnnotation.getSalle().getClientsLibre()) {
-			c.setPartie(partie);
+		if(SocketAnnotation.getSalle().getClientsLibre().size()>1)
+		{
+			Partie partie = new Partie(SocketAnnotation.getSalle().getClientsLibre(), true);
+			partie.start();
+			for (Client c : SocketAnnotation.getSalle().getClientsLibre()) {
+				c.setPartie(partie);
+			}
 		}
 	}
-
-	// choix d'une action demande au client
-	/*
-	 * public static void demandeAction(boolean carteHocus,boolean
-	 * peuPiocherCartes ) { JsonObject json = new JsonObject();
-	 * json.addProperty("methode", "demandeAction");
-	 * json.addProperty("peuCarteHocus", carteHocus); // si le joueur peu jouer
-	 * json.addProperty("peuPiocherCartes", peuPiocherCartes);
-	 * Jeu(json.toString(), partie.getJoueurJouant());
-	 * 
-	 * 
-	 * }
-	 */
-
+	
+	public static void quitterPartie(Client client)
+	{
+		partie=client.getPartie();
+		if(partie!=null)
+			partie.quitterPartie(client.getId());
+	}
+	
 	// choix d'une action demande au client
 	public static void reponseAction(int numJoueur, String action) {
 		switch (action) {
@@ -160,7 +157,7 @@ public class Interface {
 				bonJSON = true;
 				partie = message.getAuteur().getPartie();
 				partie.afficherJoueurs();
-				numAuteur = partie.getJoueurByID(message.getAuteur().getId());
+				numAuteur = partie.getnumJoueurByID(message.getAuteur().getId());
 				System.out.println(message.getAuteur().getId());
 				int numCarte = 0;
 
@@ -177,7 +174,7 @@ public class Interface {
 			case "joueurVise":
 				int numJoueurVise;
 				partie = message.getAuteur().getPartie();
-				numAuteur = partie.getJoueurByID(message.getAuteur().getId());
+				numAuteur = partie.getnumJoueurByID(message.getAuteur().getId());
 				try {
 					numJoueurVise = json.getInt("numJoueurVise");
 					partie.joueurVise(numAuteur, numJoueurVise);
@@ -189,13 +186,13 @@ public class Interface {
 
 			case "finCarteHocus":
 				partie = message.getAuteur().getPartie();
-				numAuteur = partie.getJoueurByID(message.getAuteur().getId());
+				numAuteur = partie.getnumJoueurByID(message.getAuteur().getId());
 				partie.finCarteHocus();
 				break;
 
 			case "reponseAction":
 				partie = message.getAuteur().getPartie();
-				numAuteur = partie.getJoueurByID(message.getAuteur().getId());
+				numAuteur = partie.getnumJoueurByID(message.getAuteur().getId());
 				String action = "";
 				try {
 					action = json.getString("action");
@@ -208,7 +205,7 @@ public class Interface {
 
 			case "completerGrimoire":
 				partie = message.getAuteur().getPartie();
-				numAuteur = partie.getJoueurByID(message.getAuteur().getId());
+				numAuteur = partie.getnumJoueurByID(message.getAuteur().getId());
 				try {
 					if (numAuteur == json.getInt("numJoueur")) {
 						partie.getJoueurs().get(numAuteur)
@@ -223,7 +220,7 @@ public class Interface {
 
 			case "reponseCartesDuGrimoire":
 				partie = message.getAuteur().getPartie();
-				numAuteur = partie.getJoueurByID(message.getAuteur().getId());
+				numAuteur = partie.getnumJoueurByID(message.getAuteur().getId());
 				try {
 					if (numAuteur == json.getInt("numJoueur")) {
 
