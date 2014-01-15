@@ -4,7 +4,14 @@ var cdowntitre;
 $(document).ready(function() {
 	$('.clock_seconds').hide();
 	HideJeu();
-
+	$(".dialogue").dialog({
+		autoOpen: false,
+		//resizable: false,
+		width : "auto",
+		draggable: false,
+		position: { my: "center", at: "center", of: window },
+		modal: true,
+	});
 });
 
 function HideJeu() {
@@ -120,10 +127,34 @@ function getInfo(message) {
 			}
 
 		}
+<<<<<<< HEAD
 		$('#popupCibler').trigger('create')
 		$("#popupCibler").popup("open");
 	}
 
+=======
+		$("#popupCibler").dialog("open");
+	}
+
+	if (obJ.methode == "demandeAction") {
+		if (!obJ.peuPiocherCartes) {
+			$("#boutonChoisirAction2").hide();
+			if (!obJ.peuCarteHocus)
+				$("#boutonChoisirAction0").hide();
+			else
+				$("#boutonChoisirAction0").show();
+
+		} else {
+			$("#boutonChoisirAction2").show();
+			if (!obJ.peuCarteHocus)
+				$("#boutonChoisirAction0").hide();
+			else
+				$("#boutonChoisirAction0").show();
+		}
+
+		$("#popupChoisirAction").dialog("open");
+	}
+>>>>>>> origin/master
 
 	// on débute le chrono
 	if (obJ.methode == "lancerChrono") {
@@ -141,7 +172,7 @@ function getInfo(message) {
 							+ '.png" onclick="completerGrimoire(' + i + ','
 							+ obJ.numeroJoueur + ')">');
 		}
-		$("#popupCompleterGrimoire").popup("open");
+		$("#popupCompleterGrimoire").dialog("open");
 	}
 
 	if (obJ.methode == "listeJoueurs") {
@@ -174,7 +205,7 @@ function getInfo(message) {
 							+ obJ.nbrCartes + ',' + obJ.numJoueurQuiChoisi
 							+ ',' + obJ.numJoueurGrimoire + ')">');
 		}
-		$("#popupCompleterGrimoire").popup("open");
+		$("#popupCompleterGrimoire").dialog("open");
 
 	}
 	if (obJ.methode == "joueurEnCour") {
@@ -200,26 +231,26 @@ function choixDansGrimoire(numJoue, nbrCarte, numJoueurQuiChoisi,
 				+ " numJoueurVise: " + numJoueurGrimoire + ";" + " numJoueur:"
 				+ numJoueurQuiChoisi + ";" + " grimoire:[" + arrayGrim + "]"
 				+ "}");
-		$("#popupCompleterGrimoire").popup("close");
+		$("#popupCompleterGrimoire").dialog("close");
 	}
 }
 
 function completerGrimoire(carte, joueur) {
+	$("#popupCompleterGrimoire").dialog("close");
 	envoyerServeur("{methode:completerGrimoire;numJoueur:" + joueur
 			+ ";numCarte:" + carte + "}");
-	$("#popupCompleterGrimoire").popup("close");
 }
 function carteJouee(carte) {
 	envoyerServeur("{methode:carteJouee;numCarte:" + carte + "}");
 }
 
 function viserJoueur(numero) {
+	$("#popupCibler").dialog("close");
 	envoyerServeur("{methode:joueurVise;numJoueurVise:" + numero + "}");
-	$("#popupCibler").popup("close");
 }
 function choisirAction(action) {
+	$("#popupChoisirAction").dialog("close");
 	envoyerServeur("{methode:reponseAction;action:" + action + "}");
-	$("#popupChoisirAction").popup("close");
 }
 
 function clignoteTitre(message) {

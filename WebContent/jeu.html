@@ -5,11 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Hocus Pocus</title>
 <link rel="stylesheet" href="css/socket.css">
-<link rel="stylesheet" href="css/jeu.css">
 <link rel="stylesheet" href="css/chrono.css">
 <link rel="stylesheet" href="css/jquery-mobile.css" />
+<link rel="stylesheet" href="css/jquery-ui-1.10.3.custom.css" />
+<link rel="stylesheet" href="css/jeu.css">
 <script src="js/jquery.js"></script>
 <script src="js/jquery-mobile.js"></script>
+<script src="js/jquery-ui-1.10.3.custom.js"></script>
 <script src="js/socket.js"></script>
 <script src="js/jeu.js"></script>
 <script src="js/chrono.js"></script>
@@ -32,11 +34,11 @@
 
 
 
-		<div id="popupConnectionJoueurs">
-		  <table width="100%" id="listeJoueurs">
-           </table>
-		</div>
-        
+			<div id="popupConnectionJoueurs">
+				<table width="100%" id="listeJoueurs">
+				</table>
+			</div>
+
 			<div class="ui-grid-b" id="players-container">
 
 				<div class="ui-block-a player">
@@ -94,11 +96,14 @@
 				<div class="ui-block-b" id="jeu">
 					<div class="player-title" id="infojeu"></div>
 					<div class="ui-grid-b table">
-						<div class="ui-block-a" id="chaudron" onclick='choisirAction("piocherGemme")'>
-							15 <img src="img/HocusPocus/chaudron.gif" width="90%" onclick='choisirAction("piocherGemme")'>
+						<div class="ui-block-a" id="chaudron"
+							onclick='choisirAction("piocherGemme")'>
+							15 <img src="img/HocusPocus/chaudron.gif" width="90%"
+								onclick='choisirAction("piocherGemme")'>
 						</div>
 						<div class="ui-block-b" id="bibliotheque">
-							<img src="img/HocusPocus/HocusPocus.png" onclick='choisirAction("piocherCartes")'>
+							<img src="img/HocusPocus/HocusPocus.png"
+								onclick='choisirAction("piocherCartes")'>
 						</div>
 						<div class="ui-block-c" id="airedejeu">
 							<img src="img/HocusPocus/HocusPocus2.png">
@@ -130,13 +135,21 @@
 				<div class="player-gemme"></div>
 			</div>
 		</div>
-             <div class="clock_seconds"><div class="bgLayer"><div class="topLayer"></div><canvas id="canvas_seconds" width="188" height="168"></canvas><div class="text"><p class="val">8</p></div></div></div>
- 
-<div id="target"></div>
+		<div class="clock_seconds">
+			<div class="bgLayer">
+				<div class="topLayer"></div>
+				<canvas id="canvas_seconds" width="188" height="168"></canvas>
+				<div class="text">
+					<p class="val">8</p>
+				</div>
+			</div>
+		</div>
+
+		<div id="target"></div>
 
 		<div data-role="footer">
 			<a href="#show-console" data-role="button" data-icon="arrow-d">Chat</a>
- 
+
 		</div>
 
 		<!-- panel -->
@@ -145,39 +158,56 @@
 
 			<div id="message"></div>
 			<div id="menu-right">
-				<input type="text" id="chat" data-clear-btn="true" /> 
+				<input type="text" id="chat" data-clear-btn="true" />
 			</div>
 
 
 		</div>
 		<!-- /panel -->
 
+<<<<<<< HEAD
 		
 				<!-- popup cibler un joueur -->
 		<div data-role="popup" id="popupCibler" data-theme="a"
 		data-dismissible="false"
 			class="ui-corner-all">
 	
+=======
+
+		<!-- popup cibler un joueur data-role="dialog" data-dismissible="false" -->
+		<div id="popupCibler" data-theme="a" class="ui-corner-all dialogue">
+			Qui viser?
+			<button id="boutonCiblageJ0" onclick='viserJoueur(0)'>
+				Joueur 1</button>
+			<button id="boutonCiblageJ1" onclick='viserJoueur(1)'>
+				Joueur 2</button>
+			<button id="boutonCiblageJ2" onclick='viserJoueur(2)'>
+				Joueur 3</button>
+			<button id="boutonCiblageJ3" onclick='viserJoueur(3)'>
+				Joueur 4</button>
+			<button id="boutonCiblageJ4" onclick='viserJoueur(4)'>
+				Joueur 5</button>
+			<button id="boutonCiblageJ5" onclick='viserJoueur(5)'>
+				Joueur 6</button>
+>>>>>>> origin/master
 		</div>
 		<!-- /popup -->
-		
 
-       
-        
+
+
+
 		<!-- /popup -->
-		
-		<!-- popup compléter le grimoire -->
-		<div data-role="popup" id="popupCompleterGrimoire" data-theme="a"
-		data-dismissible="false"
-			class="ui-corner-all">
-		</div>
-		<!-- /popup -->	
-        
-        
-        
-    
 
-	
+		<!-- popup compléter le grimoire data-role="dialog" data-dismissible="false"-->
+		<div id="popupCompleterGrimoire" data-theme="a" class="ui-corner-all dialogue">
+		</div>
+		<!-- /popup -->
+
+
+
+
+
+
 	</div>
 </body>
 </html>

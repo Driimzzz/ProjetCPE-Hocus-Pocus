@@ -58,7 +58,13 @@
 	height:100%;
 	
 }
-#popupCompleterGrimoire img{
+.dialogue{
+	background: rgba(1,1,1,0.8);
+}
+.ui-dialog-titlebar{
+	display: none;
+}
+.dialogue img{
 	 width:13%;
 	float:left;
 	border: 5px solid #FFF;
@@ -71,7 +77,7 @@
 -webkit-transform:rotate(7deg); /* Safari and Chrome */
 border-radius:3px;
  }
-#popupCompleterGrimoire img:hover{
+.dialogue img:hover{
  -webkit-box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
   box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
   -webkit-transform: scale(1.05,1.05);
