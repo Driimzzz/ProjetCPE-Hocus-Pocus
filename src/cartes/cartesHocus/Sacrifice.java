@@ -9,10 +9,11 @@ public class Sacrifice extends Hocus{
 	
 	private Joueur joueurVise;
 	
-	public Sacrifice(Partie partie){
+	public Sacrifice(int force, Partie partie){
 		super(partie);
 		super.setNom("Sacrifice");
-		super.setDescription("Désignez un joueur pour qu'il remette deux gemmes dans le chaudron.");
+		super.setDescription("Désignez un joueur pour qu'il remette des gemmes dans le chaudron.");
+		super.setForce(force);
 		super.setJevise(true);
 	}
 	
@@ -25,7 +26,7 @@ public class Sacrifice extends Hocus{
 	public void action() {
 		if(isValide())
 		{
-			int gemmesRemises = joueurVise.perdreDesGemmes(2);
+			int gemmesRemises = joueurVise.perdreDesGemmes(this.getForce());
 			getPartie().setChaudron(getPartie().getChaudron() + gemmesRemises);
 			
 			Interface.Console(joueurVise.getNom() +" remets "+ gemmesRemises +" gemmes dans le chaudron");

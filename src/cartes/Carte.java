@@ -16,6 +16,12 @@ public class Carte {
 
 	private Partie partie;
 
+	private Joueur joueurVise; //ajout de la propriété joueurVise a toutes les cartes mais on ne s'en servira pas pour toutes.
+	
+	public Joueur getJoueurVise() {
+		return joueurVise;
+	}
+
 	// si la carte est toujours valide, non deffaussée par une autre
 	private boolean estValide;
 

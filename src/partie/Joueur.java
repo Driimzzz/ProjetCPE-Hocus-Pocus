@@ -18,7 +18,7 @@ public class Joueur {
 	private String nom;
 	private Partie partie;
 
-	public Joueur(String _nom, Partie maPartie,int id, int positionPartie) {
+	public Joueur(String _nom, Partie maPartie, int id, int positionPartie) {
 		this.setPartie(maPartie);
 		this.setId(id);
 		this.setPositionPartie(positionPartie);
@@ -26,42 +26,53 @@ public class Joueur {
 		this.setGemmes(10);
 		this.setGrimoire(new Grimoire());
 		this.setMain(new Main());
-		for(int i=0;i<3;i++)
-			this.getGrimoire().ajouterUneCarte(getPartie().getBibliotheque().getCartes().tirerUneCarte());
+		for (int i = 0; i < 3; i++)
+			this.getGrimoire().ajouterUneCarte(
+					getPartie().getBibliotheque().getCartes().tirerUneCarte());
 		Interface.Console("joueur créé : " + this.getNom());
 	}
 
 	public void jouerCarte(Carte carteJouee, boolean duGrimoire, int numJoueur) {
 
-		if (this.getPartie().ajouterAAireDeJeu(carteJouee)) { // si on avait
+		if (this.getPartie().ajouterAAireDeJeu(carteJouee)) { // si
+			// on
+			// avait
 			// le droit
 			// de jouer
 			// la carte
 			if (!duGrimoire)
 				this.getMain().getPileDeCarte().remove(carteJouee);
-			else{
+			else {
 				this.getGrimoire().getPileDeCarte().remove(carteJouee);
 				demandeCompleterGrimoire();
 			}
-			if("Chat Noir".equals(carteJouee.getNom())){
-				carteJouee.setJoueurVise(partie.getJoueurs().get(numJoueur));//pour definir dans quelle main ira la carte
+			if ("Chat Noir".equals(carteJouee.getNom())) {
+				carteJouee.setJoueurVise(partie.getJoueurs().get(numJoueur));// pour
+																				// definir
+																				// dans
+																				// quelle
+																				// main
+				// ira la carte
 				carteJouee.jouerLaCarte();
-			}				
-			else
+			} else
 				carteJouee.jouerLaCarte();
 		}
 		partie.toutesLesInfos();
 	}
 
-	public void completerGrimoire(int numCarte){
-		if((numCarte>=0)&&(numCarte<this.getMain().tailleDeLaPile())){
+	public void completerGrimoire(int numCarte) {
+		if ((numCarte >= 0) && (numCarte < this.getMain().tailleDeLaPile())) {
 			Carte carteABouger = this.getMain().getPileDeCarte().get(numCarte);
 			this.getMain().getPileDeCarte().remove(carteABouger);
 			this.getGrimoire().ajouterUneCarte(carteABouger);
-			
-			if(getGrimoire().getPileDeCarte().size()<3){ //cas où plusieurs carte du grimoires on été retirées
+
+			if (getGrimoire().getPileDeCarte().size() < 3) { // cas où plusieurs
+																// carte du
+																// grimoires on
+																// été retirées
 				try {
-					Thread.sleep(500); // besoin d'attendre pour que le client ne soit pas surchargé
+					Thread.sleep(500); // besoin d'attendre pour que le client
+										// ne soit pas surchargé
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -70,7 +81,7 @@ public class Joueur {
 			}
 		}
 	}
-	
+
 	public void piocherCartes(int nbCartes) {
 		for (int i = 0; i < nbCartes; i++)
 			this.getMain().ajouterUneCarte(
@@ -80,36 +91,37 @@ public class Joueur {
 
 	// Le joueur perds des gemmes
 	public int perdreDesGemmes(int nbrVoles) {
-		if (gemmes - nbrVoles < 0){
+		if (gemmes - nbrVoles < 0) {
 			nbrVoles = gemmes;
 			gemmes = 0;
-		}
-		else
+		} else
 			gemmes -= nbrVoles;
 		return nbrVoles;
 	}
-	public boolean aDesHocusDansSonJeu(){
-		for (int i=0;i<this.getMain().tailleDeLaPile();i++){
+
+	public boolean aDesHocusDansSonJeu() {
+		for (int i = 0; i < this.getMain().tailleDeLaPile(); i++) {
 			if (this.getMain().getPileDeCarte().get(i).getType() == Carte.CarteType.hocus)
 				return true;
 		}
-		for (int i=0;i<this.getGrimoire().tailleDeLaPile();i++){
+		for (int i = 0; i < this.getGrimoire().tailleDeLaPile(); i++) {
 			if (this.getGrimoire().getPileDeCarte().get(i).getType() == Carte.CarteType.hocus)
 				return true;
-		}	
+		}
 		return false;
 	}
-	public boolean peutPiocherCarte(){
-		if ((this.getGrimoire().tailleDeLaPile() + this.getMain().tailleDeLaPile()) >=9 )
+
+	public boolean peutPiocherCarte() {
+		if ((this.getGrimoire().tailleDeLaPile() + this.getMain()
+				.tailleDeLaPile()) >= 9)
 			return false;
 		else
 			return true;
 	}
-	
-	public void demandeCompleterGrimoire(){
-		//pour completer il faut des cartes dans sa main !!
-		if(this.getMain().getPileDeCarte().size()>0)
-		{
+
+	public void demandeCompleterGrimoire() {
+		// pour completer il faut des cartes dans sa main !!
+		if (this.getMain().getPileDeCarte().size() > 0) {
 			JSONObject json = new JSONObject();
 			try {
 				json.put("methode", "demandeCompleterGrimoire");
@@ -131,10 +143,9 @@ public class Joueur {
 			}
 			Interface.Jeu(json.toString(), this.getId());
 		}
-		
+
 	}
-	
-	
+
 	public JSONObject toJson(int numJoueur, int j) {
 		JSONObject json = new JSONObject();
 
@@ -212,8 +223,6 @@ public class Joueur {
 		return json;
 	}
 
-	
-	
 	public int getPositionPartie() {
 		return positionPartie;
 	}
