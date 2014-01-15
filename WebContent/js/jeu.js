@@ -113,40 +113,17 @@ function getInfo(message) {
 
 	}
 	if (obJ.methode == "viserJoueur") {
-		$("#boutonCiblageJ0").hide();
-		$("#boutonCiblageJ1").hide();
-		$("#boutonCiblageJ2").hide();
-		$("#boutonCiblageJ3").hide();
-		$("#boutonCiblageJ4").hide();
-		$("#boutonCiblageJ5").hide();
+		$("#popupCibler").html("Qui viser: ");
 		for (var i = 0; i < obJ.joueurs.length; i++) {
 			if (obJ.numJoueurVisant != i) {
-				$("#boutonCiblageJ" + i).show();
-				$("#boutonCiblageJ" + i).html(obJ.joueurs[i].nom);
+				$("#popupCibler").append('<button data-role="button" onclick="viserJoueur('+i+')">'+obJ.joueurs[i].nom+'</button>');
 			}
 
 		}
+		$('#popupCibler').trigger('create')
 		$("#popupCibler").popup("open");
 	}
 
-	if (obJ.methode == "demandeAction") {
-		if (!obJ.peuPiocherCartes) {
-			$("#boutonChoisirAction2").hide();
-			if (!obJ.peuCarteHocus)
-				$("#boutonChoisirAction0").hide();
-			else
-				$("#boutonChoisirAction0").show();
-
-		} else {
-			$("#boutonChoisirAction2").show();
-			if (!obJ.peuCarteHocus)
-				$("#boutonChoisirAction0").hide();
-			else
-				$("#boutonChoisirAction0").show();
-		}
-
-		$("#popupChoisirAction").popup("open");
-	}
 
 	// on débute le chrono
 	if (obJ.methode == "lancerChrono") {

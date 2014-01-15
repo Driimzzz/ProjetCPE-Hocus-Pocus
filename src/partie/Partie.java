@@ -551,6 +551,11 @@ public class Partie extends Thread {
 			getJoueurs().remove(j.getPositionPartie());
 			Interface.Console(j.getNom() + " a quitté la partie !", this);
 			toutesLesInfos();
+			
+			
+			//on reactualise les positions de tous les joueurs
+			for(int i=0;i<getJoueurs().size();i++)
+				getJoueurs().get(i).setPositionPartie(i);
 		}
 		else if(getJoueurs().size()==1)
 			toutesLesInfos();
