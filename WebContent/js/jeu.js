@@ -4,7 +4,14 @@ var cdowntitre;
 $(document).ready(function() {
 	$('.clock_seconds').hide();
 	HideJeu();
-
+	$(".dialogue").dialog({
+		autoOpen: false,
+		//resizable: false,
+		width : "auto",
+		draggable: false,
+		position: { my: "center", at: "center", of: window },
+		modal: true,
+	});
 });
 
 function HideJeu() {
@@ -126,7 +133,7 @@ function getInfo(message) {
 			}
 
 		}
-		$("#popupCibler").popup("open");
+		$("#popupCibler").dialog("open");
 	}
 
 	if (obJ.methode == "demandeAction") {
@@ -145,7 +152,7 @@ function getInfo(message) {
 				$("#boutonChoisirAction0").show();
 		}
 
-		$("#popupChoisirAction").popup("open");
+		$("#popupChoisirAction").dialog("open");
 	}
 
 	// on débute le chrono
@@ -164,7 +171,7 @@ function getInfo(message) {
 							+ '.png" onclick="completerGrimoire(' + i + ','
 							+ obJ.numeroJoueur + ')">');
 		}
-		$("#popupCompleterGrimoire").popup("open");
+		$("#popupCompleterGrimoire").dialog("open");
 	}
 
 	if (obJ.methode == "listeJoueurs") {
@@ -197,7 +204,7 @@ function getInfo(message) {
 							+ obJ.nbrCartes + ',' + obJ.numJoueurQuiChoisi
 							+ ',' + obJ.numJoueurGrimoire + ')">');
 		}
-		$("#popupCompleterGrimoire").popup("open");
+		$("#popupCompleterGrimoire").dialog("open");
 
 	}
 	if (obJ.methode == "joueurEnCour") {
@@ -223,26 +230,26 @@ function choixDansGrimoire(numJoue, nbrCarte, numJoueurQuiChoisi,
 				+ " numJoueurVise: " + numJoueurGrimoire + ";" + " numJoueur:"
 				+ numJoueurQuiChoisi + ";" + " grimoire:[" + arrayGrim + "]"
 				+ "}");
-		$("#popupCompleterGrimoire").popup("close");
+		$("#popupCompleterGrimoire").dialog("close");
 	}
 }
 
 function completerGrimoire(carte, joueur) {
+	$("#popupCompleterGrimoire").dialog("close");
 	envoyerServeur("{methode:completerGrimoire;numJoueur:" + joueur
 			+ ";numCarte:" + carte + "}");
-	$("#popupCompleterGrimoire").popup("close");
 }
 function carteJouee(carte) {
 	envoyerServeur("{methode:carteJouee;numCarte:" + carte + "}");
 }
 
 function viserJoueur(numero) {
+	$("#popupCibler").dialog("close");
 	envoyerServeur("{methode:joueurVise;numJoueurVise:" + numero + "}");
-	$("#popupCibler").popup("close");
 }
 function choisirAction(action) {
+	$("#popupChoisirAction").dialog("close");
 	envoyerServeur("{methode:reponseAction;action:" + action + "}");
-	$("#popupChoisirAction").popup("close");
 }
 
 function clignoteTitre(message) {

@@ -33,11 +33,11 @@ public class Partie extends Thread {
 
 	public void tourDeJeu() {
 
-		for (Joueur j : getJoueurs()) {
-			if (j.getGrimoire().getPileDeCarte().size() < 3)
-				this.getJoueurs().get(j.getPositionPartie())
-						.demandeCompleterGrimoire();
-		}
+//		for (Joueur j : getJoueurs()) {
+//			if (j.getGrimoire().getPileDeCarte().size() < 3)
+//				this.getJoueurs().get(j.getPositionPartie())
+//						.demandeCompleterGrimoire();
+//		}
 		/*
 		 * Interface.demandeAction(joueurEnCours.aDesHocusDansSonJeu(),
 		 * joueurEnCours.peutPiocherCarte());
@@ -343,7 +343,8 @@ public class Partie extends Thread {
 			// mettre les carte choisies dans la main du joueurjouant
 			for (int numCarteGrim = 0; numCarteGrim < carteArr.length(); numCarteGrim++) {
 				Carte carteChoisie = this.getJoueurs().get(joueurGrimoire)
-						.getGrimoire().enleverCarte(numCarteGrim);
+						.getGrimoire().enleverCarte(this.getJoueurs().get(joueurGrimoire)
+								.getGrimoire().getPileDeCarte().get(numCarteGrim), this.getJoueurs().get(joueurGrimoire));
 				this.getJoueurs().get(getJoueurJouant()).getMain()
 						.ajouterUneCarte(carteChoisie);
 			}
@@ -351,8 +352,9 @@ public class Partie extends Thread {
 		} else if ("Malediction".equals(strComp)) {
 			// defausser les carte choisies par joueurjouant
 			for (int numCarteGrim = 0; numCarteGrim < carteArr.length(); numCarteGrim++) {
-				this.getJoueurs().get(joueurGrimoire).getGrimoire()
-						.enleverCarte(numCarteGrim);
+				this.getJoueurs().get(joueurGrimoire)
+				.getGrimoire().enleverCarte(this.getJoueurs().get(joueurGrimoire)
+						.getGrimoire().getPileDeCarte().get(numCarteGrim), this.getJoueurs().get(joueurGrimoire));
 			}
 			// this.getJoueurs().get(joueurGrimoire).demandeCompleterGrimoire();
 		}
@@ -534,9 +536,21 @@ public class Partie extends Thread {
 	}
 
 	private void lancerChrono() {
+		for (Joueur j : getJoueurs()) {
+			if (j.getGrimoire().getPileDeCarte().size() < 3)
+				this.getJoueurs().get(j.getPositionPartie())
+						.demandeCompleterGrimoire();
+		}	
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		JsonObject json = new JsonObject();
 		json.addProperty("methode", "lancerChrono");
 		Interface.Jeu(json.toString(), this);
+
 		// nouvelle carte on reset le timer
 		if (timerFinCarte != null)
 			timerFinCarte.cancel();

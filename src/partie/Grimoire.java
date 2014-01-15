@@ -9,10 +9,10 @@ import cartes.*;
 
 public class Grimoire extends PileDeCartes {
 	
-	public Carte enleverCarte(int numeroCarte){
-		Carte result = this.getPileDeCarte().get(numeroCarte);
-		this.getPileDeCarte().remove(numeroCarte);
-		return result;
+	public Carte enleverCarte(Carte carteAEnlever, Joueur proprietaireDeCeGrimoire){
+		this.getPileDeCarte().removeElement(carteAEnlever);
+		proprietaireDeCeGrimoire.demandeCompleterGrimoire();
+		return carteAEnlever;
 	}
 	
 	
