@@ -35,7 +35,7 @@
 	border: 5px dashed #FFF;
 	overflow:auto;
 	text-align:center;
-	padding:5%;
+	padding:2%;
 	margin:auto;
 	z-index:0;
 	
@@ -279,7 +279,7 @@ transform:rotate(7deg);
 #target{
 	position:absolute;
 	left:50%;
-	top:40%;
+	top:45%;
 	margin:auto;
 	width:100px;
 	height:100px;

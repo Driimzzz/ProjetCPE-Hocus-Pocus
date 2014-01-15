@@ -87,7 +87,7 @@ public class Partie extends Thread {
 		// while (chaudron > 0) {
 		if (chaudron > 0) {
 			toutesLesInfos();
-			tourDeJeu();
+			//tourDeJeu();
 
 		} else
 			finDuJeu();
@@ -353,7 +353,7 @@ public class Partie extends Thread {
 		}
 		setAireDeJeu(new PileDeCartes());
 		toutesLesInfos();
-		tourDeJeu();
+		//tourDeJeu();
 	}
 
 	// le serveur envois toutes les infos relative à la partie

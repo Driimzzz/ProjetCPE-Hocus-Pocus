@@ -45,7 +45,7 @@ public class Joueur {
 				this.getMain().getPileDeCarte().remove(carteJouee);
 			else {
 				this.getGrimoire().getPileDeCarte().remove(carteJouee);
-				demandeCompleterGrimoire();
+				//demandeCompleterGrimoire();
 			}
 			if ("Chat Noir".equals(carteJouee.getNom())) {
 				carteJouee.setJoueurVise(partie.getJoueurs().get(numJoueur));// pour
