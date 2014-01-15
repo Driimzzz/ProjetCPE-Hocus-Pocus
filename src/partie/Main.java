@@ -11,7 +11,7 @@ public class Main extends PileDeCartes {
 		if(getPileDeCarte().size()<6)
 			getPileDeCarte().push(carteAjoutee);
 		else {
-			Interface.Console("Vous ne pouvez pas avoir plus de 6 cartes");
+			Interface.Console("Vous ne pouvez pas avoir plus de 6 cartes",null);
 		}
 	}
 }

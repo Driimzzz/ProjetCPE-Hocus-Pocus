@@ -30,7 +30,7 @@ public class BaguetteMagique extends Pocus {
 		if (visee.getForce() != 0)
 			setCarteVisee(visee);
 		else
-			Interface.Console("La carte hocus en question ne peu pas etre cible d'une Baguette Magique.");
+			Interface.Console("La carte hocus en question ne peu pas etre cible d'une Baguette Magique.",this.getPartie());
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public class BaguetteMagique extends Pocus {
 		{
 			int force = carteVisee.getForce();
 			carteVisee.setForce(force*2);
-			Interface.Console("Baguette magique : "+ carteVisee);
+			Interface.Console("Baguette magique : "+ carteVisee,this.getPartie());
 		}
 	}
 }

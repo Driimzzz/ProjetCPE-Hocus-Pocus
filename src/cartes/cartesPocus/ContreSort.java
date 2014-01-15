@@ -33,7 +33,7 @@ public class ContreSort extends Pocus{
 		if(isValide())
 		{
 			carteVisee.setEstValide(false);
-			Interface.Console("La carte "+carteVisee+" est détruite");
+			Interface.Console("La carte "+carteVisee+" est détruite",this.getPartie());
 		}		
 	}
 }

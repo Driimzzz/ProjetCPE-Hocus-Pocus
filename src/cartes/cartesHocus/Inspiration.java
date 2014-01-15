@@ -21,7 +21,7 @@ public class Inspiration extends Hocus{
 		{
 			Joueur joueurJouant = getPartie().getJoueurs().get(getPartie().getJoueurJouant());
 			joueurJouant.piocherCartes(getForce());
-			Interface.Console(joueurJouant.getNom()+" pioche "+getForce()+" carte(s)");
+			Interface.Console(joueurJouant.getNom()+" pioche "+getForce()+" carte(s)",this.getPartie());
 		}
 	}
 	

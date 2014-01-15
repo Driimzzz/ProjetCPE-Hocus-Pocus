@@ -28,7 +28,7 @@ public class Sacrifice extends Hocus{
 			int gemmesRemises = joueurVise.perdreDesGemmes(2);
 			getPartie().setChaudron(getPartie().getChaudron() + gemmesRemises);
 			
-			Interface.Console(joueurVise.getNom() +" remets "+ gemmesRemises +" gemmes dans le chaudron");
+			Interface.Console(joueurVise.getNom() +" remets "+ gemmesRemises +" gemmes dans le chaudron",this.getPartie());
 		}	
 	}
 

@@ -52,7 +52,7 @@ public class Voleur extends Hocus{
 			Joueur joueurJouant = this.getPartie().getJoueurs().get(this.getPartie().getJoueurJouant());
 			joueurJouant.setGemmes(joueurJouant.getGemmes()+gemmesVolees);
 			
-			Interface.Console(joueurJouant.getNom() +" vole "+this.getForce()+" gemmes à "+joueurVise.getNom());
+			Interface.Console(joueurJouant.getNom() +" vole "+this.getForce()+" gemmes à "+joueurVise.getNom(),this.getPartie());
 		}	
 	}
 

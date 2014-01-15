@@ -36,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import partie.Joueur;
+import partie.Partie;
 
 import com.sun.xml.internal.ws.client.ClientSchemaValidationTube;
 
@@ -94,8 +95,8 @@ public class SocketAnnotation {
 				"has joined.");
 		Message message = new Message(MessageType.Message, mess, client);
 		Message message2 = new Message(MessageType.Jeu, listeJoueurs(), client);
-		broadcast(message2);
-		broadcast(message);
+		broadcast(message2,client.getPartie());
+		broadcast(message,client.getPartie());
 
 	}
 
@@ -108,8 +109,8 @@ public class SocketAnnotation {
 				"has disconnected.");
 		Message message = new Message(MessageType.Message, mess, client);
 		Message message2 = new Message(MessageType.Jeu, listeJoueurs(), client);
-		broadcast(message2);
-		broadcast(message);
+		broadcast(message2,client.getPartie());
+		broadcast(message,client.getPartie());
 	}
 
 	// Réception des messages du client
@@ -123,22 +124,28 @@ public class SocketAnnotation {
 			message.setAuteur(client);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			broadcast(new Message(MessageType.Error, e.getMessage()));
+			broadcast(new Message(MessageType.Error, e.getMessage()),client.getPartie());
 		}
 		// broadcast(message);
 		Interface.gestionMessage(message);
 	}
 
 	// le serveur envoie le message au client
-	public static void broadcast(Message message) {
+	public static void broadcast(Message message,Partie partie) {
 		salle.addMessage(message);
 		if (message.getDestination() == -1)
-			send2All(message);
+			if(partie!=null)
+			send2All(message,partie);
+			else
+				send2All(message);
 		else {
 			send2User(message);
 		}
 	}
 
+
+
+		
 	// envoie à'lutilsisateur concerné
 	private static void send2User(Message message) {
 		try {
@@ -149,22 +156,22 @@ public class SocketAnnotation {
 					client.getSession().getBasicRemote()
 							.sendText(message.toString());
 				} catch (IOException e) {
-					broadcast(new Message(MessageType.Error, e.getMessage()));
+					broadcast(new Message(MessageType.Error, e.getMessage()),client.getPartie());
 					Salle.getClients().remove(client);
 					try {
 						client.getSession().close();
 					} catch (IOException e1) {
 						broadcast(new Message(MessageType.Error,
-								e1.getMessage()));
+								e1.getMessage()),client.getPartie());
 					}
 					String mess = String.format("%s %s", client.getNickname(),
 							"has been disconnected.");
 					message = new Message(MessageType.Message, mess, client);
-					broadcast(message);
+					broadcast(message,client.getPartie());
 				}
 			}
 		} catch (Exception e) {
-			broadcast(new Message(MessageType.Error, e.getMessage()));
+			broadcast(new Message(MessageType.Error, e.getMessage()),null);
 		}
 
 	}
@@ -177,20 +184,44 @@ public class SocketAnnotation {
 						.sendText(message.toString());
 				client.setLastMessage(message.getiDmessage());
 			} catch (IOException e) {
-				broadcast(new Message(MessageType.Error, e.getMessage()));
+				broadcast(new Message(MessageType.Error, e.getMessage()),client.getPartie());
 				Salle.getClients().remove(client);
 				try {
 					client.getSession().close();
 				} catch (IOException e1) {
-					broadcast(new Message(MessageType.Error, e1.getMessage()));
+					broadcast(new Message(MessageType.Error, e1.getMessage()),client.getPartie());
 				}
 				String mess = String.format("%s %s", client.getNickname(),
 						"has been disconnected.");
 				message = new Message(MessageType.Message, mess, client);
-				broadcast(message);
+				broadcast(message,client.getPartie());
 			}
 		}
 	}
+	// envoie à tous les utilisateurs
+		private static void send2All(Message message, Partie partie) {
+			for (Client client : Salle.getClients()) {
+				try {
+					if (client.getPartie() == partie) {
+						client.getSession().getBasicRemote()
+								.sendText(message.toString());
+						client.setLastMessage(message.getiDmessage());
+					}
+				} catch (IOException e) {
+					broadcast(new Message(MessageType.Error, e.getMessage()),partie);
+					Salle.getClients().remove(client);
+					try {
+						client.getSession().close();
+					} catch (IOException e1) {
+						broadcast(new Message(MessageType.Error, e1.getMessage()),partie);
+					}
+					String mess = String.format("%s %s", client.getNickname(),
+							"has been disconnected.");
+					message = new Message(MessageType.Message, mess, client);
+					broadcast(message,partie);
+				}
+			}
+		}
 
 	// affiche tous les messages bufferisés dans la salle
 	private void bufferedMessages() {
@@ -208,19 +239,19 @@ public class SocketAnnotation {
 			grosJson.put("methode", "listeJoueurs");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			Interface.Error(e.getMessage());
+			Interface.Error(e.getMessage(),client.getPartie());
 		}
 
 		JSONArray arr = new JSONArray();
-		for (Client j : Salle.getClients()) {
-			arr.put(j.toJson());
+		for (Client j : Salle.getClientsLibre()) {
+				arr.put(j.toJson());
 		}
 
 		try {
 			grosJson.put("joueurs", arr);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			Interface.Error(e.getMessage());
+			Interface.Error(e.getMessage(),client.getPartie());
 		}
 		return grosJson.toString();
 	}

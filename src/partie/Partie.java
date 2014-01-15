@@ -52,16 +52,16 @@ public class Partie extends Thread {
 				Joueur joueurEnCours = joueurs.get(indexJoueur);
 				if (input == 1) {// pioche 1 gemme
 					Interface.Console(joueurEnCours.getNom()
-							+ " pioche 1 gemme dans le chaudron");
+							+ " pioche 1 gemme dans le chaudron",this);
 					joueurEnCours.setGemmes(joueurEnCours.getGemmes() + 1);
 					this.piocherDansLeChaudron(1);
 				} else if (input == 2) { // pioche 2 cartes
 					joueurEnCours.piocherCartes(2);
 				} else {// erreur
-					Interface.Console("erreur fin du tour");
+					Interface.Console("erreur fin du tour",this);
 				}
 				Interface.Console(joueurEnCours.getNom() + " a maintenant "
-						+ joueurEnCours.getGemmes() + " gemmes.");
+						+ joueurEnCours.getGemmes() + " gemmes.",this);
 	
 				// passe au jouer suivant
 				if (indexJoueur == joueurs.size() - 1)
@@ -72,7 +72,7 @@ public class Partie extends Thread {
 			}
 		}
 		else{
-			Interface.Error("Attendez la fin de la carte Hocus.");
+			Interface.Error("Attendez la fin de la carte Hocus.",this);
 		}
 	}
 
@@ -94,15 +94,15 @@ public class Partie extends Thread {
 	}
 
 	public void finDuJeu() {
-		Interface.Console("C'est la fin du jeu, tableau des scores : ");
+		Interface.Console("C'est la fin du jeu, tableau des scores : ",this);
 		afficherJoueurs();
 	}
 
 	public void afficherJoueurs() {
-		Interface.Console("liste des joueurs : ");
+		Interface.Console("liste des joueurs : ",this);
 		for (int i = 0; i < getJoueurs().size(); i++) {
 			Interface.Console(i + " : " + getJoueurs().get(i).getNom() + " : "
-					+ getJoueurs().get(i).getGemmes() + " gemmes");
+					+ getJoueurs().get(i).getGemmes() + " gemmes",this);
 		}
 	}
 
@@ -169,7 +169,7 @@ public class Partie extends Thread {
 
 	public void piocherDansLeChaudron(int nbrDeGemmes) {
 		setChaudron(chaudron - nbrDeGemmes);
-		Interface.Console("Il reste " + chaudron + " gemmes dans le chaudron");
+		Interface.Console("Il reste " + chaudron + " gemmes dans le chaudron",this);
 		if (chaudron <= 0) {
 			finDuJeu();
 		}
@@ -228,7 +228,7 @@ public class Partie extends Thread {
 				return true;
 			} else {
 				Interface
-						.Console("La premiere carte jouée doit être une HOCUS");
+						.Console("La premiere carte jouée doit être une HOCUS",this);
 				return false;
 			}
 		} else {
@@ -236,7 +236,7 @@ public class Partie extends Thread {
 				aireDeJeu.ajouterUneCarte(carte);
 				return true;
 			} else {
-				Interface.Console("Une seule carte Hocus à la fois");
+				Interface.Console("Une seule carte Hocus à la fois",this);
 				return false;
 			}
 		}
@@ -315,7 +315,7 @@ public class Partie extends Thread {
 			e.printStackTrace();
 		}
 		Joueur j=getJoueurs().get(numJoueurQuiChoisi);
-		Interface.Jeu(grosJson.toString(), j.getId());
+		Interface.Jeu(grosJson.toString(), j.getId(),this);
 
 //		Message msg = new Message(MessageType.Jeu,
 //				"{ methode:reponseCartesDuGrimoire;" +
@@ -364,19 +364,19 @@ public class Partie extends Thread {
 				grosJson.put("methode", "toutesLesInfos");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Interface.Error(e.getMessage());
+				Interface.Error(e.getMessage(),this);
 			}
 			try {
 				grosJson.put("chaudron", getChaudron());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Interface.Error(e.getMessage());
+				Interface.Error(e.getMessage(),this);
 			}
 			try {
 				grosJson.put("joueurEnCour", getJoueurJouant());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Interface.Error(e.getMessage());
+				Interface.Error(e.getMessage(),this);
 			}
 			JSONArray arr = new JSONArray();
 			int n = 0;
@@ -393,7 +393,7 @@ public class Partie extends Thread {
 					arr.put(0, buffer);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
-					Interface.Error(e.getMessage());
+					Interface.Error(e.getMessage(),this);
 				}
 			}
 
@@ -401,24 +401,24 @@ public class Partie extends Thread {
 				grosJson.put("joueurs", arr);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Interface.Error(e.getMessage());
+				Interface.Error(e.getMessage(),this);
 			}
 
 			try {
 				grosJson.put("aireDeJeu", getAireDeJeu().toJson());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Interface.Error(e.getMessage());
+				Interface.Error(e.getMessage(),this);
 			}
 			Joueur j=joueurs.get(numJoueur);
 
-			Interface.Jeu(grosJson.toString(), j.getId());	
+			Interface.Jeu(grosJson.toString(), j.getId(),this);	
 		}
 		Joueur joueurEnCours = joueurs.get(indexJoueur);
 		JsonObject json = new JsonObject();
 		json.addProperty("methode", "joueurEnCour");
-		Interface.Jeu(json.toString(), joueurEnCours.getId());
-		Interface.Console("C'est le tour de " + joueurEnCours.getNom());
+		Interface.Jeu(json.toString(), joueurEnCours.getId(),this);
+		Interface.Console("C'est le tour de " + joueurEnCours.getNom(),this);
 	}
 
 
@@ -458,7 +458,7 @@ public class Partie extends Thread {
 					lancerChrono();
 				// }
 			} else
-				Interface.Error("Carte interdite de jouer");
+				Interface.Error("Carte interdite de jouer",this);
 		}
 	}
 
@@ -469,13 +469,13 @@ public class Partie extends Thread {
 			grosJson.put("methode", "viserJoueur");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			Interface.Error(e.getMessage());
+			Interface.Error(e.getMessage(),this);
 		}
 		try {
 			grosJson.put("numJoueurVisant", numJoueurVisant);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			Interface.Error(e.getMessage());
+			Interface.Error(e.getMessage(),this);
 		}
 		JSONArray arr = new JSONArray();
 		for (Joueur j : this.getJoueurs()) {
@@ -485,10 +485,10 @@ public class Partie extends Thread {
 			grosJson.put("joueurs", arr);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			Interface.Error(e.getMessage());
+			Interface.Error(e.getMessage(),this);
 		}
 		Joueur j = getJoueurs().get(indexJoueur);
-		Interface.Jeu(grosJson.toString(), j.getId());
+		Interface.Jeu(grosJson.toString(), j.getId(),this);
 	}
 
 	// le client repond quel joueur est visé
@@ -497,10 +497,10 @@ public class Partie extends Thread {
 		if (numJoueur == getJoueurJouant()) {
 			Joueur jVise = getJoueurs().get(numJoueurVise);
 			Interface.Console(getJoueurs().get(numJoueur).getNom() + " vise "
-					+ jVise.getNom());
+					+ jVise.getNom(),this);
 			JsonObject json = new JsonObject();
 			json.addProperty("methode", "jeSuisVise");
-			Interface.Jeu(json.toString(), jVise.getId());
+			Interface.Jeu(json.toString(), jVise.getId(),this);
 			getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
 			lancerChrono();
 		}
@@ -516,7 +516,7 @@ public class Partie extends Thread {
 	private void lancerChrono() {
 		JsonObject json = new JsonObject();
 		json.addProperty("methode", "lancerChrono");
-		Interface.Jeu(json.toString());
+		Interface.Jeu(json.toString(),this);
 		// nouvelle carte on reset le timer
 		if (timerFinCarte != null)
 			timerFinCarte.cancel();

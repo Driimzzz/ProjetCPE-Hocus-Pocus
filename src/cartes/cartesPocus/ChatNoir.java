@@ -44,7 +44,7 @@ public class ChatNoir extends Pocus{
 			joueur.getMain().ajouterUneCarte(carteVisee);
 //			saMain.ajouterUneCarte(carteVisee);
 //			joueur.setMain(saMain);
-			Interface.Console("La carte "+carteVisee+" va dans la main de "+ joueur.getNom());
+			Interface.Console("La carte "+carteVisee+" va dans la main de "+ joueur.getNom(),this.getPartie());
 		}		
 	}
 	

@@ -42,13 +42,7 @@ public class PileDeCartes {
 		}			
 	}
 	
-	public void afficherToutes(){
-		int i=0;
-		for (Carte carteCourante : listeDeCartes) {
-			Interface.Console(i + " : " + carteCourante.toString());
-			i++;
-		}
-	}
+
 	
 	public int tailleDeLaPile(){
 		return listeDeCartes.size();

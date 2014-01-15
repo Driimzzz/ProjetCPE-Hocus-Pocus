@@ -25,7 +25,7 @@ import websocket.console.SocketAnnotation.MessageType;
 public class Interface {
 
 	public static String input = "";
-	private static int numAuteur=-1;
+	private static int numAuteur = -1;
 
 	private static Partie partie;
 
@@ -41,104 +41,99 @@ public class Interface {
 
 	}
 
-	public static void Console(String str) {
+	public static void Console(String str,Partie partie) {
 		System.out.println(str);
 		Message message = new Message(
 				websocket.console.SocketAnnotation.MessageType.Console, str);
-		SocketAnnotation.broadcast(message);
+		SocketAnnotation.broadcast(message,partie);
 	}
 
-	public static void Error(String str) {
+	public static void Error(String str,Partie partie) {
 		System.out.println(str);
 		Message message = new Message(
 				websocket.console.SocketAnnotation.MessageType.Error, str);
-		SocketAnnotation.broadcast(message);
+		SocketAnnotation.broadcast(message,partie);
 	}
 
-	public static void Jeu(String str) {
+	public static void Jeu(String str,Partie partie) {
 		System.out.println(str);
 		Message message = new Message(
 				websocket.console.SocketAnnotation.MessageType.Jeu, str);
-		SocketAnnotation.broadcast(message);
+		SocketAnnotation.broadcast(message,partie);
 	}
 
-	public static void Jeu(String str, int destination) {
+	public static void Jeu(String str, int destination,Partie partie) {
 		System.out.println(str);
 		Message message = new Message(
 				websocket.console.SocketAnnotation.MessageType.Jeu, str);
 		message.setDestination(destination);
-		SocketAnnotation.broadcast(message);
+		SocketAnnotation.broadcast(message,partie);
 	}
 
-	public static void Autorisation(String str) {
+	public static void Autorisation(String str,Partie partie) {
 		System.out.println(str);
 		Message message = new Message(
 				websocket.console.SocketAnnotation.MessageType.Autorisation,
 				str);
-		SocketAnnotation.broadcast(message);
+		SocketAnnotation.broadcast(message,partie);
 	}
-
 
 	// multijoueur (il faut ouvrir plusieurs fenêtres pour le simuler)
 	public static void creerJeu() {
-		partie = new Partie(SocketAnnotation.getSalle().getClients(), true);
+		Partie partie = new Partie(SocketAnnotation.getSalle().getClientsLibre(), true);
 		partie.start();
-		for(Client c: SocketAnnotation.getSalle().getClients())
-		{
+		for (Client c : SocketAnnotation.getSalle().getClientsLibre()) {
 			c.setPartie(partie);
 		}
 	}
 
-	
-	
-	
 	// choix d'une action demande au client
-	/*public static void demandeAction(boolean carteHocus,boolean peuPiocherCartes ) {
-		JsonObject json = new JsonObject();
-		json.addProperty("methode", "demandeAction");
-		json.addProperty("peuCarteHocus", carteHocus); // si le joueur peu jouer
-		json.addProperty("peuPiocherCartes", peuPiocherCartes);
-		Jeu(json.toString(), partie.getJoueurJouant());
-
-
-	}*/
+	/*
+	 * public static void demandeAction(boolean carteHocus,boolean
+	 * peuPiocherCartes ) { JsonObject json = new JsonObject();
+	 * json.addProperty("methode", "demandeAction");
+	 * json.addProperty("peuCarteHocus", carteHocus); // si le joueur peu jouer
+	 * json.addProperty("peuPiocherCartes", peuPiocherCartes);
+	 * Jeu(json.toString(), partie.getJoueurJouant());
+	 * 
+	 * 
+	 * }
+	 */
 
 	// choix d'une action demande au client
-	public static void reponseAction(int numJoueur,String action) {
+	public static void reponseAction(int numJoueur, String action) {
 		switch (action) {
 		case "jouerHocus":
 			break;
 		case "piocherGemme":
-			partie.finDuTour(numJoueur,1);
+			partie.finDuTour(numJoueur, 1);
 			break;
 		case "piocherCartes":
-			partie.finDuTour(numJoueur,2);
+			partie.finDuTour(numJoueur, 2);
 			break;
 		default:
-			Error("Erreur Json dans la sythaxe de l'action");
+			Error("Erreur Json dans la sythaxe de l'action",partie);
 			break;
 		}
 		partie.toutesLesInfos();
 	}
 
 	public static void gestionMessage(Message message) {
-		
 
-			
 		if (message.getType() == MessageType.Jeu) {
 			JSONObject json = new JSONObject();
 			try {
 				json = new JSONObject(message.getMessage());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Error(e.getMessage());
+				Error(e.getMessage(),partie);
 			}
 			String methode = "error";
 			try {
 				methode = (String) json.get("methode");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Error(e.getMessage());
+				Error(e.getMessage(),partie);
 			}
 
 			boolean bonJSON = true;
@@ -163,15 +158,17 @@ public class Interface {
 
 			case "carteJouee":
 				bonJSON = true;
-				partie=message.getAuteur().getPartie();
-				numAuteur=partie.getJoueurByID(message.getAuteur().getId());
+				partie = message.getAuteur().getPartie();
+				partie.afficherJoueurs();
+				numAuteur = partie.getJoueurByID(message.getAuteur().getId());
+				System.out.println(message.getAuteur().getId());
 				int numCarte = 0;
 
 				try {
 					numCarte = json.getInt("numCarte");
 				} catch (JSONException e) {
 					bonJSON = false;
-					Error(e.getMessage());
+					Error(e.getMessage(),partie);
 				}
 				if (bonJSON)
 					partie.carteJouee(numAuteur, numCarte);
@@ -179,26 +176,26 @@ public class Interface {
 
 			case "joueurVise":
 				int numJoueurVise;
-				partie=message.getAuteur().getPartie();
-				numAuteur=partie.getJoueurByID(message.getAuteur().getId());
+				partie = message.getAuteur().getPartie();
+				numAuteur = partie.getJoueurByID(message.getAuteur().getId());
 				try {
 					numJoueurVise = json.getInt("numJoueurVise");
-					partie.joueurVise(numAuteur,numJoueurVise);
+					partie.joueurVise(numAuteur, numJoueurVise);
 				} catch (JSONException e) {
 					bonJSON = false;
-					Error(e.getMessage());
+					Error(e.getMessage(),partie);
 				}
 				break;
 
 			case "finCarteHocus":
-				partie=message.getAuteur().getPartie();
-				numAuteur=partie.getJoueurByID(message.getAuteur().getId());
+				partie = message.getAuteur().getPartie();
+				numAuteur = partie.getJoueurByID(message.getAuteur().getId());
 				partie.finCarteHocus();
 				break;
 
 			case "reponseAction":
-				partie=message.getAuteur().getPartie();
-				numAuteur=partie.getJoueurByID(message.getAuteur().getId());
+				partie = message.getAuteur().getPartie();
+				numAuteur = partie.getJoueurByID(message.getAuteur().getId());
 				String action = "";
 				try {
 					action = json.getString("action");
@@ -206,15 +203,16 @@ public class Interface {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}// piocherGemme OU piocherCartes OU jouerHocus
-				reponseAction(numAuteur,action);
+				reponseAction(numAuteur, action);
 				break;
 
 			case "completerGrimoire":
-				partie=message.getAuteur().getPartie();
-				numAuteur=partie.getJoueurByID(message.getAuteur().getId());
+				partie = message.getAuteur().getPartie();
+				numAuteur = partie.getJoueurByID(message.getAuteur().getId());
 				try {
-					if(numAuteur == json.getInt("numJoueur")){
-						partie.getJoueurs().get(numAuteur).completerGrimoire(json.getInt("numCarte"));
+					if (numAuteur == json.getInt("numJoueur")) {
+						partie.getJoueurs().get(numAuteur)
+								.completerGrimoire(json.getInt("numCarte"));
 						partie.toutesLesInfos();
 					}
 					break;
@@ -222,37 +220,39 @@ public class Interface {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			
+
 			case "reponseCartesDuGrimoire":
-				partie=message.getAuteur().getPartie();
-				numAuteur=partie.getJoueurByID(message.getAuteur().getId());
+				partie = message.getAuteur().getPartie();
+				numAuteur = partie.getJoueurByID(message.getAuteur().getId());
 				try {
-					if(numAuteur == json.getInt("numJoueur")){
-						
-						int joueurGrimoire = json.getInt("numJoueurVise");						
-						JSONArray carteArr = json.getJSONArray("grimoire");						
-						partie.reponseCartesDuGrimoire(carteArr, joueurGrimoire);	
-						
+					if (numAuteur == json.getInt("numJoueur")) {
+
+						int joueurGrimoire = json.getInt("numJoueurVise");
+						JSONArray carteArr = json.getJSONArray("grimoire");
+						partie.reponseCartesDuGrimoire(carteArr, joueurGrimoire);
+
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				break;
-				
+
 			default:
-				Error("erreur dans la sythaxe json de methode");
+				Error("erreur dans la sythaxe json de methode",partie);
 				break;
 			}
 		}
 		input = "";
 		if (message.getType() == MessageType.Console) {
 			input = message.getMessage();
-			Console(">" + input);
+			Console(">" + input,partie);
 		}
 		if (message.getType() == MessageType.Message) {
-			message.setMessage(message.getAuteur().getNickname()+": "+message.getMessage());
-			SocketAnnotation.broadcast(message);
+			message.setMessage(message.getAuteur().getNickname() + ": "
+					+ message.getMessage());
+			partie = message.getAuteur().getPartie();
+				SocketAnnotation.broadcast(message, partie);
 		}
 	}
 }

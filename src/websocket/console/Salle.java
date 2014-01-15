@@ -18,6 +18,16 @@ public class Salle {
 	public static List<Client> getClients() {
 		return clients;
 	}
+	
+	public static List<Client> getClientsLibre() {
+		 List<Client> libres=new ArrayList<Client>();
+		for(Client c:clients)
+		{
+			if(c.getPartie()==null)
+				libres.add(c);
+		}
+		return libres;
+	}
 
 
 	public static void setClients(List<Client> clients) {

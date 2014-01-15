@@ -28,7 +28,6 @@ public class Joueur {
 		this.setMain(new Main());
 		for(int i=0;i<3;i++)
 			this.getGrimoire().ajouterUneCarte(getPartie().getBibliotheque().getCartes().tirerUneCarte());
-		Interface.Console("joueur créé : " + this.getNom());
 	}
 
 	public void jouerCarte(Carte carteJouee, boolean duGrimoire, int numJoueur) {
@@ -115,13 +114,13 @@ public class Joueur {
 				json.put("methode", "demandeCompleterGrimoire");
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Interface.Error(e.getMessage());
+				Interface.Error(e.getMessage(),partie);
 			}
 			try {
 				json.put("numeroJoueur", this.getPositionPartie());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				Interface.Error(e.getMessage());
+				Interface.Error(e.getMessage(),partie);
 			}
 			try {
 				json.put("main", this.main.toJson());
@@ -129,7 +128,7 @@ public class Joueur {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Interface.Jeu(json.toString(), this.getId());
+			Interface.Jeu(json.toString(), this.getId(),partie);
 		}
 		
 	}
