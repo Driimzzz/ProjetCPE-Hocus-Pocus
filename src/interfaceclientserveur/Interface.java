@@ -226,6 +226,7 @@ public class Interface {
 
 						int joueurGrimoire = json.getInt("numJoueurVise");
 						JSONArray carteArr = json.getJSONArray("grimoire");
+						Console(carteArr.toString(), partie);
 						partie.reponseCartesDuGrimoire(carteArr, joueurGrimoire);
 
 					}

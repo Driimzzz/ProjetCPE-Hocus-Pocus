@@ -339,22 +339,14 @@ public class Partie extends Thread {
                 Stack<Carte> pileCarte = pile.getPileDeCarte();
                 Carte carteHocus = pileCarte.get(0);
                 String strComp = carteHocus.getNom();
-                if ("Hibou".equals(strComp)) {
+                if ("Hibou".equals(strComp)||"Malediction".equals(strComp)) {
                         // mettre les carte choisies dans la main du joueurjouant
                         for (int numCarteGrim = 0; numCarteGrim < carteArr.length(); numCarteGrim++) {
-                                Carte carteChoisie = this.getJoueurs().get(joueurGrimoire)
-                                                .getGrimoire().enleverCarte(this.getJoueurs().get(joueurGrimoire)
-                                                                .getGrimoire().getPileDeCarte().get(numCarteGrim), this.getJoueurs().get(joueurGrimoire));
-                                this.getJoueurs().get(getJoueurJouant()).getMain()
-                                                .ajouterUneCarte(carteChoisie);
-                        }
-                        // this.getJoueurs().get(joueurGrimoire).demandeCompleterGrimoire();
-                } else if ("Malediction".equals(strComp)) {
-                        // defausser les carte choisies par joueurjouant
-                        for (int numCarteGrim = 0; numCarteGrim < carteArr.length(); numCarteGrim++) {
-                                this.getJoueurs().get(joueurGrimoire)
-                                .getGrimoire().enleverCarte(this.getJoueurs().get(joueurGrimoire)
-                                                .getGrimoire().getPileDeCarte().get(numCarteGrim), this.getJoueurs().get(joueurGrimoire));
+                                Carte carteChoisie = this.getJoueurs().get(joueurGrimoire).getGrimoire().getPileDeCarte().get(numCarteGrim);
+                                Joueur joueurDuGrimoire = this.getJoueurs().get(joueurGrimoire);
+                                joueurDuGrimoire.getGrimoire().enleverCarte(carteChoisie, joueurDuGrimoire);
+                                if ("Hibou".equals(strComp))
+                                		this.getJoueurs().get(getJoueurJouant()).getMain().ajouterUneCarte(carteChoisie);
                         }
                         // this.getJoueurs().get(joueurGrimoire).demandeCompleterGrimoire();
                 }
