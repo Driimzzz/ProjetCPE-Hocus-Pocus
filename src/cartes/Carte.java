@@ -126,4 +126,14 @@ public class Carte {
 
 	}
 
+	public boolean isCitrouille() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	public void setCitrouille(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

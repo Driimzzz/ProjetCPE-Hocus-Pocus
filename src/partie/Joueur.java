@@ -3,11 +3,8 @@ package partie;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.JsonObject;
-
 import interfaceclientserveur.Interface;
 import cartes.Carte;
-import cartes.Carte.CarteType;
 
 public class Joueur {
 	private int gemmes;

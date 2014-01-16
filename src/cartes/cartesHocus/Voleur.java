@@ -14,11 +14,6 @@ import partie.Partie;
 public class Voleur extends Hocus{
 	
 	private Joueur joueurVise;
-
-//	public Voleur(){		
-//		super.setNom("Voleur");
-//		super.setDescription("Piochez des gemmes chez un autre joueur");
-//	}
 	
 	public Voleur(int force,Partie partie){
 		super(partie);

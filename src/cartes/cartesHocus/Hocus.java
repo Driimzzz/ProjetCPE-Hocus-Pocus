@@ -7,7 +7,15 @@ public class Hocus extends Carte{
 		
 	private int force; //valeur du pouvoir
 	private boolean jevise;
+	private boolean citrouille;
 	
+		
+	public boolean isCitrouille() {
+		return citrouille;
+	}
+	public void setCitrouille(boolean citrouille) {
+		this.citrouille = citrouille;
+	}
 	@Override
 	public int getForce() {
 		return force;
@@ -26,6 +34,7 @@ public class Hocus extends Carte{
 	}
 	protected Hocus(Partie partie){
 		super(partie);
+		setCitrouille(false);
 		setForce(0);
 		super.setType(CarteType.hocus);
 	}

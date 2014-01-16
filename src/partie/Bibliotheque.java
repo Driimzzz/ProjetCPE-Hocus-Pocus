@@ -12,6 +12,7 @@ import cartes.cartesHocus.Vortex;
 import cartes.cartesPocus.Amulette;
 import cartes.cartesPocus.BaguetteMagique;
 import cartes.cartesPocus.ChatNoir;
+import cartes.cartesPocus.Citrouille;
 import cartes.cartesPocus.ContreSort;
 import cartes.cartesPocus.Eclair;
 
@@ -100,8 +101,15 @@ public class Bibliotheque {
 		this.cartes.ajouterUneCarte(new Abracadabra(maPartie));
 		this.cartes.ajouterUneCarte(new Abracadabra(maPartie));
 		
-		for (int i = 0; i < 2; i++)
-			this.cartes.ajouterUneCarte(new Vortex(maPartie));
+		this.cartes.ajouterUneCarte(new Vortex(maPartie));
+		this.cartes.ajouterUneCarte(new Vortex(maPartie));
+		
+		//3 citrouilles
+		for (int i = 0; i < 3; i++)
+			this.cartes.ajouterUneCarte(new Citrouille(maPartie));
+		
+//		for (int i = 0; i < 20; i++)
+//			this.cartes.ajouterUneCarte(new Citrouille(maPartie));
 
 		this.cartes.melanger();
 	}
