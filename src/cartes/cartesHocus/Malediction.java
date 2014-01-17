@@ -5,7 +5,7 @@ import partie.Partie;
 
 public class Malediction extends Hocus{
 
-	private Joueur joueurVise;
+//	private Joueur joueurVise;
 	
 	public Malediction(int force, Partie partie) {
 		super(partie);
@@ -25,19 +25,19 @@ public class Malediction extends Hocus{
 	public void action() {
 		if(isValide())
 		{
-			int numJoueurGrimoire = joueurVise.getPositionPartie();
+			int numJoueurGrimoire = getJoueurVise().getPositionPartie();
 			int numJoueurQuiChoisi = getPartie().getJoueurJouant();
 			getPartie().demanderCartesDuGrimoire(numJoueurGrimoire, numJoueurQuiChoisi, this.getForce());
 		}
 	}
 	
-	public Joueur getJoueurVise() {
-		return joueurVise;
-	}
-
-	@Override
-	public void setJoueurVise(Joueur joueurVise) {
-		this.joueurVise = joueurVise;		
-	}	
+//	public Joueur getJoueurVise() {
+//		return joueurVise;
+//	}
+//
+//	@Override
+//	public void setJoueurVise(Joueur joueurVise) {
+//		this.joueurVise = joueurVise;		
+//	}	
 
 }

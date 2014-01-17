@@ -13,7 +13,7 @@ import partie.Partie;
 
 public class Voleur extends Hocus{
 	
-	private Joueur joueurVise;
+	//private Joueur joueurVise;
 	
 	public Voleur(int force,Partie partie){
 		super(partie);
@@ -43,23 +43,22 @@ public class Voleur extends Hocus{
 	public void action() {
 		if(isValide())
 		{
-			int gemmesVolees = joueurVise.perdreDesGemmes(this.getForce());
+			int gemmesVolees = getJoueurVise().perdreDesGemmes(this.getForce());
 			Joueur joueurJouant = this.getPartie().getJoueurs().get(this.getPartie().getJoueurJouant());
 			joueurJouant.setGemmes(joueurJouant.getGemmes()+gemmesVolees);
 			
-			Interface.Console(joueurJouant.getNom() +" vole "+this.getForce()+" gemmes à "+joueurVise.getNom(),this.getPartie());
+			Interface.Console(joueurJouant.getNom() +" vole "+this.getForce()+" gemmes à "+getJoueurVise().getNom(),this.getPartie());
 		}	
 	}
-
-	public Joueur getJoueurVise() {
-		return joueurVise;
-	}
 	
-	@Override
-	public void setJoueurVise(Joueur joueurVise) {
-		this.joueurVise = joueurVise;
-	}	
-	
-	
+//	@Override
+//	public Joueur getJoueurVise() {
+//		return joueurVise;
+//	}
+//	
+//	@Override
+//	public void setJoueurVise(Joueur joueurVise) {
+//		this.joueurVise = joueurVise;
+//	}	
 		
 }

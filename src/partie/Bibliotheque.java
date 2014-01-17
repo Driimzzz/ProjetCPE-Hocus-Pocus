@@ -15,6 +15,7 @@ import cartes.cartesPocus.ChatNoir;
 import cartes.cartesPocus.Citrouille;
 import cartes.cartesPocus.ContreSort;
 import cartes.cartesPocus.Eclair;
+import cartes.cartesPocus.MiroirEnchante;
 
 public class Bibliotheque {
 	private PileDeCartes cartes;
@@ -78,9 +79,18 @@ public class Bibliotheque {
 		for (int i = 0; i < 2; i++)
 			this.cartes.ajouterUneCarte(new Eclair(maPartie));
 		
-		// 2 amulettes
-		for (int i = 0; i < 2; i++)
-			this.cartes.ajouterUneCarte(new Amulette(maPartie));
+		// 3 amulettes
+		if(getPartie().getJoueurs().size()<3)
+		{
+			for (int i = 0; i < 3; i++)
+				this.cartes.ajouterUneCarte(new Amulette(maPartie));
+		}
+		else
+		{
+			for (int i = 0; i < 3; i++)
+				this.cartes.ajouterUneCarte(new MiroirEnchante(maPartie));
+		}
+		
 		
 		
 		this.cartes.ajouterUneCarte(new Malediction(2,maPartie));
@@ -108,8 +118,7 @@ public class Bibliotheque {
 		for (int i = 0; i < 3; i++)
 			this.cartes.ajouterUneCarte(new Citrouille(maPartie));
 		
-//		for (int i = 0; i < 20; i++)
-//			this.cartes.ajouterUneCarte(new Citrouille(maPartie));
+		
 
 		this.cartes.melanger();
 	}

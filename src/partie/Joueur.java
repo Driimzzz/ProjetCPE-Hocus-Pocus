@@ -52,7 +52,10 @@ public class Joueur {
 																				// main
 				// ira la carte
 				carteJouee.jouerLaCarte();
-			} else
+			} 
+			else if("Miroir Enchante".equals(carteJouee.getNom()))
+				carteJouee.jouerLaCarte(this.getPositionPartie());
+			else
 				carteJouee.jouerLaCarte();
 		}
 		partie.toutesLesInfos();

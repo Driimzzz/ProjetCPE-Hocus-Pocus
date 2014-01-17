@@ -345,7 +345,6 @@ public class Partie extends Thread {
 	// reponse du client
 	public void reponseCartesDuGrimoire(JSONArray carteArr, int joueurGrimoire) {
 		PileDeCartes pile = this.getAireDeJeu();
-		int taille = pile.tailleDeLaPile();
 		Stack<Carte> pileCarte = pile.getPileDeCarte();
 		Carte carteHocus = pileCarte.get(0);
 		String strComp = carteHocus.getNom();
@@ -453,7 +452,8 @@ public class Partie extends Thread {
 
 			// on vérifie que c'est bien à lui de jouer +hocus/pocus
 			if (carteJouee.getType() == CarteType.pocus) {// POCUS
-				if ("Amulette".equals(carteJouee.getNom())) {
+				if (("Amulette".equals(carteJouee.getNom()))
+						|| ("Miroir Enchante".equals(carteJouee.getNom()))) {
 					if (this.getAireDeJeu().getPileDeCarte().get(0).isJevise()) {
 						if (this.getAireDeJeu().getPileDeCarte().get(0)
 								.getJoueurVise() != joueur) {
@@ -476,9 +476,11 @@ public class Partie extends Thread {
 					joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
 					if (!carteJouee.isJevise())
 						lancerChrono();
-				}
-				else
-					Interface.Console("Citrouille : Vous ne pourrez jouer cette carte qu'au prochain tour", this);
+				} else
+					Interface
+							.Console(
+									"Citrouille : Vous ne pourrez jouer cette carte qu'au prochain tour",
+									this);
 			} else
 				Interface.Error("Carte interdite de jouer", this);
 		}
@@ -509,22 +511,30 @@ public class Partie extends Thread {
 			// TODO Auto-generated catch block
 			Interface.Error(e.getMessage(), this);
 		}
-		Joueur j = getJoueurs().get(indexJoueur);
+		Joueur j = getJoueurs().get(numJoueurVisant);
 		Interface.Jeu(grosJson.toString(), j.getId(), this);
 	}
 
 	// le client repond quel joueur est visé
 	public void joueurVise(int numJoueur, int numJoueurVise) {
-		// on vérifie l'auteur du message
-		if (numJoueur == getJoueurJouant()) {
-			Joueur jVise = getJoueurs().get(numJoueurVise);
-			Interface.Console(getJoueurs().get(numJoueur).getNom() + " vise "
-					+ jVise.getNom(), this);
-			JsonObject json = new JsonObject();
-			json.addProperty("methode", "jeSuisVise");
-			Interface.Jeu(json.toString(), jVise.getId(), this);
-			getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
-			lancerChrono();
+		Carte derniereCarte = this.getAireDeJeu().getPileDeCarte()
+				.get(this.getAireDeJeu().tailleDeLaPile() - 1);
+		// on vérifie l'auteur du message si carte hocus
+		if (numJoueur == getJoueurJouant()
+				|| "Miroir Enchante".equals(derniereCarte.getNom())) {
+			if (numJoueurVise != this.getJoueurJouant()) {
+				Joueur jVise = getJoueurs().get(numJoueurVise);
+				Interface.Console(getJoueurs().get(numJoueur).getNom()
+						+ " vise " + jVise.getNom(), this);
+				JsonObject json = new JsonObject();
+				json.addProperty("methode", "jeSuisVise");
+				Interface.Jeu(json.toString(), jVise.getId(), this);
+				getAireDeJeu().getPileDeCarte().get(0).setJoueurVise(jVise);
+				lancerChrono();
+			} else { // cas du miroir enchanté redirigé vers la premiere persone
+				Interface.Console("Vous ne pouvez pas viser ce joueur", this);
+				this.viserUnJoueur(numJoueur);
+			}
 		}
 	}
 

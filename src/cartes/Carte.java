@@ -20,10 +20,6 @@ public class Carte {
 								// cartes mais on ne s'en servira pas pour
 								// toutes.
 
-	public Joueur getJoueurVise() {
-		return joueurVise;
-	}
-
 	// si la carte est toujours valide, non deffaussée par une autre
 	private boolean estValide;
 
@@ -112,9 +108,13 @@ public class Carte {
 	public void action() {
 	}
 
-	public void setJoueurVise(Joueur jVise) {
-
+	public Joueur getJoueurVise() {
+		return joueurVise;
 	}
+	
+	public void setJoueurVise(Joueur joueurVise) {
+		this.joueurVise = joueurVise;
+	}	
 
 	public boolean isJevise() {
 		// TODO Auto-generated method stub
@@ -132,6 +132,11 @@ public class Carte {
 	}
 	
 	public void setCitrouille(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void jouerLaCarte(int numJoueurVisant) {
 		// TODO Auto-generated method stub
 		
 	}

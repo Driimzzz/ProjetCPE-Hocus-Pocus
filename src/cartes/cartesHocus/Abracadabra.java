@@ -6,7 +6,7 @@ import partie.Partie;
 
 public class Abracadabra extends Hocus{
         
-        private Joueur joueurVise;
+//        private Joueur joueurVise;
         
         public Abracadabra(Partie partie){
                 super(partie);
@@ -29,19 +29,19 @@ public class Abracadabra extends Hocus{
                         Joueur joueurJouant = this.getPartie().getJoueurs().get(this.getPartie().getJoueurJouant());
                         
                         Main buff = joueurJouant.getMain();
-                        joueurJouant.setMain(joueurVise.getMain());
-                        joueurVise.setMain(buff);
+                        joueurJouant.setMain(getJoueurVise().getMain());
+                        getJoueurVise().setMain(buff);
                         
                 }        
         }
 
-        public Joueur getJoueurVise() {
-                return joueurVise;
-        }
-        
-        @Override
-        public void setJoueurVise(Joueur joueurVise) {
-                this.joueurVise = joueurVise;
-        }                
+//        public Joueur getJoueurVise() {
+//                return joueurVise;
+//        }
+//        
+//        @Override
+//        public void setJoueurVise(Joueur joueurVise) {
+//                this.joueurVise = joueurVise;
+//        }                
                 
 }

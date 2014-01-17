@@ -7,7 +7,7 @@ import partie.Partie;
 
 public class Sacrifice extends Hocus{
 	
-	private Joueur joueurVise;
+//	private Joueur joueurVise;
 	
 	public Sacrifice(int force, Partie partie){
 		super(partie);
@@ -26,19 +26,19 @@ public class Sacrifice extends Hocus{
 	public void action() {
 		if(isValide())
 		{
-			int gemmesRemises = joueurVise.perdreDesGemmes(this.getForce());
+			int gemmesRemises = getJoueurVise().perdreDesGemmes(this.getForce());
 			getPartie().setChaudron(getPartie().getChaudron() + gemmesRemises);
 			
-			Interface.Console(joueurVise.getNom() +" remets "+ gemmesRemises +" gemmes dans le chaudron",getPartie());
+			Interface.Console(getJoueurVise().getNom() +" remets "+ gemmesRemises +" gemmes dans le chaudron",getPartie());
 		}	
 	}
 
-	public Joueur getJoueurVise() {
-		return joueurVise;
-	}
-
-	public void setJoueurVise(Joueur joueurVise) {
-		this.joueurVise = joueurVise;
-	}	
+//	public Joueur getJoueurVise() {
+//		return joueurVise;
+//	}
+//
+//	public void setJoueurVise(Joueur joueurVise) {
+//		this.joueurVise = joueurVise;
+//	}	
 			
 }
