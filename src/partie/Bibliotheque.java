@@ -123,8 +123,7 @@ public class Bibliotheque {
 		
 		// 2 Sabliers
 		this.cartes.ajouterUneCarte(new Sablier(maPartie));
-		for (int i = 0; i < 20; i++)
-			this.cartes.ajouterUneCarte(new Sablier(maPartie));
+		this.cartes.ajouterUneCarte(new Sablier(maPartie));
 		
 		
 
