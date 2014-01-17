@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 import websocket.console.Client;
 import cartes.*;
 import cartes.Carte.CarteType;
+import cartes.cartesHocus.BouleDeCristal;
 
 public class Partie extends Thread {
 	private int chaudron;// le nb de gemmes dans le chaudron
@@ -141,7 +142,8 @@ public class Partie extends Thread {
 
 		// distribution des cartes aux joueurs
 		for (int i = 0; i < clients.size(); i++) {
-			this.getJoueurs().get(i).piocherCartes(5);
+			//this.getJoueurs().get(i).piocherCartes(5);
+			this.getJoueurs().get(i).getMain().ajouterUneCarte(new BouleDeCristal(this));
 		}
 		initChaudron(partieRapide);
 
@@ -304,6 +306,76 @@ public class Partie extends Thread {
 	}
 
 	// ----------Communication client / serveur --------------
+	//fonction qui montre au client les 4 premieres cartes de la biblio (pour la carte boule de cristal)
+	public void demanderCartesBouleDeCristal(int numJoueurQuiChoisi, int nbrCartes){
+		JSONObject grosJson = new JSONObject();
+		try {
+			grosJson.put("methode", "demanderCartesBouleDeCristal");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			grosJson.put("nbrCartes", nbrCartes);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			grosJson.put("numJoueurQuiChoisi", numJoueurQuiChoisi);
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		PileDeCartes cartes= new PileDeCartes();
+		//prend les nbrCartes dernieres cartes de la bibliotheque
+		for (int i=this.getBibliotheque().getCartes().getPileDeCarte().size()-nbrCartes;i<this.getBibliotheque().getCartes().getPileDeCarte().size();i++) {
+			cartes.ajouterUneCarte(this.getBibliotheque().getCartes().getPileDeCarte().get(i));
+		}
+		
+		JSONArray cartesJson = cartes.toJson();
+
+		try {
+			grosJson.put("cartes", cartesJson);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Joueur j = getJoueurs().get(numJoueurQuiChoisi);
+		Interface.Jeu(grosJson.toString(), j.getId(), this);
+	}
+	
+	// reponse du client
+	public void reponseCartesBouleDeCristal(JSONArray carteArr) {
+		
+		PileDeCartes cartesTopDeck= new PileDeCartes();
+		int tailleBibli = this.getBibliotheque().getCartes().getPileDeCarte().size();
+		int nbCartesAChanger = carteArr.length();
+		//prend les nbrCartes dernieres cartes de la bibliotheque
+		for (int i=tailleBibli-nbCartesAChanger ; i<tailleBibli ; i++) {
+			cartesTopDeck.ajouterUneCarte(this.getBibliotheque().getCartes().getPileDeCarte().get(i));
+		}
+		for(int pos=0 ; pos<nbCartesAChanger ; pos++){
+			try {
+				int num = carteArr.getInt(pos);
+				if(num < cartesTopDeck.tailleDeLaPile() && num>=0 ){//on vérifie que ce n'est pas hors bound
+					this.getBibliotheque().getCartes().getPileDeCarte().set(tailleBibli-pos-1, cartesTopDeck.getPileDeCarte().get(num));
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		setAireDeJeu(new PileDeCartes());
+		toutesLesInfos();
+		// tourDeJeu();
+	}
+	
+	
 	// le serveur demande le cartes du grimoire d'un joueur
 	public void demanderCartesDuGrimoire(int numJoueurGrimoire,
 			int numJoueurQuiChoisi, int nbrCartes) {

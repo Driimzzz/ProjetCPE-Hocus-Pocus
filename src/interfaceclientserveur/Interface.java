@@ -234,6 +234,17 @@ public class Interface {
 					e.printStackTrace();
 				}
 				break;
+			case "reponseChoixBouleDeCristal":
+				partie = message.getAuteur().getPartie();
+				JSONArray carteArr;
+				try {
+					carteArr = json.getJSONArray("cartes");
+					partie.reponseCartesBouleDeCristal(carteArr);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
 
 			default:
 				Error("erreur dans la sythaxe json de methode",partie);
