@@ -27,6 +27,7 @@ public class Partie extends Thread {
 	static private PileDeCartes aireDeJeu;
 	static private PileDeCartes defausse;
 	Timer timerFinCarte;
+	private boolean finDuTourDeJeu;
 
 	public void tourDeJeu() {
 
@@ -79,6 +80,9 @@ public class Partie extends Thread {
 					indexJoueur = 0;
 				else
 					indexJoueur++;
+				
+				setFinDuTourDeJeu(false);
+				
 				jeu();
 			}
 		} else {
@@ -121,9 +125,11 @@ public class Partie extends Thread {
 		aireDeJeu = new PileDeCartes();
 		defausse = new PileDeCartes();
 
-		bibliotheque = new Bibliotheque(this);
+		bibliotheque = new Bibliotheque(clients.size(),this);
 
 		indexJoueur = 0;
+		
+		setFinDuTourDeJeu(false);
 
 		// creation des joueurs
 		joueurs = new ArrayList<Joueur>();
@@ -185,8 +191,17 @@ public class Partie extends Thread {
 	}
 
 	// GETTERS & SETTERS ********************
+		
 	public int getJoueurJouant() {
 		return indexJoueur;
+	}
+
+	public boolean isFinDuTourDeJeu() {
+		return finDuTourDeJeu;
+	}
+
+	public void setFinDuTourDeJeu(boolean finDuTourDeJeu) {
+		this.finDuTourDeJeu = finDuTourDeJeu;
 	}
 
 	public int getnumJoueurByID(int ID) {
@@ -470,17 +485,23 @@ public class Partie extends Thread {
 					}
 				}
 				joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
-				lancerChrono();
+				if(!this.isFinDuTourDeJeu())
+					lancerChrono();
 			} else if (numJoueur == getJoueurJouant()) {// HOCUS
-				if (!carteJouee.isCitrouille()) {
-					joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
-					if (!carteJouee.isJevise())
-						lancerChrono();
-				} else
-					Interface
-							.Console(
-									"Citrouille : Vous ne pourrez jouer cette carte qu'au prochain tour",
-									this);
+				if(!this.isFinDuTourDeJeu()){ //quand la fin du tour est forcée par le sablier
+					if (!carteJouee.isCitrouille()) {
+						joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
+						if (!carteJouee.isJevise())
+							lancerChrono();
+					} else
+						Interface
+								.Console(
+										"Citrouille : Vous ne pourrez jouer cette carte qu'au prochain tour",
+										this);
+				}
+				else
+					Interface.Error("C'est la fin de votre tour piochez deux cartes ou une gemme", this);
+				
 			} else
 				Interface.Error("Carte interdite de jouer", this);
 		}

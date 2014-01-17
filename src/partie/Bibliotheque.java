@@ -16,13 +16,14 @@ import cartes.cartesPocus.Citrouille;
 import cartes.cartesPocus.ContreSort;
 import cartes.cartesPocus.Eclair;
 import cartes.cartesPocus.MiroirEnchante;
+import cartes.cartesPocus.Sablier;
 
 public class Bibliotheque {
 	private PileDeCartes cartes;
 
 	private Partie partie;
 
-	public Bibliotheque(Partie maPartie) { // constructeur de la bilbiotheque
+	public Bibliotheque(int nbrJoueurs,Partie maPartie) { // constructeur de la bilbiotheque
 											// qui initialise le paquet de
 											// cartes
 		this.cartes = new PileDeCartes();
@@ -79,16 +80,18 @@ public class Bibliotheque {
 		for (int i = 0; i < 2; i++)
 			this.cartes.ajouterUneCarte(new Eclair(maPartie));
 		
-		// 3 amulettes
-		if(getPartie().getJoueurs().size()<3)
+		// amulettes et miroir enchanté en fonction du nombre de joueurs
+		if(nbrJoueurs<3)
 		{
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < 7; i++)
 				this.cartes.ajouterUneCarte(new Amulette(maPartie));
 		}
 		else
 		{
 			for (int i = 0; i < 3; i++)
 				this.cartes.ajouterUneCarte(new MiroirEnchante(maPartie));
+			for (int i = 0; i < 4; i++)
+				this.cartes.ajouterUneCarte(new Amulette(maPartie));
 		}
 		
 		
@@ -117,6 +120,11 @@ public class Bibliotheque {
 		//3 citrouilles
 		for (int i = 0; i < 3; i++)
 			this.cartes.ajouterUneCarte(new Citrouille(maPartie));
+		
+		// 2 Sabliers
+		this.cartes.ajouterUneCarte(new Sablier(maPartie));
+		for (int i = 0; i < 20; i++)
+			this.cartes.ajouterUneCarte(new Sablier(maPartie));
 		
 		
 
