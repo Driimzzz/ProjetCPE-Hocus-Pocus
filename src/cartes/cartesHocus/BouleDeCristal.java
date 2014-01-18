@@ -1,11 +1,8 @@
 package cartes.cartesHocus;
 
-import partie.Joueur;
 import partie.Partie;
 
 public class BouleDeCristal extends Hocus{
-
-//	private Joueur joueurVise;
 	
 	public BouleDeCristal(Partie partie) {
 		super(partie);

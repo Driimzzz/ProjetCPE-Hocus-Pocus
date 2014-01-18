@@ -2,12 +2,9 @@ package cartes.cartesHocus;
 
 import interfaceclientserveur.Interface;
 
-import partie.Joueur;
 import partie.Partie;
 
 public class Sacrifice extends Hocus{
-	
-//	private Joueur joueurVise;
 	
 	public Sacrifice(int force, Partie partie){
 		super(partie);
@@ -33,12 +30,5 @@ public class Sacrifice extends Hocus{
 		}	
 	}
 
-//	public Joueur getJoueurVise() {
-//		return joueurVise;
-//	}
-//
-//	public void setJoueurVise(Joueur joueurVise) {
-//		this.joueurVise = joueurVise;
-//	}	
 			
 }

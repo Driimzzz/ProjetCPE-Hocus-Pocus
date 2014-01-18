@@ -234,6 +234,10 @@ function getInfo(message) {
 	if (obJ.methode == "jeSuisVise") {
 		$("#target").show();
 	}
+	if (obJ.methode == "finDuJeu" ){
+		$("#popupFinDuJeu").dialog("open");
+		$("#popupFinDuJeu p").html(obJ.text);
+	}
 
 }
 //pour boule de cristal : 

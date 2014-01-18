@@ -1,6 +1,5 @@
 package cartes.cartesHocus;
 
-import cartes.Carte;
 import interfaceclientserveur.Interface;
 import partie.Joueur;
 import partie.Partie;

@@ -25,7 +25,7 @@ public class Joueur {
 		this.setMain(new Main());
 
 		for(int i=0;i<3;i++)
-			this.getGrimoire().ajouterUneCarte(getPartie().getBibliotheque().getCartes().tirerUneCarte());
+			this.getGrimoire().ajouterUneCarte(getPartie().getBibliotheque().tirerUneCarte());
 
 
 	}
@@ -86,8 +86,7 @@ public class Joueur {
 	public void piocherCartes(int nbCartes) {
 		for (int i = 0; i < nbCartes; i++)
 			this.getMain().ajouterUneCarte(
-					getPartie().getBibliotheque().getCartes().tirerUneCarte());
-
+					getPartie().getBibliotheque().tirerUneCarte());
 	}
 
 	// Le joueur perds des gemmes

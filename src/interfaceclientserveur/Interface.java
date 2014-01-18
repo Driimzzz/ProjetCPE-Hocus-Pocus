@@ -137,18 +137,7 @@ public class Interface {
 
 			switch (methode) {
 			case "creerJeu":
-				/*
-				 * JSONArray arr = new JSONArray(); try { arr = (JSONArray)
-				 * json.get("joueurs"); } catch (JSONException e1) { // TODO
-				 * Auto-generated catch block Error(e1.getMessage()); }
-				 * List<String> joueurs = new ArrayList<>(); for (int i = 0; i <
-				 * arr.length(); i++) { try { joueurs.add(arr.getString(i)); }
-				 * catch (JSONException e) { // TODO Auto-generated catch block
-				 * Error(e.getMessage()); } }
-				 * 
-				 * String[] joueursTab = joueurs .toArray(new
-				 * String[joueurs.size()]);
-				 */
+
 				creerJeu();
 
 				break;
@@ -156,7 +145,7 @@ public class Interface {
 			case "carteJouee":
 				bonJSON = true;
 				partie = message.getAuteur().getPartie();
-				partie.afficherJoueurs();
+				//partie.afficherJoueurs();
 				numAuteur = partie.getnumJoueurByID(message.getAuteur().getId());
 				System.out.println(message.getAuteur().getId());
 				int numCarte = 0;

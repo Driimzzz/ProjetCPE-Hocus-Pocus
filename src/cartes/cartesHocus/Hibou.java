@@ -1,11 +1,8 @@
 package cartes.cartesHocus;
 
-import partie.Joueur;
 import partie.Partie;
 
 public class Hibou extends Hocus{
-
-//	private Joueur joueurVise;
 	
 	public Hibou(int force, Partie partie) {
 		super(partie);
@@ -30,14 +27,5 @@ public class Hibou extends Hocus{
 			getPartie().demanderCartesDuGrimoire(numJoueurGrimoire, numJoueurQuiChoisi, this.getForce());
 		}
 	}
-	
-//	public Joueur getJoueurVise() {
-//		return joueurVise;
-//	}
-//
-//	@Override
-//	public void setJoueurVise(Joueur joueurVise) {
-//		this.joueurVise = joueurVise;		
-//	}	
 
 }

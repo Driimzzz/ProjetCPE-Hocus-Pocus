@@ -17,7 +17,6 @@ import com.google.gson.JsonObject;
 import websocket.console.Client;
 import cartes.*;
 import cartes.Carte.CarteType;
-import cartes.cartesHocus.BouleDeCristal;
 
 public class Partie extends Thread {
 	private int chaudron;// le nb de gemmes dans le chaudron
@@ -29,20 +28,6 @@ public class Partie extends Thread {
 	static private PileDeCartes defausse;
 	Timer timerFinCarte;
 	private boolean finDuTourDeJeu;
-
-	public void tourDeJeu() {
-
-		// for (Joueur j : getJoueurs()) {
-		// if (j.getGrimoire().getPileDeCarte().size() < 3)
-		// this.getJoueurs().get(j.getPositionPartie())
-		// .demandeCompleterGrimoire();
-		// }
-		/*
-		 * Interface.demandeAction(joueurEnCours.aDesHocusDansSonJeu(),
-		 * joueurEnCours.peutPiocherCarte());
-		 */
-
-	}
 
 	public void finDuTour(int numJoueur, int input) {
 
@@ -109,16 +94,30 @@ public class Partie extends Thread {
 	}
 
 	public void finDuJeu() {
-		Interface.Console("C'est la fin du jeu, tableau des scores : ", this);
-		afficherJoueurs();
-	}
-
-	public void afficherJoueurs() {
-		Interface.Console("liste des joueurs : ", this);
+		Interface.Console("C'est la fin du jeu", this);
+		String strFinDeJeu = "C'est la fin du jeu, tableau des scores : </br>";
+		int plusGrandNbrsGemmes = 0;
+		int numJoueurGagnant = 0;
 		for (int i = 0; i < getJoueurs().size(); i++) {
-			Interface.Console(i + " : " + getJoueurs().get(i).getNom() + " : "
-					+ getJoueurs().get(i).getGemmes() + " gemmes", this);
+			strFinDeJeu += getJoueurs().get(i).getNom() + " : "+ getJoueurs().get(i).getGemmes() + " gemmes";
+			strFinDeJeu += "</br>";
+			if (getJoueurs().get(i).getGemmes() > plusGrandNbrsGemmes){
+				plusGrandNbrsGemmes = getJoueurs().get(i).getGemmes();
+				numJoueurGagnant = i;
+			}				
 		}
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Interface.Console("C'est la fin du jeu "+getJoueurs().get(numJoueurGagnant).getNom() + " Gagne", this);
+		strFinDeJeu += getJoueurs().get(numJoueurGagnant).getNom() + " GAGNE";
+		JsonObject json = new JsonObject();
+		json.addProperty("methode", "finDuJeu");
+		json.addProperty("text", strFinDeJeu);
+		Interface.Jeu(json.toString(), this);
 	}
 
 	// constructeur multijoueur de la partie
@@ -142,8 +141,7 @@ public class Partie extends Thread {
 
 		// distribution des cartes aux joueurs
 		for (int i = 0; i < clients.size(); i++) {
-			//this.getJoueurs().get(i).piocherCartes(5);
-			this.getJoueurs().get(i).getMain().ajouterUneCarte(new BouleDeCristal(this));
+			this.getJoueurs().get(i).piocherCartes(5);
 		}
 		initChaudron(partieRapide);
 
@@ -183,13 +181,20 @@ public class Partie extends Thread {
 		/* Interface.Console("chaudron initialisé à : " + this.getChaudron()); */
 	}
 
-	public void piocherDansLeChaudron(int nbrDeGemmes) {
-		setChaudron(chaudron - nbrDeGemmes);
+	public int piocherDansLeChaudron(int nbrDeGemmes) {
+		if((chaudron - nbrDeGemmes)<0){
+			nbrDeGemmes=chaudron;
+			setChaudron(0);
+		}
+		else
+			setChaudron(chaudron - nbrDeGemmes);
+		
 		Interface.Console("Il reste " + chaudron + " gemmes dans le chaudron",
 				this);
 		if (chaudron <= 0) {
 			finDuJeu();
 		}
+		return nbrDeGemmes;
 	}
 
 	// GETTERS & SETTERS ********************
@@ -278,12 +283,15 @@ public class Partie extends Thread {
 
 	public void jouerLesCartesDeLaireDeJeu() {
 		while (aireDeJeu.tailleDeLaPile() > 1) {
-			Carte currentCarte = aireDeJeu.tirerUneCarte();
+			Carte currentCarte = aireDeJeu.tirerUneCarte();			
 			currentCarte.action();
+			defausse.ajouterUneCarte(currentCarte);
 		}
+		
 		Carte hocus = this.getAireDeJeu().getPileDeCarte().get(0);
 		hocus.action();
-
+		defausse.ajouterUneCarte(hocus);
+		
 		if (!("Hibou".equals(hocus.getNom()))
 				&& !("Malediction".equals(hocus.getNom()))) {
 			setAireDeJeu(new PileDeCartes());
@@ -633,9 +641,7 @@ public class Partie extends Thread {
 
 	// le client informe le serveur la fin de la carte hocus
 	public void finCarteHocus() {
-
 		jouerLesCartesDeLaireDeJeu();
-		tourDeJeu();
 	}
 
 	private void lancerChrono() {
@@ -684,4 +690,5 @@ public class Partie extends Thread {
 			finCarteHocus();
 		}
 	}
+
 }

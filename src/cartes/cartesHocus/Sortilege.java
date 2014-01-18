@@ -18,11 +18,11 @@ public class Sortilege extends Hocus{
 	public void action() {
 		if(isValide())
 		{
-			this.getPartie().piocherDansLeChaudron(getForce());
+			int gemmesPiochees = this.getPartie().piocherDansLeChaudron(getForce());
 			
 			Joueur joueurJouant = this.getPartie().getJoueurs().get(this.getPartie().getJoueurJouant());
-			joueurJouant.setGemmes(joueurJouant.getGemmes()+this.getForce());
-			Interface.Console(joueurJouant.getNom() + " lance un sortilege "+this.getForce()+" contre le chaudron",this.getPartie());
+			joueurJouant.setGemmes(joueurJouant.getGemmes()+gemmesPiochees);
+			Interface.Console(joueurJouant.getNom() + " lance un sortilege "+gemmesPiochees+" contre le chaudron",this.getPartie());
 		}
 	}
 	

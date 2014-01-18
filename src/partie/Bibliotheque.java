@@ -1,7 +1,9 @@
 package partie;
 
+import interfaceclientserveur.Interface;
 import cartes.*;
 import cartes.cartesHocus.Abracadabra;
+import cartes.cartesHocus.BouleDeCristal;
 import cartes.cartesHocus.Hibou;
 import cartes.cartesHocus.Inspiration;
 import cartes.cartesHocus.Malediction;
@@ -26,6 +28,8 @@ public class Bibliotheque {
 	public Bibliotheque(int nbrJoueurs,Partie maPartie) { // constructeur de la bilbiotheque
 											// qui initialise le paquet de
 											// cartes
+		setPartie(maPartie);
+		
 		this.cartes = new PileDeCartes();
 
 		// initialisations cartes voleurs
@@ -48,7 +52,7 @@ public class Bibliotheque {
 		for (int i = 0; i < 5; i++)
 			// 5 cartes Sortilege 1
 			this.cartes.ajouterUneCarte(new Sortilege(1, maPartie));
-		for (int i = 0; i < 4; i++)
+				for (int i = 0; i < 4; i++)
 			// 4 cartes Sortilege 2
 			this.cartes.ajouterUneCarte(new Sortilege(2, maPartie));
 		for (int i = 0; i < 3; i++)
@@ -71,7 +75,7 @@ public class Bibliotheque {
 		// 2 sacrifices
 		for (int i = 0; i < 2; i++)
 			this.cartes.ajouterUneCarte(new Sacrifice(2, maPartie));
-
+		
 		// 2 chats noirs
 		for (int i = 0; i < 2; i++)
 			this.cartes.ajouterUneCarte(new ChatNoir(maPartie));
@@ -125,7 +129,10 @@ public class Bibliotheque {
 		this.cartes.ajouterUneCarte(new Sablier(maPartie));
 		this.cartes.ajouterUneCarte(new Sablier(maPartie));
 		
-		
+		//3 boules de cristal
+		this.cartes.ajouterUneCarte(new BouleDeCristal(maPartie));
+		this.cartes.ajouterUneCarte(new BouleDeCristal(maPartie));
+		this.cartes.ajouterUneCarte(new BouleDeCristal(maPartie));
 
 		this.cartes.melanger();
 	}
@@ -144,6 +151,17 @@ public class Bibliotheque {
 
 	public void setCartes(PileDeCartes cartes) {
 		this.cartes = cartes;
+	}
+
+	public Carte tirerUneCarte() {
+		if(cartes.tailleDeLaPile()<1){
+			getPartie().getDefausse().melanger();
+			setCartes(getPartie().getDefausse());
+		}			
+			
+		Carte carteTiree = cartes.tirerUneCarte();
+		
+		return carteTiree;
 	}
 
 }
