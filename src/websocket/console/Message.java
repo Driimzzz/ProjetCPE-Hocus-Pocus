@@ -133,6 +133,16 @@ public final class Message {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
+		
+		if(this.getAuteur()!=null)
+		{
+			try {
+				json.put("auteur", this.getAuteur().getNickname());
+			} catch (JSONException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		}
 
 		try {
 			json.put("message", this.getMessage());

@@ -62,8 +62,11 @@ function envoyerServeur(s) {
 }
 
 var Client = {};
+var auteur="";
 
 Client.log = (function(message) {
+	
+	auteur=message.auteur;
 	// type chat message
 	if (message.type == 1)
 		$("#message").append("<p>" + message.message + "</p>");

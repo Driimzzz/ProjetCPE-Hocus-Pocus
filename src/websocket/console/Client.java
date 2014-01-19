@@ -58,6 +58,7 @@ public class Client {
 	}
 	public JSONObject toJson() {
 		JSONObject json = new JSONObject();
+	
 		try {
 			json.put("id", this.getId());
 		} catch (JSONException e2) {

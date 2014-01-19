@@ -182,6 +182,7 @@ public class SocketAnnotation {
 		for (Client client : Salle.getClients()) {
 			try {
 				if (client.getPartie() == null) {
+					message.setAuteur(client);
 					client.getSession().getBasicRemote()
 							.sendText(message.toString());
 					client.setLastMessage(message.getiDmessage());
@@ -243,7 +244,7 @@ public class SocketAnnotation {
 
 	}
 
-	private String listeJoueurs() {
+	public String listeJoueurs() {
 		JSONObject grosJson = new JSONObject();
 		try {
 			grosJson.put("methode", "listeJoueurs");

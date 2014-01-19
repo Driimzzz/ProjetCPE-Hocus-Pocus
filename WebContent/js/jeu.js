@@ -188,9 +188,14 @@ function getInfo(message) {
 	if (obJ.methode == "listeJoueurs") {
 		$("#listeJoueurs").html('');
 		for (var i = 0; i < obJ.joueurs.length; i++) {
-			$("#listeJoueurs").append(
-					"<td class='tdjoueur' style='background-color:#006633;'><h1>"
-							+ obJ.joueurs[i].nickname + "</h1></td>");
+			if (auteur == obJ.joueurs[i].nickname)
+				$("#listeJoueurs").append(
+						"<td class='tdjoueur' style='background-color:#F60;' onclick='pseudoDuJeu()'><h1>"
+								+ obJ.joueurs[i].nickname + "</h1></td>");
+			else
+				$("#listeJoueurs").append(
+						"<td class='tdjoueur' style='background-color:#006633;'><h1>"
+								+ obJ.joueurs[i].nickname + "</h1></td>");
 		}
 		for (var i = obJ.joueurs.length; i < 6; i++) {
 			$("#listeJoueurs")
@@ -306,6 +311,19 @@ function rejouerJeu()
 {
 	envoyerServeur("{methode:rejouerJeu}");
 }
+
+function pseudoDuJeu()
+{
+	$("#popupPseudoDuJeu").dialog("open");
+	$("#popupPseudoDuJeu").html("<input value='"+auteur+"' type='text' name='pseudo' id='pseudo'><button onclick='envoyerPseudo()'>Valider</button>");	
+}
+
+function envoyerPseudo()
+{
+	$("#popupPseudoDuJeu").dialog("close");
+	envoyerServeur("{methode:pseudoDuJeu;pseudo:"+$("#pseudo").val()+"}");
+}
+
 function clignoteTitre(message) {
 	var bool = true;
 	cdowntitre = setInterval(function() {

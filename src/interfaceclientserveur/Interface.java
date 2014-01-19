@@ -247,6 +247,19 @@ public class Interface {
 				}
 				Interface.Jeu(json1.toString(), partie);
 				break;
+				
+			case "pseudoDuJeu":
+
+				try {
+					String pseudo = (String) json.get("pseudo");
+					message.getAuteur().setNickname(pseudo);
+					Message message2 = new Message(MessageType.Jeu,listeJoueurs(), message.getAuteur());
+					SocketAnnotation.broadcast(message2, null);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					Error(e.getMessage(), partie);
+				}
+				break;
 
 			default:
 				Error("erreur dans la sythaxe json de methode",partie);
@@ -265,4 +278,28 @@ public class Interface {
 				SocketAnnotation.broadcast(message, partie);
 		}
 	}
+	
+	public static String listeJoueurs() {
+		JSONObject grosJson = new JSONObject();
+		try {
+			grosJson.put("methode", "listeJoueurs");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Error(e.getMessage(), null);
+		}
+
+		JSONArray arr = new JSONArray();
+		for (Client j : Salle.getClientsLibre()) {
+			arr.put(j.toJson());
+		}
+
+		try {
+			grosJson.put("joueurs", arr);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			Interface.Error(e.getMessage(),null);
+		}
+		return grosJson.toString();
+	}
+
 }
