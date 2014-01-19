@@ -1,6 +1,5 @@
 package partie;
 
-import interfaceclientserveur.Interface;
 import cartes.*;
 import cartes.cartesHocus.Abracadabra;
 import cartes.cartesHocus.BouleDeCristal;

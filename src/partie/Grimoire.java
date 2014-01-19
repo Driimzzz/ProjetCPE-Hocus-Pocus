@@ -2,11 +2,6 @@ package partie;
 
 import java.util.Stack;
 
-import interfaceclientserveur.Interface;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import cartes.*;
 
 public class Grimoire extends PileDeCartes {

@@ -234,6 +234,19 @@ public class Interface {
 					e.printStackTrace();
 				}
 				break;
+			case "rejouerJeu":
+				//un des clients recoit rejouer jeu tous les autres rejouetn le jeu
+				partie = message.getAuteur().getPartie();
+				numAuteur = partie.getnumJoueurByID(message.getAuteur().getId());
+				 JSONObject json1=new JSONObject();
+				 try {
+					json1.put("methode", "rejouerJeu");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Interface.Jeu(json1.toString(), partie);
+				break;
 
 			default:
 				Error("erreur dans la sythaxe json de methode",partie);

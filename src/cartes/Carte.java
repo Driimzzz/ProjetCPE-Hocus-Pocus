@@ -46,7 +46,7 @@ public class Carte {
 		// catch (JSONException e) { // // TODO
 		// Auto-generated catch block //
 		// e.printStackTrace(); // }
-		return nom.trim();
+		return nom;
 	}
 
 	public boolean isValide() {

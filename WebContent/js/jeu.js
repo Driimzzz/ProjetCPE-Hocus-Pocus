@@ -238,6 +238,9 @@ function getInfo(message) {
 		$("#popupFinDuJeu").dialog("open");
 		$("#popupFinDuJeu p").html(obJ.text);
 	}
+	if (obJ.methode == "rejouerJeu" ){
+		document.location.reload(true);
+	}
 
 }
 //pour boule de cristal : 
@@ -293,6 +296,10 @@ function choisirAction(action) {
 	envoyerServeur("{methode:reponseAction;action:" + action + "}");
 }
 
+function rejouerJeu()
+{
+	envoyerServeur("{methode:rejouerJeu}");
+}
 function clignoteTitre(message) {
 	var bool = true;
 	cdowntitre = setInterval(function() {
