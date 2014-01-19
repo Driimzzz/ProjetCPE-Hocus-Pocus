@@ -178,7 +178,7 @@ public class Partie extends Thread {
 			}
 		} else
 			chaudron = 15;
-		/* Interface.Console("chaudron initialisé à : " + this.getChaudron()); */
+		
 	}
 
 	public int piocherDansLeChaudron(int nbrDeGemmes) {
@@ -191,9 +191,9 @@ public class Partie extends Thread {
 		
 		Interface.Console("Il reste " + chaudron + " gemmes dans le chaudron",
 				this);
-		if (chaudron <= 0) {
-			finDuJeu();
-		}
+//		if (chaudron <= 0) {
+//			finDuJeu();
+//		}
 		return nbrDeGemmes;
 	}
 

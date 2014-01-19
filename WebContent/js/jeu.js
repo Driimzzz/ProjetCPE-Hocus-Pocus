@@ -64,7 +64,7 @@ function getInfo(message) {
 		$("#airedejeu").html("");
 		for (var i = 0; i < obJ.aireDeJeu.length; i++) {
 			$("#airedejeu").append(
-					'<img src="img/HocusPocus/' + obJ.aireDeJeu[i]
+					'<img src="img/HocusPocus/' + obJ.aireDeJeu[i].nom
 							+ '.png" style="margin-top:' + i * -170 + 'px;">');
 
 		}
@@ -98,7 +98,9 @@ function getInfo(message) {
 			for (var j = 0; j < obJ.joueurs[i].grimoire.length; j++) {
 				$("#player" + i + " .player-jeu").append(
 						'<img src="img/HocusPocus/'
-								+ obJ.joueurs[i].grimoire[j] + '.png">');
+								+ obJ.joueurs[i].grimoire[j].nom + '.png"'
+								+ 'title="'+obJ.joueurs[i].grimoire[j].description+'"'
+								+'>');
 			}
 
 		}
@@ -111,14 +113,18 @@ function getInfo(message) {
 								+ '</h1><img src="img/HocusPocus/gemmes.png" width="15%">');
 		for (var i = 0; i < obJ.joueurs[0].main.length; i++) {
 			$("#player" + 0 + " .player-main").append(
-					'<img src="img/HocusPocus/' + obJ.joueurs[0].main[i]
-							+ '.png" onclick="carteJouee(' + i + ')">');
+					'<img src="img/HocusPocus/' + obJ.joueurs[0].main[i].nom
+							+ '.png"'
+							+ 'title="'+obJ.joueurs[0].main[i].description+'"'
+							+' onclick="carteJouee(' + i + ')">');
 		}
 		$("#player" + 0 + " .player-grimoire").html("");
 		for (var j = 0; j < obJ.joueurs[0].grimoire.length; j++) {
 			$("#player" + 0 + " .player-grimoire").append(
-					'<img src="img/HocusPocus/' + obJ.joueurs[0].grimoire[j]
-							+ '.png" onclick="carteJouee(' + 1 + j + ')">');
+					'<img src="img/HocusPocus/' + obJ.joueurs[0].grimoire[j].nom
+							+ '.png"'
+							+ ' title="'+obJ.joueurs[0].grimoire[j].description+'"'
+							+ ' onclick="carteJouee(' + 1 + j + ')">');
 		}
 		document.title = "Hocus Pocus";
 		clearInterval(cdowntitre);
@@ -172,7 +178,7 @@ function getInfo(message) {
 						"<h2>Vous devez completer votre grimoire, quelle carte poser?</h2>");
 		for (var i = 0; i < obJ.main.length; i++) {
 			$("#popupCompleterGrimoire").append(
-					'<img src="img/HocusPocus/' + obJ.main[i]
+					'<img src="img/HocusPocus/' + obJ.main[i].nom
 							+ '.png" onclick="completerGrimoire(' + i + ','
 							+ obJ.numeroJoueur + ')">');
 		}
@@ -203,7 +209,7 @@ function getInfo(message) {
 		arrayGrim = new Array();
 		for (var i = 0; i < obJ.grim.length; i++) {
 			$("#popupCompleterGrimoire").append(
-					'<img src="img/HocusPocus/' + obJ.grim[i]
+					'<img src="img/HocusPocus/' + obJ.grim[i].nom
 							+ '.png" id="cartesGrimoire' + i
 							+ '" onclick="choixDansGrimoire(' + i + ','
 							+ obJ.nbrCartes + ',' + obJ.numJoueurQuiChoisi
@@ -224,7 +230,7 @@ function getInfo(message) {
 						"<h2>Cliquez sur les cartes dans l'ordre que vous desirez (1er clic = carte en haut de la pile)</h2>");
 		for (var i = 0; i < obJ.cartes.length; i++) {
 			$("#popupCompleterGrimoire").append(
-					'<img id="bouleDeCristal'+i+'" src="img/HocusPocus/' + obJ.cartes[i]
+					'<img id="bouleDeCristal'+i+'" src="img/HocusPocus/' + obJ.cartes[i].nom
 							+ '.png" onclick="clicChoixBouleDeCristal(' + i + ','
 							+ obJ.cartes.length + ')">');
 		}
@@ -315,3 +321,4 @@ function clignoteTitre(message) {
 
 	}, 1000);
 }
+

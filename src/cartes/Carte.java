@@ -1,5 +1,10 @@
 package cartes;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.JsonObject;
+
 import partie.Joueur;
 import partie.Partie;
 
@@ -33,7 +38,8 @@ public class Carte {
 		setDescription(descrp);
 	}
 
-	public String toJson() { // JSONObject json =new JSONObject();
+	public JSONObject toJson() { // JSONObject json =new JSONObject();
+		JSONObject json =new JSONObject();
 		String nom = "";
 		if (this.getType() == CarteType.hocus)
 			nom = "Hocus";
@@ -42,11 +48,19 @@ public class Carte {
 		nom += this.getNom();
 		if (this.getForce() != 0)
 			nom += this.getForce();
-		// try { // json.put("nomCarte", nom); // }
-		// catch (JSONException e) { // // TODO
-		// Auto-generated catch block //
-		// e.printStackTrace(); // }
-		return nom;
+		try {
+			json.put("nom", nom);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			json.put("description", this.getDescription());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return json;
 	}
 
 	public boolean isValide() {

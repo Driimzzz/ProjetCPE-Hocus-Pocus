@@ -107,6 +107,7 @@ border-radius:3px;
   -o-transform: scale(1.05,1.05);
   -ms-transform: scale(1.05,1.05);
   transform: scale(1.05,1.05);
+  
 }
 .player-gemme{
 	float:right;
@@ -146,6 +147,7 @@ border-radius:3px;
   -o-transform: scale(1.05,1.05);
   -ms-transform: scale(1.05,1.05);
   transform: scale(1.05,1.05);
+
 }
  
 .player-jeu{
