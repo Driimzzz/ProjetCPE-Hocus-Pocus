@@ -22,13 +22,8 @@ public class ChatNoir extends Pocus{
         public ChatNoir(Partie partie){        
                 super(partie);
                 super.setNom("Chat Noir");
-                super.setDescription("Détruisez la carte HOCUS");
+                super.setDescription("Volez la carte HOCUS en cours");
         }
-        
-
-
-        
-
         
         public void setJoueurVise(Joueur jVise) {
                 joueur = jVise;
@@ -45,7 +40,7 @@ public class ChatNoir extends Pocus{
         public void action() {
                 if(isValide())
                 {
-                        this.getPartie().getAireDeJeu().getPileDeCarte().get(0).setEstValide(false);
+                        this.getPartie().getAireDeJeu().getPileDeCarte().get(0).setEstValide(true);
                         
                         for(Carte carte : getPartie().getAireDeJeu().getPileDeCarte()){
             				if(carte.getType() == CarteType.pocus)

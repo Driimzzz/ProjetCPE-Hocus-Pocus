@@ -38,8 +38,11 @@ public class Partie extends Thread {
 				if (input == 1) {// pioche 1 gemme
 					Interface.Console(joueurEnCours.getNom()
 							+ " pioche 1 gemme dans le chaudron", this);
-					joueurEnCours.setGemmes(joueurEnCours.getGemmes() + 1);
-					this.piocherDansLeChaudron(1);
+					
+					joueurEnCours.setGemmes(joueurEnCours.getGemmes() + this.piocherDansLeChaudron(1));
+					if(getChaudron() == 0)
+						finDuJeu();
+					
 				} else if (input == 2) { // pioche 2 cartes
 					joueurEnCours.piocherCartes(2);
 				} else {// erreur
@@ -66,9 +69,9 @@ public class Partie extends Thread {
 					indexJoueur = 0;
 				else
 					indexJoueur++;
-				
+
 				setFinDuTourDeJeu(false);
-				
+
 				jeu();
 			}
 		} else {
@@ -83,36 +86,34 @@ public class Partie extends Thread {
 
 	// la fonction qui alterne les tours de jeu entre les joueurs
 	public void jeu() {
-		// indexJoueur = 0;
-		// while (chaudron > 0) {
-		if (chaudron > 0) {
-			toutesLesInfos();
-			// tourDeJeu();
-
-		} else
-			finDuJeu();
+		toutesLesInfos();
 	}
 
 	public void finDuJeu() {
-		Interface.Console("C'est la fin du jeu", this);
-		String strFinDeJeu = "C'est la fin du jeu, tableau des scores : </br>";
-		int plusGrandNbrsGemmes = 0;
-		int numJoueurGagnant = 0;
-		for (int i = 0; i < getJoueurs().size(); i++) {
-			strFinDeJeu += getJoueurs().get(i).getNom() + " : "+ getJoueurs().get(i).getGemmes() + " gemmes";
-			strFinDeJeu += "</br>";
-			if (getJoueurs().get(i).getGemmes() > plusGrandNbrsGemmes){
-				plusGrandNbrsGemmes = getJoueurs().get(i).getGemmes();
-				numJoueurGagnant = i;
-			}				
-		}
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Interface.Console("C'est la fin du jeu "+getJoueurs().get(numJoueurGagnant).getNom() + " Gagne", this);
+		Interface.Console("C'est la fin du jeu", this);
+		String strFinDeJeu = "C'est la fin du jeu, tableau des scores : </br>";
+		int plusGrandNbrsGemmes = 0;
+		int numJoueurGagnant = 0;
+		for (int i = 0; i < getJoueurs().size(); i++) {
+			strFinDeJeu += getJoueurs().get(i).getNom() + " : "
+					+ getJoueurs().get(i).getGemmes() + " gemmes";
+			strFinDeJeu += "</br>";
+			if (getJoueurs().get(i).getGemmes() > plusGrandNbrsGemmes) {
+				plusGrandNbrsGemmes = getJoueurs().get(i).getGemmes();
+				numJoueurGagnant = i;
+			}
+		}
+		
+		Interface.Console(
+				"C'est la fin du jeu "
+						+ getJoueurs().get(numJoueurGagnant).getNom()
+						+ " Gagne", this);
 		strFinDeJeu += getJoueurs().get(numJoueurGagnant).getNom() + " GAGNE";
 		JsonObject json = new JsonObject();
 		json.addProperty("methode", "finDuJeu");
@@ -125,10 +126,10 @@ public class Partie extends Thread {
 		aireDeJeu = new PileDeCartes();
 		defausse = new PileDeCartes();
 
-		bibliotheque = new Bibliotheque(clients.size(),this);
+		bibliotheque = new Bibliotheque(clients.size(), this);
 
 		indexJoueur = 0;
-		
+
 		setFinDuTourDeJeu(false);
 
 		// creation des joueurs
@@ -178,27 +179,27 @@ public class Partie extends Thread {
 			}
 		} else
 			chaudron = 15;
-		
+
 	}
 
 	public int piocherDansLeChaudron(int nbrDeGemmes) {
-		if((chaudron - nbrDeGemmes)<0){
-			nbrDeGemmes=chaudron;
+		if ((chaudron - nbrDeGemmes) < 0) {
+			nbrDeGemmes = chaudron;
 			setChaudron(0);
-		}
-		else
+		} else
 			setChaudron(chaudron - nbrDeGemmes);
-		
+
 		Interface.Console("Il reste " + chaudron + " gemmes dans le chaudron",
 				this);
 //		if (chaudron <= 0) {
+//			toutesLesInfos();
 //			finDuJeu();
 //		}
 		return nbrDeGemmes;
 	}
 
 	// GETTERS & SETTERS ********************
-		
+
 	public int getJoueurJouant() {
 		return indexJoueur;
 	}
@@ -283,15 +284,16 @@ public class Partie extends Thread {
 
 	public void jouerLesCartesDeLaireDeJeu() {
 		while (aireDeJeu.tailleDeLaPile() > 1) {
-			Carte currentCarte = aireDeJeu.tirerUneCarte();			
+			Carte currentCarte = aireDeJeu.tirerUneCarte();
 			currentCarte.action();
 			defausse.ajouterUneCarte(currentCarte);
 		}
-		
+		// pour malediction et hibou l'hors de l'exécution de action la carte
+		// hocus doit existée
 		Carte hocus = this.getAireDeJeu().getPileDeCarte().get(0);
 		hocus.action();
 		defausse.ajouterUneCarte(hocus);
-		
+
 		if (!("Hibou".equals(hocus.getNom()))
 				&& !("Malediction".equals(hocus.getNom()))) {
 			setAireDeJeu(new PileDeCartes());
@@ -301,6 +303,13 @@ public class Partie extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+
+		try {
+			Thread.sleep(300);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		toutesLesInfos();
 	}
@@ -314,8 +323,10 @@ public class Partie extends Thread {
 	}
 
 	// ----------Communication client / serveur --------------
-	//fonction qui montre au client les 4 premieres cartes de la biblio (pour la carte boule de cristal)
-	public void demanderCartesBouleDeCristal(int numJoueurQuiChoisi, int nbrCartes){
+	// fonction qui montre au client les 4 premieres cartes de la biblio (pour
+	// la carte boule de cristal)
+	public void demanderCartesBouleDeCristal(int numJoueurQuiChoisi,
+			int nbrCartes) {
 		JSONObject grosJson = new JSONObject();
 		try {
 			grosJson.put("methode", "demanderCartesBouleDeCristal");
@@ -338,12 +349,15 @@ public class Partie extends Thread {
 			e1.printStackTrace();
 		}
 
-		PileDeCartes cartes= new PileDeCartes();
-		//prend les nbrCartes dernieres cartes de la bibliotheque
-		for (int i=this.getBibliotheque().getCartes().getPileDeCarte().size()-nbrCartes;i<this.getBibliotheque().getCartes().getPileDeCarte().size();i++) {
-			cartes.ajouterUneCarte(this.getBibliotheque().getCartes().getPileDeCarte().get(i));
+		PileDeCartes cartes = new PileDeCartes();
+		// prend les nbrCartes dernieres cartes de la bibliotheque
+		for (int i = this.getBibliotheque().getCartes().getPileDeCarte().size()
+				- nbrCartes; i < this.getBibliotheque().getCartes()
+				.getPileDeCarte().size(); i++) {
+			cartes.ajouterUneCarte(this.getBibliotheque().getCartes()
+					.getPileDeCarte().get(i));
 		}
-		
+
 		JSONArray cartesJson = cartes.toJson();
 
 		try {
@@ -355,35 +369,47 @@ public class Partie extends Thread {
 		Joueur j = getJoueurs().get(numJoueurQuiChoisi);
 		Interface.Jeu(grosJson.toString(), j.getId(), this);
 	}
-	
+
 	// reponse du client
 	public void reponseCartesBouleDeCristal(JSONArray carteArr) {
-		
-		PileDeCartes cartesTopDeck= new PileDeCartes();
-		int tailleBibli = this.getBibliotheque().getCartes().getPileDeCarte().size();
+
+		PileDeCartes cartesTopDeck = new PileDeCartes();
+		int tailleBibli = this.getBibliotheque().getCartes().getPileDeCarte()
+				.size();
 		int nbCartesAChanger = carteArr.length();
-		//prend les nbrCartes dernieres cartes de la bibliotheque
-		for (int i=tailleBibli-nbCartesAChanger ; i<tailleBibli ; i++) {
-			cartesTopDeck.ajouterUneCarte(this.getBibliotheque().getCartes().getPileDeCarte().get(i));
+		// prend les nbrCartes dernieres cartes de la bibliotheque
+		for (int i = tailleBibli - nbCartesAChanger; i < tailleBibli; i++) {
+			cartesTopDeck.ajouterUneCarte(this.getBibliotheque().getCartes()
+					.getPileDeCarte().get(i));
 		}
-		for(int pos=0 ; pos<nbCartesAChanger ; pos++){
+		for (int pos = 0; pos < nbCartesAChanger; pos++) {
 			try {
 				int num = carteArr.getInt(pos);
-				if(num < cartesTopDeck.tailleDeLaPile() && num>=0 ){//on vérifie que ce n'est pas hors bound
-					this.getBibliotheque().getCartes().getPileDeCarte().set(tailleBibli-pos-1, cartesTopDeck.getPileDeCarte().get(num));
+				if (num < cartesTopDeck.tailleDeLaPile() && num >= 0) {// on
+																		// vérifie
+																		// que
+																		// ce
+																		// n'est
+																		// pas
+																		// hors
+																		// bound
+					this.getBibliotheque()
+							.getCartes()
+							.getPileDeCarte()
+							.set(tailleBibli - pos - 1,
+									cartesTopDeck.getPileDeCarte().get(num));
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 		setAireDeJeu(new PileDeCartes());
 		toutesLesInfos();
 		// tourDeJeu();
 	}
-	
-	
+
 	// le serveur demande le cartes du grimoire d'un joueur
 	public void demanderCartesDuGrimoire(int numJoueurGrimoire,
 			int numJoueurQuiChoisi, int nbrCartes) {
@@ -445,7 +471,14 @@ public class Partie extends Thread {
 		String strComp = carteHocus.getNom();
 		if ("Hibou".equals(strComp) || "Malediction".equals(strComp)) {
 			// mettre les carte choisies dans la main du joueurjouant
-			for (int numCarteGrim = 0; numCarteGrim < carteArr.length(); numCarteGrim++) {
+			for (int i = 0; i < carteArr.length(); i++) {
+				int numCarteGrim = 3;
+				try {
+					numCarteGrim = carteArr.getInt(i);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				Carte carteChoisie = this.getJoueurs().get(joueurGrimoire)
 						.getGrimoire().getPileDeCarte().get(numCarteGrim);
 				Joueur joueurDuGrimoire = this.getJoueurs().get(joueurGrimoire);
@@ -565,10 +598,11 @@ public class Partie extends Thread {
 					}
 				}
 				joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
-				if(!this.isFinDuTourDeJeu())
+				if (!this.isFinDuTourDeJeu())
 					lancerChrono();
 			} else if (numJoueur == getJoueurJouant()) {// HOCUS
-				if(!this.isFinDuTourDeJeu()){ //quand la fin du tour est forcée par le sablier
+				if (!this.isFinDuTourDeJeu()) { // quand la fin du tour est
+												// forcée par le sablier
 					if (!carteJouee.isCitrouille()) {
 						joueur.jouerCarte(carteJouee, duGrimoire, numJoueur);
 						if (!carteJouee.isJevise())
@@ -578,10 +612,11 @@ public class Partie extends Thread {
 								.Console(
 										"Citrouille : Vous ne pourrez jouer cette carte qu'au prochain tour",
 										this);
-				}
-				else
-					Interface.Error("C'est la fin de votre tour piochez deux cartes ou une gemme", this);
-				
+				} else
+					Interface
+							.Error("C'est la fin de votre tour piochez deux cartes ou une gemme",
+									this);
+
 			} else
 				Interface.Error("Carte interdite de jouer", this);
 		}

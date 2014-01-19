@@ -24,6 +24,16 @@ public class BaguetteMagique extends Pocus {
 
 	public void jouerLaCarte() {
 		Carte visee = this.getPartie().getAireDeJeu().getPileDeCarte().get(0);
+		//s'il y a déjà une baguette magique sur cette carte
+		int cmpt = 0;
+		for(Carte c : getPartie().getAireDeJeu().getPileDeCarte()){			
+			if("Baguette Magique".equals(c.getNom()))
+				cmpt++;	
+		}
+		if(cmpt>1){
+			Interface.Console("Vous ne pouvez qu'une seule Baguette Magique à la fois", getPartie());
+			this.setEstValide(false);
+		}
 
 		if (visee.getForce() != 0)
 			setCarteVisee(visee);
