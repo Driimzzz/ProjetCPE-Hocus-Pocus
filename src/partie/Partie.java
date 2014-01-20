@@ -29,6 +29,32 @@ public class Partie extends Thread {
 	Timer timerFinCarte;
 	private boolean finDuTourDeJeu;
 
+	public void jouerLesCartesDeLaireDeJeu() {
+		while (aireDeJeu.tailleDeLaPile() > 1) {
+			Carte currentCarte = aireDeJeu.tirerUneCarte();
+			currentCarte.action();
+			defausse.ajouterUneCarte(currentCarte);
+		}
+		// pour malediction et hibou l'hors de l'exécution de action la carte
+		// hocus doit existée
+		Carte hocus = this.getAireDeJeu().getPileDeCarte().get(0);
+		hocus.action();
+		defausse.ajouterUneCarte(hocus);
+
+		if (!("Hibou".equals(hocus.getNom()))
+				&& !("Malediction".equals(hocus.getNom()))) {
+			setAireDeJeu(new PileDeCartes());
+		}
+
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		toutesLesInfos();
+	}
+
 	public void finDuTour(int numJoueur, int input) {
 
 		// on vérifie l'auteur
@@ -38,11 +64,12 @@ public class Partie extends Thread {
 				if (input == 1) {// pioche 1 gemme
 					Interface.Console(joueurEnCours.getNom()
 							+ " pioche 1 gemme dans le chaudron", this);
-					
-					joueurEnCours.setGemmes(joueurEnCours.getGemmes() + this.piocherDansLeChaudron(1));
-					if(getChaudron() == 0)
+
+					joueurEnCours.setGemmes(joueurEnCours.getGemmes()
+							+ this.piocherDansLeChaudron(1));
+					if (getChaudron() == 0)
 						finDuJeu();
-					
+
 				} else if (input == 2) { // pioche 2 cartes
 					joueurEnCours.piocherCartes(2);
 				} else {// erreur
@@ -72,7 +99,7 @@ public class Partie extends Thread {
 
 				setFinDuTourDeJeu(false);
 
-				jeu();
+				toutesLesInfos();
 			}
 		} else {
 			Interface.Error("Attendez la fin de la carte Hocus.", this);
@@ -80,14 +107,14 @@ public class Partie extends Thread {
 	}
 
 	public void run() {
-		jeu();
-
-	}
-
-	// la fonction qui alterne les tours de jeu entre les joueurs
-	public void jeu() {
 		toutesLesInfos();
 	}
+
+	//
+	// // la fonction qui alterne les tours de jeu entre les joueurs
+	// public void jeu() {
+	//
+	// }
 
 	public void finDuJeu() {
 		try {
@@ -109,7 +136,7 @@ public class Partie extends Thread {
 				numJoueurGagnant = i;
 			}
 		}
-		
+
 		Interface.Console(
 				"C'est la fin du jeu "
 						+ getJoueurs().get(numJoueurGagnant).getNom()
@@ -146,14 +173,6 @@ public class Partie extends Thread {
 		}
 		initChaudron(partieRapide);
 
-		/*
-		 * for (int i = 0; i < clients.size(); i++) {
-		 * Interface.Console("affichage de la main de " +
-		 * this.getJoueurs().get(i).getNom());
-		 * this.getJoueurs().get(i).getMain().afficherToutes(); }
-		 * Interface.Console("affichage de la bibliotheque :");
-		 * bibliotheque.getCartes().afficherToutes();
-		 */
 	}
 
 	private void initChaudron(boolean partieRapide) {
@@ -191,10 +210,7 @@ public class Partie extends Thread {
 
 		Interface.Console("Il reste " + chaudron + " gemmes dans le chaudron",
 				this);
-//		if (chaudron <= 0) {
-//			toutesLesInfos();
-//			finDuJeu();
-//		}
+
 		return nbrDeGemmes;
 	}
 
@@ -280,32 +296,6 @@ public class Partie extends Thread {
 			}
 		}
 
-	}
-
-	public void jouerLesCartesDeLaireDeJeu() {
-		while (aireDeJeu.tailleDeLaPile() > 1) {
-			Carte currentCarte = aireDeJeu.tirerUneCarte();
-			currentCarte.action();
-			defausse.ajouterUneCarte(currentCarte);
-		}
-		// pour malediction et hibou l'hors de l'exécution de action la carte
-		// hocus doit existée
-		Carte hocus = this.getAireDeJeu().getPileDeCarte().get(0);
-		hocus.action();
-		defausse.ajouterUneCarte(hocus);
-
-		if (!("Hibou".equals(hocus.getNom()))
-				&& !("Malediction".equals(hocus.getNom()))) {
-			setAireDeJeu(new PileDeCartes());
-		}
-
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		toutesLesInfos();
 	}
 
 	public PileDeCartes getDefausse() {
@@ -414,7 +404,7 @@ public class Partie extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//il n'y a que 3 cartes dans le grimoire
+		// il n'y a que 3 cartes dans le grimoire
 		if (nbrCartes > 3)
 			nbrCartes = 3;
 
@@ -467,7 +457,8 @@ public class Partie extends Thread {
 		Carte carteHocus = pileCarte.get(0);
 		String strComp = carteHocus.getNom();
 		if ("Hibou".equals(strComp) || "Malediction".equals(strComp)) {
-			// mettre les carte choisies dans la main du joueurjouant
+			// récupérer les cartes choisies
+			List<Carte> cartesChoisies = new ArrayList<Carte>();
 			for (int i = 0; i < carteArr.length(); i++) {
 				int numCarteGrim = 3;
 				try {
@@ -476,15 +467,20 @@ public class Partie extends Thread {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Carte carteChoisie = this.getJoueurs().get(joueurGrimoire)
-						.getGrimoire().getPileDeCarte().get(numCarteGrim);
-				Joueur joueurDuGrimoire = this.getJoueurs().get(joueurGrimoire);
+				cartesChoisies.add(this.getJoueurs().get(joueurGrimoire)
+						.getGrimoire().getPileDeCarte().get(numCarteGrim));
+
+			}
+			//enlever les cartes choisies du grimoire
+			Joueur joueurDuGrimoire = this.getJoueurs().get(joueurGrimoire);
+			for (Carte carteChoisie : cartesChoisies) {
 				joueurDuGrimoire.getGrimoire().enleverCarte(carteChoisie,
 						joueurDuGrimoire);
 				if ("Hibou".equals(strComp))
 					this.getJoueurs().get(getJoueurJouant()).getMain()
 							.ajouterUneCarte(carteChoisie);
 			}
+
 			// this.getJoueurs().get(joueurGrimoire).demandeCompleterGrimoire();
 		}
 		setAireDeJeu(new PileDeCartes());
