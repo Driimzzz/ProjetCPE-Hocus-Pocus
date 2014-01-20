@@ -1,5 +1,6 @@
 package cartes.cartesHocus;
 
+import cartes.PileDeCartes;
 import partie.Partie;
 
 public class Hibou extends Hocus{
@@ -26,6 +27,8 @@ public class Hibou extends Hocus{
 			int numJoueurQuiChoisi = getPartie().getJoueurJouant();
 			getPartie().demanderCartesDuGrimoire(numJoueurGrimoire, numJoueurQuiChoisi, this.getForce());
 		}
+		else
+			getPartie().setAireDeJeu(new PileDeCartes());
 	}
 
 }

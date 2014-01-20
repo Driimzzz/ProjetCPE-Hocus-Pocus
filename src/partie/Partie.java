@@ -297,16 +297,10 @@ public class Partie extends Thread {
 		if (!("Hibou".equals(hocus.getNom()))
 				&& !("Malediction".equals(hocus.getNom()))) {
 			setAireDeJeu(new PileDeCartes());
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 
 		try {
-			Thread.sleep(300);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -420,6 +414,9 @@ public class Partie extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//il n'y a que 3 cartes dans le grimoire
+		if (nbrCartes > 3)
+			nbrCartes = 3;
 
 		try {
 			grosJson.put("nbrCartes", nbrCartes);
