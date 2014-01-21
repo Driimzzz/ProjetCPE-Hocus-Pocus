@@ -160,6 +160,8 @@ public class Bibliotheque {
 			
 		Carte carteTiree = cartes.tirerUneCarte();
 		
+		//TODO Completer grimoire
+		
 		return carteTiree;
 	}
 
