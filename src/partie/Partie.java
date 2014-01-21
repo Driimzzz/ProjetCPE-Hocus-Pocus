@@ -24,8 +24,8 @@ public class Partie extends Thread {
 	private List<Joueur> joueurs;
 	static Bibliotheque bibliotheque;
 	private int indexJoueur;
-	static private PileDeCartes aireDeJeu;
-	static private PileDeCartes defausse;
+	 private PileDeCartes aireDeJeu;
+	 private PileDeCartes defausse;
 	Timer timerFinCarte;
 	private boolean finDuTourDeJeu;
 
@@ -273,7 +273,7 @@ public class Partie extends Thread {
 	}
 
 	public void setAireDeJeu(PileDeCartes aireDeJeu) {
-		Partie.aireDeJeu = aireDeJeu;
+		this.aireDeJeu = aireDeJeu;
 	}
 
 	public boolean ajouterAAireDeJeu(Carte carte) {
@@ -303,7 +303,7 @@ public class Partie extends Thread {
 	}
 
 	public void setDefausse(PileDeCartes defausse) {
-		Partie.defausse = defausse;
+		this.defausse = defausse;
 	}
 
 	// ----------Communication client / serveur --------------
