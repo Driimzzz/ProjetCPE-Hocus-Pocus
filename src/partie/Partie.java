@@ -33,12 +33,14 @@ public class Partie extends Thread {
 		while (aireDeJeu.tailleDeLaPile() > 1) {
 			Carte currentCarte = aireDeJeu.tirerUneCarte();
 			currentCarte.action();
+			currentCarte.setEstValide(true);
 			defausse.ajouterUneCarte(currentCarte);
 		}
 		// pour malediction et hibou l'hors de l'exécution de action la carte
 		// hocus doit existée
 		Carte hocus = this.getAireDeJeu().getPileDeCarte().get(0);
 		hocus.action();
+		hocus.setEstValide(true);
 		defausse.ajouterUneCarte(hocus);
 
 		if (!("Hibou".equals(hocus.getNom()))
@@ -56,7 +58,13 @@ public class Partie extends Thread {
 	}
 
 	public void finDuTour(int numJoueur, int input) {
-
+		//on vérifie que tous les grimoires sont complets
+		for (Joueur j : getJoueurs()) {
+			if (j.getGrimoire().getPileDeCarte().size() < 3)
+				this.getJoueurs().get(j.getPositionPartie())
+						.demandeCompleterGrimoire();
+		}
+		
 		// on vérifie l'auteur
 		if (indexJoueur == numJoueur) {
 			if (this.getAireDeJeu().getPileDeCarte().size() == 0) {
@@ -673,6 +681,7 @@ public class Partie extends Thread {
 	}
 
 	private void lancerChrono() {
+		//on vérifie que tous les grimoires sont complets
 		for (Joueur j : getJoueurs()) {
 			if (j.getGrimoire().getPileDeCarte().size() < 3)
 				this.getJoueurs().get(j.getPositionPartie())

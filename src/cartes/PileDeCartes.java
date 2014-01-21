@@ -1,7 +1,5 @@
 package cartes;
 
-import interfaceclientserveur.Interface;
-
 import java.util.Stack;
 
 import org.json.JSONArray;

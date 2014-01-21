@@ -40,12 +40,12 @@ public class ChatNoir extends Pocus{
         public void action() {
                 if(isValide())
                 {
-                        this.getPartie().getAireDeJeu().getPileDeCarte().get(0).setEstValide(false);
+                        this.carteVisee.setEstValide(false);
                         
                         for(Carte carte : getPartie().getAireDeJeu().getPileDeCarte()){
             				if(carte.getType() == CarteType.pocus)
             					carte.setEstValide(false);
-            			}
+            			}                        
                                                 
                         joueur.getMain().ajouterUneCarte(carteVisee);
                         Interface.Console("La carte "+carteVisee+" va dans la main de "+ joueur.getNom(),getPartie());

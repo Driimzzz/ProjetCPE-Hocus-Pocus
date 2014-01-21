@@ -13,8 +13,6 @@ public class Eclair extends Pocus{
 	
 	@Override
 	public void action() {
-		if(isValide())
-		{
 			Carte hocus = this.getPartie().getAireDeJeu().getPileDeCarte().get(0);	
 			hocus.setEstValide(true);
 			
@@ -24,7 +22,6 @@ public class Eclair extends Pocus{
 			}
 			
 			getPartie().finCarteHocus();
-		}		
 	}
 
 }
