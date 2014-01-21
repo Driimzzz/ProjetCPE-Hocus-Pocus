@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Règles</title>
+	</head>
+	<body onload="load()">
+	<div id="pageTotale">
+		<header>
+			<img src="img/PocusBaguetteMagiqueLogo.png" alt="logo" id="logo1" width="18%" height="100%" /><br/>
+			
+			<img src="img/PocusContreSortLogo.png" alt="logo" id="logo2" width="18%" height="100%"/><br/>
+		</header>
+		<div id="page">
+			<nav id="onglets">
+				<ul>
+					<li><a onclick="window.close()">Home</a></li>
+					<li><a href="ButDuJeu.html">Règles</a></li>
+					<li><a href="contact.html">Contact</a></li>							
+				</ul>
+			</nav>
+			<nav id="menu">
+				<div>
+					<h3>Menu</h3>
+					<ul>
+						<li><a href="ButDuJeu.html">But Du Jeu</a></li>
+						<li><a href="Deroulement.html">Déroulement</a></li>
+						<li><a href="CartesHocus.html">Cartes Hocus</a></li>
+						<li><a href="CartesPocus.html">Cartes Pocus</a></li>
+
+					</ul>
+				</div>
+			</nav>
+			<section>
+				<h2>Cartes Pocus</h2>
+				<div>
+					<p>Les cartes Pocus sont jaunes.</br> Ces cartes ne représentent pas vos sorts mais sont un moyen d'agir sur ceux-ci en les amplifiant, les modifiant, les neutralisant, etc. Ainsi, elles peuvent être jouées que s'il y a une carte Hocus dans 
+					la Zone de jeu. Une carte Pocus peut être jouée sur une carte Hocus ou sur une autre carte Pocus. Chaque joueur peut jouer plusieurs cartes Pocus sur une seule carte Hocus. Les cartes Pocus peuvent être jouées par n'importe qui, à n'importe 
+					quel moment de la partie, que ce soit pendant son Tour ou non, tant qu'il y a une carte Hocus dans la Zone de jeu. </p>
+
+				</div>
+				<div>
+					<figure>
+					<img src="img/HocusPocus/PocusAmulette.png" alt="Amulette"/>						
+					</figure>
+					<h3>AMULETTE</h3>
+					<p>
+					La carte Hocus, dirigée contre vous, sur laquelle vous jouez l'amulette est détruite. Toutes les cartes Pocus présentes dans la Zone de jeu sont détruites.					
+					</p>			 					
+				</div>
+				<div>
+					<figure>
+					<img src="img/HocusPocus/PocusBaguette Magique.png" alt="BaguetteMagique"/>						
+					</figure>
+					<h3>BAGUETTE MAGIQUE</h3>
+					<p>
+					Le chiffre de la carte Hocus, sur laquelle vous jouez la carte Baguette Magique, est doublé.			
+					</p>			 					
+				</div>
+				<div>
+					<figure>
+					<img src="img/HocusPocus/PocusChat Noir.png" alt="ChatNoir"/>						
+					</figure>
+					<h3>CHAT NOIR</h3>
+					<p>
+					Prenez la carte Hocus, sur laquelle vous jouez la carte Chat Noir, dans votre Main. Toutes les cartes Pocus présentes dans la Zone de jeu sont détruites.					
+					</p>			 					
+				</div>
+				<div>
+					<figure>
+					<img src="img/HocusPocus/PocusCitrouille.png" alt="Citrouille"/>						
+					</figure>
+					<h3>CITROUILLE</h3>
+					<p>
+					La carte Hocus, sur laquelle vous jouez la carte Citrouille, retourne dans la Main du joueur qui vient de la jouer. Il ne pourra la jouer qu'à partir de son prochain Tour.	Toutes les cartes Pocus présentes dans la zone de jeu sont détruites.
+					</p>			 					
+				</div>
+				<div>
+					<figure>
+					<img src="img/HocusPocus/PocusContre Sort.png" alt="ContreSort"/>						
+					</figure>
+					<h3>CONTRE-SORT</h3>
+					<p>
+					La carte Hocus sur laquelle vous jouez la carte Contre-Sort, est détruite. Toutes les cartes Pocus présentes dans la Zone de jeu sont détruites.					
+					</p>			 					
+				</div>
+				<div>
+					<figure>
+					<img src="img/HocusPocus/PocusEclair.png" alt="Eclair"/>						
+					</figure>
+					<h3>ECLAIR</h3>
+					<p>
+					La carte Hocus sur laquelle vous jouez la carte Eclair est protégée contre toutes les autres cartes Pocus à venir; celles-ci seront sans effet. De plus, toutes les cartes Pocus déjà jouées sur la carte Hocus sont annulées. Seule la Baguette 
+					Magique fonctionne sur une carte Hocus sur laquelle est jouée une carte Eclair.
+					</p>			 					
+				</div>
+				<div>
+					<figure>
+					<img src="img/HocusPocus/PocusMiroir Enchante.png" alt="MiroirEnchante"/>						
+					</figure>
+					<h3>MIROIR ENCHANTE</h3>
+					<p>
+					Renvoyez le pouvoir de la carte Hocus dont vous êtes la cible sur un joueur autre que celui qui a joué la carte Hocus. Plusieurs cartes Miroirs peuvent être jouées sur une seule carte Hocus mais ne peuvent jamais renvoyer la carte Hocus sur 
+					le joeur qui l'a jouée.					
+					</p>			 					
+				</div>
+				<div>
+					<figure>
+					<img src="img/HocusPocus/PocusSablier.png" alt="Sablier"/>						
+					</figure>
+					<h3>SABLIER</h3>
+					<p>
+					Mettez fin au tour du joueur qui a posé la carte Hocus sur laquelle vous jouez la carte Sablier. Dès que le pouvoir de cette carte Hocus est résolu, le Tour du joueur en cours est terminé. Il pioche tout de même 2 cartes de la Bibliothèque ou
+					1 Gemme du Chaudron.
+					</p>			 					
+
+			</section>
+			<aside>
+				<div class="right">
+					<h3>Liens</h3>
+					<div id="facebook">
+						<a href="http://www.facebook.com" target="facebook"> <img src="img/facebook.png" alt="facebook"/> </a>
+					</div>			</div>
+			</aside>
+		</div>
+		<footer>
+			<ul>				
+				<li><a href=#>Mentions Légales</a></li><br/>
+				<li>BELLIER-FERRAGE-KOENIG-PERRON</li>
+				</ul>
+		</footer>
+		</div>
+	</body>
+	<script src="jquery.js"></script>
+</html>

@@ -1,0 +1,335 @@
+body
+{
+	min-width:1200px;	
+	font-family:Arial,Helvetica,sans-serif;
+	
+}
+#pageTotale
+{
+	background-image: url(img/FondVert.jpg);
+	background-repeat: no-repeat;
+	background-size:cover;
+	background-attachment: fixed;
+}
+
+/*-----------------------Header-------------------------*/
+header
+{
+	background-image: url(img/HocusPocusLogo.png);
+	background-size:65% 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+	position: relative;
+	text-align:center;
+	height:200px;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size: 30px;
+	color: maroon;
+	
+	
+}
+
+#logo1
+{
+	position:absolute;
+	top:0;
+	left:0;
+}
+#logo2
+{
+	position:absolute;
+	top:0;
+	right:0;
+}
+/*---------------------------bloc page-------------------------*/
+#page
+{
+	position:relative;
+	width:100%;
+	/*height:700px;*/
+}
+#onglets
+{
+	border: 1px solid #A5D152;
+	background-image: url("img/BaguetteMagique.gif");
+	float:top;
+	width:100%;
+	height:110px;
+	background-repeat: no-repeat;
+	background-size:100% 100%;
+}
+#onglets ul
+{
+	text-align:center;
+	margin-top: 60px;
+	color: #BEF574;
+}
+#onglets li
+{
+	display:inline;
+	height:100px;
+	padding: 9px 30px;
+	margin: 5px 5px;
+	top: 200px;
+	color: #BEF574;
+ 
+}
+#onglets a:hover
+{
+	color:purple;
+}
+
+#onglets a
+{
+	color:#A5D152;
+	text-transform:uppercase;
+	text-decoration:none;
+	font-family:Arial,Helvetica,sans-serif;
+	font-weight:bold;
+	font-size:30px;
+}
+/*----------------------------Menu--------------------------*/
+#menu
+{
+	background: url("img/Gemmes.gif") left top no-repeat;
+	background-size:75% 20%;
+	background-position:20% 20%;
+	float:left;
+	width:15%;
+	height:675px;
+}
+#menu div
+{
+	padding-top:250px;
+	padding-left:10px;
+}
+#menu h3
+{
+color:#18391E;
+	text-decoration:underline;
+	font-family:Arial,Helvetica,sans-serif;
+	margin-left: 20%;
+}
+#menu ul
+{
+	list-style-image:url(img/puce_bouchon.png);
+}
+#menu a
+{
+	color:teal;
+	text-decoration:none;
+	font-family:Arial,Helvetica,sans-serif;
+}
+#menu a:hover
+{
+	color:fuchsia;
+	text-decoration:underline;
+	font-family:Arial,Helvetica,sans-serif;
+}
+/*---------------------------------------------------------*/
+section
+{
+	border: 10px solid black;
+	float:left;
+	width:60%;
+	min-height:675px;
+	margin-left:30px;
+	margin-right:1px;
+	margin-top:15px;
+	margin-bottom:50px;
+	padding: 20px 20px 20px 20px;
+	background: url("img/ParcheminVert.jpg");
+	overflow: auto;
+}
+section div
+{
+	float:left;
+}
+section h2
+{
+	color:18391E;
+}
+section input[type="submit"]
+{
+	background-color:rgb(150,5,40);
+	color:rgb(200,100,0);
+	font-size:15px;
+}
+figure
+{
+	float:left;
+	width: 100px;
+	height: 200px;
+}
+/*----------------------------------------------*/
+p
+{
+	text-align: justify;
+}
+p img
+{
+	float:right;
+	margin-left:5px;
+	border: 2px solid maroon;
+}
+img
+{
+	width: 100px;
+	height: 200px;
+}
+aside
+{
+	padding-top:15px;
+	float:right;
+	width:17%;
+	height:675px;
+}
+
+#facebook
+{
+	text-align:center;
+	width:100%;
+}
+
+.right
+{
+	background-color:black;
+	border:1px solid rgb(150,5,40);;
+	border-radius: 10px 10px 10px 10px;
+	margin-right:10px;
+	margin-bottom:15px;
+}
+.right h3
+{
+	padding-left:5px;
+	color:#A5D152;
+}
+.right div
+{
+	background-color:silver;
+	border-radius: 0px 0px 10px 10px;
+}
+fieldset
+{
+	border:none;
+}
+input[type="text"]
+{
+	width:90px;
+}
+input[name="pseudo"]
+{
+	width:60px;
+}
+select[type="coord"]
+{
+	margin-left:10px;
+}
+
+input[type="coord"]
+{
+	margin-left:10px;
+	width:100px;
+}
+
+textarea[name="fullInformation"]
+{
+	width:400px;
+}
+#contact
+{
+	margin-top:25px;
+	float: right;
+}
+
+#civil
+{
+	float: left;	
+	text-align:center;
+}
+
+#reponse
+{
+	float: right; 
+	text-align:center;
+}
+
+textarea[name="repondre"]
+{
+	position: left; 
+	width: 500px;
+	height: 200px;
+}
+
+
+.diss
+{
+	height: 30px;
+	width: 400px;
+	color: maroon;
+	font-size: 18px;
+	font-family:Arial,Helvetica,sans-serif;
+	padding: 0px 7px;
+	margin: 20px 0px 0px;
+	text-align: left;
+	
+}
+
+.autre
+{
+	height: 30px;
+	width: 100px;
+	font-size: 18px;
+	font-family:Arial,Helvetica,sans-serif;
+	padding: 0px 7px;
+	margin: 20px 0px 0px;
+	text-align: left;
+}
+
+.Rep
+{
+	width: 640px;
+	font-size: 12px;
+	font-family:Arial,Helvetica,sans-serif;
+	padding: 0px 7px;
+	margin: 20px 0px 0px;
+	text-align: left;
+}
+/*-------------------------footer-----------------------*/
+footer
+{
+
+	clear:both;
+
+	text-align:center;
+
+	border: 1px solid #A5D152;
+	background-image: url("img/BaguetteMagique.gif");
+	float:top;
+	width:100%;
+	height:110px;
+	background-repeat: no-repeat;
+	background-size:100% 100%;
+}
+footer li
+{
+	display:inline;	
+	color:white;
+	
+
+}
+
+a:hover
+{
+	color:purple;
+}
+
+a
+{
+	color:rgb(250,192,20);
+}
+.pub
+{
+	width:100%;
+	text-align:center;
+}
