@@ -316,6 +316,7 @@ function pseudoDuJeu()
 {
 	$("#popupPseudoDuJeu").dialog("open");
 	$("#popupPseudoDuJeu").html("<input value='"+auteur+"' type='text' name='pseudo' id='pseudo'><button onclick='envoyerPseudo()'>Valider</button>");	
+	$("#popupPseudoDuJeu").trigger('create');
 }
 
 function envoyerPseudo()
